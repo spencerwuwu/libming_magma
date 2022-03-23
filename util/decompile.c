@@ -2131,6 +2131,9 @@ getAllSwitchActions(union SWF_ACTION *dest, union SWF_ACTION *actions, union SWF
 static int
 decompile_SWITCH(int n, SWF_ACTION *actions, int maxn, int off1end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(0);
+#endif
 	int i,j;
 	int start;		// base action index for case value and code
 	int ccsize=0;		// size of code for case value
