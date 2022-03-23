@@ -3255,6 +3255,9 @@ decompileCAST(int n, SWF_ACTION *actions, int maxn)
 int
 decompileAction(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(0);
+#endif
 	if( n > maxn ) SWF_error("Action overflow!!");
 
 #ifdef DEBUG
