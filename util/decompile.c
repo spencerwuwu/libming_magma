@@ -437,6 +437,9 @@ getName(struct SWF_ACTIONPUSHPARAM *act)
 static int
 getInt(struct SWF_ACTIONPUSHPARAM *act)
 {
+#ifdef MAGMA_ENABLE_CANARIES
+	    MAGMA_LOG("MIN005", act == NULL);
+#endif
 	switch( act->Type ) 
 	{
 	case PUSH_FLOAT: /* FLOAT -- also used for PROPERTY storing */
@@ -3144,6 +3147,9 @@ decompileAction(int n, SWF_ACTION *actions, int maxn)
 	        actionName(actions[n].SWF_ACTIONRECORD.ActionCode));
 #endif
 
+#ifdef MAGMA_ENABLE_CANARIES
+	    MAGMA_LOG("MIN006", n < 1 || n >= maxn);
+#endif
 	switch(actions[n].SWF_ACTIONRECORD.ActionCode)
 	{
 	case SWFACTION_END:
