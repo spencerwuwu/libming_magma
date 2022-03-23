@@ -951,7 +951,7 @@ ztrim_fInstrument(55);
 static inline int OpCode(SWF_ACTION *actions, int n, int maxn)
 {
 #ifndef ZTRIM_DONT_INSTR
-ztrim_fInstrument(56);
+ztrim_fInstrument(0);
 #endif
 	if(!n || n >= maxn)
 	{
