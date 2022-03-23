@@ -322,6 +322,9 @@ ztrim_fInstrument(263);
 int
 main (int argc, char *argv[])
 {
+#ifndef ZTRIM_DONT_INSTR
+    ztrim_initIteration(1000);
+#endif
 	FILE *f;
 	int compressed = 0;
 
