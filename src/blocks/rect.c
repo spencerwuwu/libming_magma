@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -37,6 +42,9 @@ SWFRect_numBits(SWFRect rect)
 void
 SWFOutput_writeRect(SWFOutput out, SWFRect rect)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(586);
+#endif
 	int nBits = max(max(SWFOutput_numSBits(rect->minX),
 					SWFOutput_numSBits(rect->maxX)),
 			max(SWFOutput_numSBits(rect->minY),
@@ -64,6 +72,9 @@ destroySWFRect(SWFRect rect)
 SWFRect
 newSWFRect(int minX, int maxX, int minY, int maxY)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(587);
+#endif
 	SWFRect rect = (SWFRect)malloc(sizeof(struct SWFRect_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -123,6 +134,9 @@ SWFRect_copy(SWFRect rect)
 void
 SWFRect_includeRect(SWFRect a, SWFRect b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(588);
+#endif
 	if ( b->minX < a->minX )
 		a->minX = b->minX;
 
@@ -141,6 +155,9 @@ SWFRect_includeRect(SWFRect a, SWFRect b)
 void
 SWFRect_includePoint(SWFRect rect, int x, int y, int width)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(589);
+#endif
 	if ( x-width-1 < rect->minX )
 		rect->minX = x-width;
 

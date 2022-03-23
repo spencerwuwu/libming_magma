@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -125,6 +130,9 @@ struct SWFMovie_s
 static void
 destroySWFExports(SWFMovie movie)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(444);
+#endif
 	int n;
 
 	for ( n=0; n<movie->nExports; ++n )
@@ -143,6 +151,9 @@ destroySWFExports(SWFMovie movie)
 void
 destroySWFMovie(SWFMovie movie /* Movie to be destroyed */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(445);
+#endif
 	destroySWFBlockList(movie->blockList);
 	destroySWFDisplayList(movie->displayList);
 	destroySWFRect(movie->bounds);
@@ -179,6 +190,9 @@ destroySWFMovie(SWFMovie movie /* Movie to be destroyed */)
 SWFMovie
 newSWFMovieWithVersion(int version /* Flash version */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(446);
+#endif
 	SWFMovie movie;
 
 	Ming_useSWFVersion(version);
@@ -264,6 +278,9 @@ SWFMovie_setDimension(SWFMovie movie /* movie to adjust */,
 	float width	/* new width of the movie */,
 	float height	/* new height of the movie */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(447);
+#endif
 	if ( movie->bounds != NULL )
 		free(movie->bounds);
 	
@@ -321,6 +338,9 @@ SWFMovie_protect(SWFMovie movie /* movie to protect */,
 SWFFontCharacter
 SWFMovie_addFont(SWFMovie movie, SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(448);
+#endif
 	SWFFontCharacter fontchar;
 	int i;
 	
@@ -341,6 +361,9 @@ SWFMovie_addFont(SWFMovie movie, SWFFont font)
 static void
 SWFMovie_resolveTextFonts(SWFMovie movie, SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(449);
+#endif
 	// translate text object font references to movie-specific fontchars
 
 	SWFTextRecord record = SWFText_getInitialRecord(text);
@@ -362,6 +385,9 @@ SWFMovie_resolveTextFonts(SWFMovie movie, SWFText text)
 static void
 SWFMovie_resolveTextfieldFont(SWFMovie movie, SWFTextField field)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(450);
+#endif
 	// given a font used for a text field, add it to the movie
 	SWFFontCharacter fontchar;
 	SWFFont font = SWFTextField_getUnresolvedFont(field);
@@ -394,6 +420,9 @@ SWFMovie_addBlock(SWFMovie movie, SWFBlock block)
 void
 SWFMovie_addExport(SWFMovie movie, SWFBlock block, const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(451);
+#endif
 	switch( SWFBlock_getType(block))
 	{
 		case SWF_DEFINESHAPE:
@@ -427,6 +456,9 @@ SWFMovie_addCharacterDependencies(SWFMovie movie, SWFCharacter character);
 static void
 SWFMovie_addDependency(SWFMovie movie, SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(452);
+#endif
 	if ( SWFBlock_getType((SWFBlock)character) == SWF_DEFINETEXT ||
 			 SWFBlock_getType((SWFBlock)character) == SWF_DEFINETEXT2 )
 	{
@@ -447,6 +479,9 @@ SWFMovie_addDependency(SWFMovie movie, SWFCharacter character)
 static void
 SWFMovie_addCharacterDependencies(SWFMovie movie, SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(453);
+#endif
 	SWFCharacter* deps = NULL;
 	int nDeps = 0;
 
@@ -471,6 +506,9 @@ SWFMovie_addCharacterDependencies(SWFMovie movie, SWFCharacter character)
 void
 SWFMovie_writeExports(SWFMovie movie)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(454);
+#endif
 	int n;
 	SWFBlock exports;
 
@@ -518,6 +556,9 @@ SWFMovie_writeExports(SWFMovie movie)
 int
 SWFMovie_replace_internal(SWFMovie movie, SWFDisplayItem item, SWFMovieBlockType ublock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(455);
+#endif
 	SWFBlock block = ublock.block;
 	if(block == NULL || item == NULL)
 		return -1;
@@ -568,6 +609,9 @@ SWFDisplayItem
 SWFMovie_add_internal(SWFMovie movie /* movie to which the block will be added */,
                       SWFMovieBlockType ublock /* block to add to the movie */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(456);
+#endif
 	SWFBlock block = ublock.block;
 	if ( block == NULL )
 		return NULL;
@@ -640,6 +684,9 @@ SWFMovie_remove(SWFMovie movie , SWFDisplayItem item)
 void
 SWFMovie_setSoundStreamAt(SWFMovie movie, SWFSoundStream stream, float skip)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(457);
+#endif
 	SWFBlock block = SWFSoundStream_getStreamHead(stream, movie->rate, skip);
 
 	if ( block != NULL )
@@ -669,6 +716,9 @@ SWFMovie_setSoundStream(SWFMovie movie, SWFSoundStream stream)
 SWFSoundInstance
 SWFMovie_startSound(SWFMovie movie, SWFSound sound)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(458);
+#endif
 	SWFSoundInstance inst = newSWFSoundInstance(sound);
 
 	if ( !SWFBlock_isDefined((SWFBlock)sound) )
@@ -687,6 +737,9 @@ SWFMovie_startSound(SWFMovie movie, SWFSound sound)
 void
 SWFMovie_stopSound(SWFMovie movie, SWFSound sound)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(459);
+#endif
 	SWFSoundInstance inst = newSWFSoundInstance_stop(sound);
 
 	// XXX - ???
@@ -733,6 +786,9 @@ SWFMovie_namedAnchor(SWFMovie movie /* Movie to which the anchor is added */,
 SWFOutput
 SWFMovie_toOutput(SWFMovie movie, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(460);
+#endif
 	int swflength;
 #if USE_ZLIB
 	int status;
@@ -863,6 +919,9 @@ SWFMovie_toOutput(SWFMovie movie, int level)
 int
 SWFMovie_output(SWFMovie movie, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(461);
+#endif
 	SWFOutput swfbuffer;
 	int swflength;
 	byte *buffer;
@@ -886,6 +945,9 @@ SWFMovie_output(SWFMovie movie, SWFByteOutputMethod method, void *data)
 int
 SWFMovie_save(SWFMovie movie, const char *filename)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(462);
+#endif
 	FILE *f = fopen(filename, "wb");
 	int count;
 
@@ -919,6 +981,9 @@ completeSWFImportCharacter(SWFBlock block)
 SWFImportBlock
 SWFMovie_addImport(SWFMovie movie, const char *filename, const char *name, int id)
 {	int n;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(463);
+#endif
 	SWFImportBlock imports;
 	struct importitem *ip;
 	char *p;
@@ -956,6 +1021,9 @@ SWFMovie_importCharacter(SWFMovie movie,
                          const char *filename /* URL to movie */, 
                          const char *name /* idetifier of character */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(464);
+#endif
 	SWFCharacter res;
 	SWFImportBlock importer;
 	int id;
@@ -980,6 +1048,9 @@ SWFMovie_importCharacter(SWFMovie movie,
 SWFFontCharacter
 SWFMovie_importFont(SWFMovie movie, const char *filename, const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(465);
+#endif
 	SWFFontCharacter res;
 	SWFImportBlock importer;
 	int id;
@@ -1023,6 +1094,9 @@ SWFMovie_setNetworkAccess(SWFMovie movie, int flag)
 void
 SWFMovie_addMetadata(SWFMovie movie, const char *xml)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(466);
+#endif
 	if(!movie->fattrs)
 		movie->fattrs = newSWFFileAttributes();
 
@@ -1043,6 +1117,9 @@ SWFMovie_setScriptLimits(SWFMovie movie,
                          int maxRecursion /* max recursion */,
                          int timeout /* timeout in sec */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(467);
+#endif
 	if(!movie->limits)
 		movie->limits = newSWFScriptLimits();
 

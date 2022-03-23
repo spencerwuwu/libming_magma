@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -62,6 +67,9 @@ int SWFBitmap_getHeight(SWFBitmap b)
 
 SWFBitmap newSWFBitmap_fromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(809);
+#endif
 	int c1 = SWFInput_getChar(input);
 	int c2 = SWFInput_getChar(input);
 	int c3 = SWFInput_getChar(input);
@@ -98,6 +106,9 @@ SWFBitmap newSWFBitmap_fromRawImg(unsigned char *raw,
                                   SWFRawImgFmt srcFmt, SWFBitmapFmt dstFmt,
                                   unsigned short width, unsigned short height)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(810);
+#endif
 #if USE_ZLIB
 	struct dbl_data image;
 	uLongf insize, outsize;

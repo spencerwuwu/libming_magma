@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -48,6 +53,9 @@ struct pngdata
 
 struct pngdata readPNG(FILE *fp)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(76);
+#endif
   struct pngdata png;
   unsigned char header[8];
   unsigned int x, y;
@@ -234,6 +242,9 @@ struct pngdata readPNG(FILE *fp)
 static void
 alignedcopy(struct pngdata png, unsigned char *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(77);
+#endif
   unsigned int row;
   int alignedrowsize;
   int pngrowsize;
@@ -253,6 +264,9 @@ alignedcopy(struct pngdata png, unsigned char *data)
 
 void writeDBL(FILE *f, struct pngdata png)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(78);
+#endif
   unsigned char *data, *outdata;
   int alignedsize;
   unsigned long outsize;

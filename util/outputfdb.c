@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdlib.h>
 #include "blocks/blocktypes.h"
 #include "parser.h"
@@ -17,6 +22,9 @@ outputTrailer (struct Movie *m)
 void
 outputBlock (int type, SWF_Parserstruct * blockp, FILE* f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(178);
+#endif
 	FILE *out;
 	char name[256];
 	int skipBytes, ret;

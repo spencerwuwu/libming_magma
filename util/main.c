@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -65,6 +70,9 @@ int verbose = 0;
 int
 cws2fws(FILE *f, uLong outsize)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(259);
+#endif
 
 	struct stat statbuffer;
 	int insize, ret;
@@ -154,6 +162,9 @@ cws2fws(FILE *f, uLong outsize)
 
 static void usage(char *prog)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(260);
+#endif
 #ifdef MAKE_FDB
 	fprintf(stderr,"%s: [-v] inputfile\n", prog);
 	fprintf(stderr,"<inputfile> should be a swf files containing font blocks (DEFINEFONT2).\n");
@@ -165,6 +176,9 @@ static void usage(char *prog)
 
 static int filelen_check_fails(int minLength)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(261);
+#endif
 	if(m.size - fileOffset < minLength)
 	{
 		SWF_warn("sudden file end: read failed @%i fileSize %i, request %i\n", 
@@ -176,6 +190,9 @@ static int filelen_check_fails(int minLength)
 
 static int readMovieHeader(FILE *f, int *compressed)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(262);
+#endif
 	char first;
 	struct stat stat_buf;
 	
@@ -234,6 +251,9 @@ static int readMovieHeader(FILE *f, int *compressed)
 
 static void readMovie(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(263);
+#endif
 	int block, type, blockstart, blockoffset, length, nextFrame=0;
 	SWF_Parserstruct *blockp;
 	for (;;)

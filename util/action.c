@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -44,6 +49,9 @@ static int indent = 1;
 void
 outputSWFACTION_CONSTANTPOOL (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(1);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONCONSTANTPOOL);
 
@@ -62,6 +70,9 @@ outputSWFACTION_CONSTANTPOOL (SWF_ACTION *act)
 void
 outputSWFACTION_STOREREGISTER (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(2);
+#endif
   OUT_BEGIN(SWF_ACTIONSTOREREGISTER);
 
   if( verbose ) {
@@ -75,6 +86,9 @@ outputSWFACTION_STOREREGISTER (SWF_ACTION *act)
 void
 outputSWFACTION_IF (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(3);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONIF);
 
@@ -104,6 +118,9 @@ outputSWFACTION_IF (SWF_ACTION *act)
 void
 outputSWFACTION_JUMP (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(4);
+#endif
   OUT_BEGIN(SWF_ACTIONJUMP);
 
   if( verbose ) {
@@ -118,6 +135,9 @@ outputSWFACTION_JUMP (SWF_ACTION *act)
 void
 outputSWFACTION_WAITFORFRAME (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(5);
+#endif
   OUT_BEGIN(SWF_ACTIONWAITFORFRAME);
 
   if( verbose ) {
@@ -133,6 +153,9 @@ outputSWFACTION_WAITFORFRAME (SWF_ACTION *act)
 void
 outputSWFACTION_SETTARGET (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(6);
+#endif
   OUT_BEGIN(SWF_ACTIONSETTARGET);
 
   if( verbose ) {
@@ -146,6 +169,9 @@ outputSWFACTION_SETTARGET (SWF_ACTION *act)
 void
 outputSWFACTION_WITH (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(7);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONWITH);
 
@@ -172,6 +198,9 @@ outputSWFACTION_WITH (SWF_ACTION *act)
 void
 outputSWFACTION_DEFINEFUNCTION (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(8);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONDEFINEFUNCTION);
 
@@ -210,6 +239,9 @@ outputSWFACTION_DEFINEFUNCTION (SWF_ACTION *act)
 void
 outputSWFACTION_DEFINEFUNCTION2 (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(9);
+#endif
   int i, registerCount = 1;
   OUT_BEGIN(SWF_ACTIONDEFINEFUNCTION2);
 
@@ -278,6 +310,9 @@ getConstant(unsigned int n)
 void
 outputSWFACTION_PUSHPARAM (struct SWF_ACTIONPUSHPARAM *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(10);
+#endif
 
   switch( act->Type ) 
   {
@@ -330,6 +365,9 @@ outputSWFACTION_PUSHPARAM (struct SWF_ACTIONPUSHPARAM *act)
 void
 outputSWFACTION_PUSH (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(11);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONPUSH);
 
@@ -354,6 +392,9 @@ outputSWFACTION_GETURL (SWF_ACTION *act)
 void
 outputSWFACTION_GETURL2 (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(12);
+#endif
   OUT_BEGIN(SWF_ACTIONGETURL2);
 
   if( verbose )
@@ -394,6 +435,9 @@ outputSWFACTION_GETURL2 (SWF_ACTION *act)
 void
 outputSWFACTION_GOTOFRAME (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(13);
+#endif
   OUT_BEGIN(SWF_ACTIONGOTOFRAME);
 
   if( verbose ) {
@@ -408,6 +452,9 @@ outputSWFACTION_GOTOFRAME (SWF_ACTION *act)
 void
 outputSWFACTION_GOTOFRAME2 (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(14);
+#endif
   OUT_BEGIN(SWF_ACTIONGOTOFRAME2);
 
   if( verbose )
@@ -423,6 +470,9 @@ outputSWFACTION_GOTOFRAME2 (SWF_ACTION *act)
 void 
 outputSWFACTION_TRY (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(15);
+#endif
   int i;
   OUT_BEGIN(SWF_ACTIONTRY);
   
@@ -582,6 +632,9 @@ static int numActions = sizeof (actions) / sizeof (struct SWFActionName);
 const char *
 actionName (Action header)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(16);
+#endif
     int i;
 
   for (i = 0; i < numActions; i++)
@@ -598,6 +651,9 @@ actionName (Action header)
 void
 outputSWF_ACTION (int n, SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(17);
+#endif
   struct SWF_ACTIONRECORD *action = (struct SWF_ACTIONRECORD *)act;
   int i;
 

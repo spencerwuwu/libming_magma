@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -51,6 +56,9 @@ struct pngdata
 
 static png_structp openPngFromFile(FILE *fp)
 {	unsigned char header[8];
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(719);
+#endif
 	png_structp result;
 
 	if(fread(header, 1, 8, fp) != 8)
@@ -71,6 +79,9 @@ static int pngReadFunc(png_structp png, unsigned char *buf, int len)
 
 png_structp openPngFromInput(SWFInput input)
 {	unsigned char header[8];
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(720);
+#endif
 	png_structp result;
 	
 	if(SWFInput_read(input, header, 8) != 8)
@@ -87,6 +98,9 @@ png_structp openPngFromInput(SWFInput input)
 static void
 alignedcopy(struct pngdata png, unsigned char *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(721);
+#endif
 	unsigned int row;
 	int alignedrowsize;
 	int pngrowsize;
@@ -106,6 +120,9 @@ alignedcopy(struct pngdata png, unsigned char *data)
 
 static int readPNG(png_structp png_ptr, dblData result)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(722);
+#endif
 	struct pngdata png;
 	unsigned char *data;
 
@@ -313,6 +330,9 @@ static int readPNG(png_structp png_ptr, dblData result)
 
 SWFDBLBitmapData newSWFDBLBitmapData_fromPngFile(const char *fileName)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(723);
+#endif
 	SWFDBLBitmapData ret;
 	FILE *fp;
 	png_structp png_ptr;
@@ -335,6 +355,9 @@ SWFDBLBitmapData newSWFDBLBitmapData_fromPngFile(const char *fileName)
 
 SWFDBLBitmapData newSWFDBLBitmapData_fromPngInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(724);
+#endif
 	SWFDBLBitmapData ret;
 	png_structp png_ptr;
 	struct dbl_data pngdata;

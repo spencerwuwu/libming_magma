@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -35,6 +40,9 @@ struct SWFFill_s
 SWFFill
 newSWFFill(SWFFillStyle fillstyle)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(468);
+#endif
 	SWFFill fill;
 	if(fillstyle == NULL)
 		return NULL;

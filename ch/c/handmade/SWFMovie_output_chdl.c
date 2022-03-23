@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <ming.h>
 #include <ch.h>
 
@@ -6,6 +11,9 @@ static void *fileOutputMethod_funptr;
 static void fileOutputMethod_funarg(byte b, void *data);
 
 EXPORTCH int SWFMovie_output_chdl(void *varg) {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(425);
+#endif
     va_list ap;
     SWFMovie movie;
     SWFByteOutputMethod method;

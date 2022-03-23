@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -51,6 +56,9 @@ writeSWFSoundWithSoundStreamToMethod(SWFSoundStream stream,
 static int
 soundDataSize(SWFSound sound)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(888);
+#endif
 	if ((sound->flags&SWF_SOUND_COMPRESSION) == SWF_SOUND_NOT_COMPRESSED ||
 		 (sound->flags&SWF_SOUND_COMPRESSION) == SWF_SOUND_NOT_COMPRESSED_LE)
 	{
@@ -113,6 +121,9 @@ soundDataSize(SWFSound sound)
 void
 writeSWFSoundToStream(SWFBlock block, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(889);
+#endif
 	int l, i;
 	SWFSound sound = (SWFSound)block;
 
@@ -235,6 +246,9 @@ newSWFSoundFromFileno(int fd, byte flags)
 SWFSound
 newSWFSound_fromInput(SWFInput input, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(890);
+#endif
 	SWFSound sound = (SWFSound)malloc(sizeof(struct SWFSound_s));
 	SWFBlock block = (SWFBlock)sound;
 
@@ -272,6 +286,9 @@ newSWFSound_fromInput(SWFInput input, byte flags)
 SWFSound
 newSWFSound_fromSoundStream(SWFSoundStream stream)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(891);
+#endif
 	SWFSound sound = (SWFSound)malloc(sizeof(struct SWFSound_s));
 	SWFBlock block = (SWFBlock)sound;
 

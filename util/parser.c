@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -56,6 +61,9 @@ void silentSkipBytes(FILE *f, int length);
 void
 parseSWF_RGB (FILE * f, struct SWF_RGBA *rgb)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(264);
+#endif
   rgb->red = readUInt8 (f);
   rgb->green = readUInt8 (f);
   rgb->blue = readUInt8 (f);
@@ -74,6 +82,9 @@ parseSWF_RGBA (FILE * f, struct SWF_RGBA *rgb)
 void
 parseSWF_RECT (FILE * f, struct SWF_RECT *rect)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(265);
+#endif
   byteAlign ();
 
   rect->Nbits = readBits (f, 5);
@@ -86,6 +97,9 @@ parseSWF_RECT (FILE * f, struct SWF_RECT *rect)
 void
 parseSWF_MATRIX (FILE * f, struct SWF_MATRIX *matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(266);
+#endif
   byteAlign ();
 
   matrix->HasScale = readBits (f, 1);
@@ -116,6 +130,9 @@ parseSWF_FILTERLIST(FILE *f, SWF_FILTERLIST *list);
 int
 parseSWF_BUTTONRECORD (FILE * f, struct SWF_BUTTONRECORD *brec, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(267);
+#endif
   byteAlign ();
 
   brec->ButtonReserved = readBits (f, 2);
@@ -148,6 +165,9 @@ parseSWF_BUTTONRECORD (FILE * f, struct SWF_BUTTONRECORD *brec, int level)
 int
 parseSWF_BUTTONCONDACTION (FILE * f, struct SWF_BUTTONCONDACTION *bcarec, int end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(268);
+#endif
   int actionEnd, start;
   byteAlign ();
 
@@ -199,6 +219,9 @@ parseSWF_BUTTONCONDACTION (FILE * f, struct SWF_BUTTONCONDACTION *bcarec, int en
 void
 parseSWF_CXFORM (FILE * f, struct SWF_CXFORM *cxform)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(269);
+#endif
   byteAlign ();
 
   cxform->HasAddTerms = readBits (f, 1);
@@ -219,6 +242,9 @@ parseSWF_CXFORM (FILE * f, struct SWF_CXFORM *cxform)
 void
 parseSWF_CXFORMWITHALPHA (FILE * f, struct SWF_CXFORMWITHALPHA *cxform)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(270);
+#endif
   byteAlign ();
 
   cxform->HasAddTerms = readBits (f, 1);
@@ -241,6 +267,9 @@ parseSWF_CXFORMWITHALPHA (FILE * f, struct SWF_CXFORMWITHALPHA *cxform)
 void
 parseSWF_GLYPHENTRY (FILE * f, SWF_GLYPHENTRY *gerec, int glyphbits, int advancebits)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(271);
+#endif
   unsigned int i;
 
   size_t nmalloc = ( glyphbits < 1 ? 1 : ((glyphbits+31)/32) ) * sizeof(UI32);
@@ -281,6 +310,9 @@ parseSWF_GLYPHENTRY (FILE * f, SWF_GLYPHENTRY *gerec, int glyphbits, int advance
 int
 parseSWF_TEXTRECORD (FILE * f, struct SWF_TEXTRECORD *brec, int glyphbits, int advancebits, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(272);
+#endif
   int i, glyph_count;
 
   byteAlign ();
@@ -325,6 +357,9 @@ parseSWF_TEXTRECORD (FILE * f, struct SWF_TEXTRECORD *brec, int glyphbits, int a
 int
 parseSWF_CLIPEVENTFLAGS (FILE * f, struct SWF_CLIPEVENTFLAGS *cflags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(273);
+#endif
   byteAlign ();
 
   cflags->ClipEventKeyUp = readBits (f, 1);
@@ -364,6 +399,9 @@ parseSWF_CLIPEVENTFLAGS (FILE * f, struct SWF_CLIPEVENTFLAGS *cflags)
 int
 parseSWF_CLIPACTIONRECORD (FILE * f, struct SWF_CLIPACTIONRECORD *carec)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(274);
+#endif
   int length,end;
   byteAlign ();
 
@@ -398,6 +436,9 @@ parseSWF_CLIPACTIONRECORD (FILE * f, struct SWF_CLIPACTIONRECORD *carec)
 void
 parseSWF_CLIPACTIONS (FILE * f, struct SWF_CLIPACTIONS *clipact, int end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(275);
+#endif
   byteAlign ();
   clipact->Reserved = readUInt16 (f);
   parseSWF_CLIPEVENTFLAGS( f, &(clipact->AllEventFlags) );
@@ -433,6 +474,9 @@ parseSWF_GRADIENTRECORD (FILE * f, struct SWF_GRADIENTRECORD *gradientrec, int l
 void
 parseSWF_FOCALGRADIENT (FILE * f, struct SWF_FOCALGRADIENT *gradient, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(276);
+#endif
   int i;
   gradient->SpreadMode = readBits(f, 2);
   gradient->InterpolationMode = readBits(f, 2);
@@ -452,6 +496,9 @@ parseSWF_FOCALGRADIENT (FILE * f, struct SWF_FOCALGRADIENT *gradient, int level)
 void
 parseSWF_GRADIENT (FILE * f, struct SWF_GRADIENT *gradient, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(277);
+#endif
   int i;
   gradient->SpreadMode = readBits(f, 2);
   gradient->InterpolationMode = readBits(f, 2);
@@ -469,6 +516,9 @@ int
 parseSWF_SHAPERECORD (FILE * f, SWF_SHAPERECORD * shape, int *fillBits,
 		      int *lineBits, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(278);
+#endif
   UI16 tmpbits;
   memset (shape, 0, sizeof (SWF_SHAPERECORD));
   shape->EndShape.TypeFlag = readBits (f, 1);
@@ -577,6 +627,9 @@ parseSWF_SHAPERECORD (FILE * f, SWF_SHAPERECORD * shape, int *fillBits,
 void
 parseSWF_FILLSTYLE (FILE * f, SWF_FILLSTYLE * fillstyle, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(279);
+#endif
   fillstyle->FillStyleType = readUInt8 (f);
   switch (fillstyle->FillStyleType)
     {
@@ -608,6 +661,9 @@ parseSWF_FILLSTYLE (FILE * f, SWF_FILLSTYLE * fillstyle, int level)
 void
 parseSWF_FILLSTYLEARRAY (FILE * f, SWF_FILLSTYLEARRAY * fillstyle, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(280);
+#endif
   int count, i;
   fillstyle->FillStyleCount = readUInt8 (f);
   count = fillstyle->FillStyleCount;
@@ -637,6 +693,9 @@ parseSWF_LINESTYLE (FILE * f, SWF_LINESTYLE * linestyle, int level)
 void 
 parseSWF_LINESTYLE2 (FILE *f, SWF_LINESTYLE2 *linestyle2, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(281);
+#endif
   linestyle2->Width = readUInt16(f);
   linestyle2->StartCapStyle = readBits(f, 2);
   linestyle2->JoinStyle = readBits(f, 2);
@@ -658,6 +717,9 @@ parseSWF_LINESTYLE2 (FILE *f, SWF_LINESTYLE2 *linestyle2, int level)
 void
 parseSWF_LINESTYLEARRAY (FILE * f, SWF_LINESTYLEARRAY * linestyle, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(282);
+#endif
   int count, i;
 
   count = readUInt8 (f);
@@ -708,6 +770,9 @@ parseSWF_MORPHFILLSTYLE (FILE * f, SWF_MORPHFILLSTYLE * fillstyle );
 void
 parseSWF_MORPHLINESTYLE2 (FILE * f, SWF_MORPHLINESTYLE2 * linestyle2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(283);
+#endif
   linestyle2->StartWidth = readUInt16 (f);
   linestyle2->EndWidth = readUInt16 (f);
   linestyle2->StartCapStyle = readBits(f, 2);
@@ -734,6 +799,9 @@ void
 parseSWF_MORPHLINESTYLES (FILE * f, SWF_MORPHLINESTYLES * linestyle, 
                           int version)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(284);
+#endif
   int count, i;
 
   linestyle->LineStyleCount = readUInt8 (f);
@@ -777,6 +845,9 @@ parseSWF_MORPHGRADIENTRECORD (FILE * f, struct SWF_MORPHGRADIENTRECORD *gradient
 void
 parseSWF_MORPHGRADIENT (FILE * f, struct SWF_MORPHGRADIENT *gradient)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(285);
+#endif
   int i;
   gradient->NumGradients = readUInt8 (f);
   if( gradient->NumGradients > 8 ) {
@@ -789,6 +860,9 @@ parseSWF_MORPHGRADIENT (FILE * f, struct SWF_MORPHGRADIENT *gradient)
 void
 parseSWF_MORPHFILLSTYLE (FILE * f, SWF_MORPHFILLSTYLE * fillstyle )
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(286);
+#endif
   fillstyle->FillStyleType = readUInt8 (f);
   switch (fillstyle->FillStyleType)
     {
@@ -815,6 +889,9 @@ parseSWF_MORPHFILLSTYLE (FILE * f, SWF_MORPHFILLSTYLE * fillstyle )
 void
 parseSWF_MORPHFILLSTYLES (FILE * f, SWF_MORPHFILLSTYLES * fillstyle )
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(287);
+#endif
   int count, i;
   fillstyle->FillStyleCount = readUInt8 (f);
   count = fillstyle->FillStyleCount;
@@ -834,6 +911,9 @@ parseSWF_MORPHFILLSTYLES (FILE * f, SWF_MORPHFILLSTYLES * fillstyle )
 void
 parseSWF_SHAPE (FILE * f, SWF_SHAPE * shape, int level, int len)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(288);
+#endif
   int fillBits, lineBits;
   int end;	
   byteAlign ();
@@ -861,6 +941,9 @@ parseSWF_SHAPE (FILE * f, SWF_SHAPE * shape, int level, int len)
 void
 parseSWF_SHAPEWITHSTYLE (FILE * f, SWF_SHAPEWITHSTYLE * shape, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(289);
+#endif
   int fillBits, lineBits;
   memset (shape, 0, sizeof (SWF_SHAPEWITHSTYLE));
 
@@ -902,6 +985,9 @@ parseSWF_SHAPEWITHSTYLE (FILE * f, SWF_SHAPEWITHSTYLE * shape, int level)
 int
 parseSWF_ACTIONRECORD(FILE * f, int *thisactionp, SWF_ACTION *actions)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(290);
+#endif
 	int thisaction = *thisactionp;
 	SWF_ACTION *action = &(actions[thisaction]);
 
@@ -1287,6 +1373,9 @@ parseSWF_ACTIONRECORD(FILE * f, int *thisactionp, SWF_ACTION *actions)
 void 
 parseSWF_DROPSHADOWFILTER(FILE *f, SWF_DROPSHADOWFILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(291);
+#endif
 	parseSWF_RGBA(f, &filter->DropShadowColor);
 	filter->BlurX = readUInt32(f);
 	filter->BlurY = readUInt32(f);
@@ -1311,6 +1400,9 @@ parseSWF_BLURFILTER(FILE *f, SWF_BLURFILTER *filter)
 void 
 parseSWF_GLOWFILTER(FILE *f, SWF_GLOWFILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(292);
+#endif
 	parseSWF_RGBA(f, &filter->GlowColor);
 	filter->BlurX = readUInt32(f);
 	filter->BlurY = readUInt32(f);
@@ -1324,6 +1416,9 @@ parseSWF_GLOWFILTER(FILE *f, SWF_GLOWFILTER *filter)
 void 
 parseSWF_BEVELFILTER(FILE *f, SWF_BEVELFILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(293);
+#endif
 	parseSWF_RGBA(f, &filter->ShadowColor);
 	parseSWF_RGBA(f, &filter->HighlightColor);
 	filter->BlurX = readUInt32(f);
@@ -1341,6 +1436,9 @@ parseSWF_BEVELFILTER(FILE *f, SWF_BEVELFILTER *filter)
 void 
 parseSWF_GRADIENTFILTER(FILE *f, SWF_GRADIENTFILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(294);
+#endif
 	int i, size, num_colors;
 
 	num_colors = readUInt8(f);
@@ -1373,6 +1471,9 @@ parseSWF_GRADIENTFILTER(FILE *f, SWF_GRADIENTFILTER *filter)
 void 
 parseSWF_CONVOLUTIONFILTER(FILE *f, SWF_CONVOLUTIONFILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(295);
+#endif
 	int size, i, x, y;
 
 	x = readUInt8(f);
@@ -1408,6 +1509,9 @@ parseSWF_COLORMATRIXFILTER(FILE *f, SWF_COLORMATRIXFILTER *filter)
 void 
 parseSWF_FILTER(FILE *f, SWF_FILTER *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(296);
+#endif
 	filter->FilterId = readUInt8(f);
 
 	switch(filter->FilterId)
@@ -1444,6 +1548,9 @@ parseSWF_FILTER(FILE *f, SWF_FILTER *filter)
 void 
 parseSWF_FILTERLIST(FILE *f, SWF_FILTERLIST *list)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(297);
+#endif
 	int i, size, number_of_filters;
 	number_of_filters = readUInt8(f);
         if (number_of_filters == EOF) {
@@ -1472,6 +1579,9 @@ parseSWF_CHARACTERSET (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEBITS (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(298);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEBITS);
 
@@ -1485,6 +1595,9 @@ parseSWF_DEFINEBITS (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEBITSJPEG2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(299);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEBITSJPEG2);
 
@@ -1498,6 +1611,9 @@ parseSWF_DEFINEBITSJPEG2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEBITSJPEG3 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(300);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEBITSJPEG3);
 
@@ -1522,6 +1638,9 @@ parseSWF_DEFINEBITSPTR (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEBUTTON (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(301);
+#endif
   PAR_BEGIN (SWF_DEFINEBUTTON);
   parserrec->ButtonId = readUInt16 (f);
   parserrec->numCharacters = 0;
@@ -1547,6 +1666,9 @@ parseSWF_DEFINEBUTTON (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEBUTTON2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(302);
+#endif
   int stop;
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEBUTTON2);
@@ -1609,6 +1731,9 @@ void parseSWF_SOUNDINFO(FILE *f, struct SWF_SOUNDINFO *si);
 SWF_Parserstruct *
 parseSWF_DEFINEBUTTONSOUND (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(303);
+#endif
   PAR_BEGIN (SWF_DEFINEBUTTONSOUND);
   parserrec->CharacterID = readUInt16 (f);
   parserrec->ButtonSoundChar0 = readUInt16 (f);
@@ -1641,6 +1766,9 @@ parseSWF_DEFINECOMMANDOBJ (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEEDITTEXT (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(304);
+#endif
   PAR_BEGIN (SWF_DEFINEEDITTEXT);
 
   parserrec->CharacterID = readUInt16 (f);
@@ -1699,6 +1827,9 @@ parseSWF_DEFINEEDITTEXT (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEFONT (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(305);
+#endif
   int i;
   int  firstOffset;
   PAR_BEGIN (SWF_DEFINEFONT);
@@ -1732,6 +1863,9 @@ parseSWF_DEFINEFONT (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEFONT2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(306);
+#endif
   int i, num_glyphs;
   PAR_BEGIN (SWF_DEFINEFONT2);
 
@@ -1868,6 +2002,9 @@ parseSWF_DEFINEFONT2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEFONT3 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(307);
+#endif
   int i, num_glyphs;
   PAR_BEGIN (SWF_DEFINEFONT3);
 
@@ -2004,6 +2141,9 @@ parseSWF_DEFINEFONT3 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEFONTINFO (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(308);
+#endif
   int i, end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEFONTINFO);
 
@@ -2039,6 +2179,9 @@ parseSWF_DEFINEFONTINFO (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEFONTINFO2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(309);
+#endif
   int i, end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINEFONTINFO2);
 
@@ -2069,6 +2212,9 @@ parseSWF_DEFINEFONTINFO2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_CSMTEXTSETTINGS (FILE * f, int length)
 { 
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(310);
+#endif
   PAR_BEGIN (SWF_CSMTEXTSETTINGS);
   parserrec->TextID = readUInt16(f);
   parserrec->UseFlashType = readBits(f, 2);
@@ -2090,6 +2236,9 @@ parseSWF_ZONEDATA(FILE *f, struct SWF_ZONEDATA *data)
 void 
 parseSWF_ZONERECORD(FILE *f, struct SWF_ZONERECORD *table)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(311);
+#endif
   int i, num_zone_data;
   num_zone_data = readUInt8(f);
   if (num_zone_data == EOF) {
@@ -2109,6 +2258,9 @@ parseSWF_ZONERECORD(FILE *f, struct SWF_ZONERECORD *table)
 SWF_Parserstruct *
 parseSWF_DEFINEFONTALIGNZONES(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(312);
+#endif
   int i;
   PAR_BEGIN (SWF_DEFINEFONTALIGNZONES);
   parserrec->FontID = readUInt16(f);
@@ -2137,6 +2289,9 @@ parseSWF_DEFINEFONTNAME(FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINELOSSLESS (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(313);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINELOSSLESS);
 
@@ -2155,6 +2310,9 @@ parseSWF_DEFINELOSSLESS (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINELOSSLESS2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(314);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINELOSSLESS2);
 
@@ -2173,6 +2331,9 @@ parseSWF_DEFINELOSSLESS2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEMORPHSHAPE (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(315);
+#endif
   int end, endEdges;
   PAR_BEGIN (SWF_DEFINEMORPHSHAPE);
   end = fileOffset + length;
@@ -2198,6 +2359,9 @@ parseSWF_DEFINEMORPHSHAPE (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEMORPHSHAPE2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(316);
+#endif
   int end, endEdges;
   PAR_BEGIN (SWF_DEFINEMORPHSHAPE2);
   end = fileOffset + length;
@@ -2228,6 +2392,9 @@ parseSWF_DEFINEMORPHSHAPE2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESHAPE (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(317);
+#endif
   PAR_BEGIN (SWF_DEFINESHAPE);
 
   parserrec->ShapeID = readUInt16 (f);
@@ -2240,6 +2407,9 @@ parseSWF_DEFINESHAPE (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESHAPE2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(318);
+#endif
   PAR_BEGIN (SWF_DEFINESHAPE2);
 
   parserrec->ShapeID = readUInt16 (f);
@@ -2252,6 +2422,9 @@ parseSWF_DEFINESHAPE2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESHAPE3 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(319);
+#endif
   PAR_BEGIN (SWF_DEFINESHAPE3);
 
   parserrec->ShapeID = readUInt16 (f);
@@ -2264,6 +2437,9 @@ parseSWF_DEFINESHAPE3 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESHAPE4 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(320);
+#endif
   PAR_BEGIN (SWF_DEFINESHAPE4);
 
   parserrec->ShapeID = readUInt16 (f);
@@ -2281,6 +2457,9 @@ parseSWF_DEFINESHAPE4 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESPRITE (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(321);
+#endif
   int block, type, splength, blockstart, nextFrame;
   int numblocks, start;
   PAR_BEGIN (SWF_DEFINESPRITE);
@@ -2338,6 +2517,9 @@ parseSWF_DEFINESPRITE (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINETEXT (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(322);
+#endif
   PAR_BEGIN (SWF_DEFINETEXT);
 
   parserrec->CharacterID = readUInt16 (f);
@@ -2364,6 +2546,9 @@ parseSWF_DEFINETEXT (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINETEXT2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(323);
+#endif
   PAR_BEGIN (SWF_DEFINETEXT2);
 
   parserrec->CharacterID = readUInt16 (f);
@@ -2406,6 +2591,9 @@ parseSWF_DEFINEVIDEO (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINEVIDEOSTREAM (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(324);
+#endif
   PAR_BEGIN (SWF_DEFINEVIDEOSTREAM);
   
   parserrec->CharacterID = readUInt16 (f);
@@ -2424,6 +2612,9 @@ parseSWF_DEFINEVIDEOSTREAM (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DOACTION (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(325);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DOACTION);
 
@@ -2474,6 +2665,9 @@ parseSWF_END (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_EXPORTASSETS (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(326);
+#endif
   int i;
   PAR_BEGIN (SWF_EXPORTASSETS);
 
@@ -2499,6 +2693,9 @@ parseSWF_FONTREF (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_FRAMELABEL (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(327);
+#endif
   PAR_BEGIN (SWF_FRAMELABEL);
 
   parserrec->Name = readString (f);
@@ -2547,6 +2744,9 @@ parseSWF_GENCOMMAND (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_IMPORTASSETS (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(328);
+#endif
   int i;
   PAR_BEGIN (SWF_IMPORTASSETS);
 
@@ -2565,6 +2765,9 @@ parseSWF_IMPORTASSETS (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_IMPORTASSETS2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(329);
+#endif
   int i;
   PAR_BEGIN (SWF_IMPORTASSETS2);
 
@@ -2585,6 +2788,9 @@ parseSWF_IMPORTASSETS2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_JPEGTABLES (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(330);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_JPEGTABLES);
 
@@ -2614,6 +2820,9 @@ parseSWF_PATHSAREPOSTSCRIPT (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_PLACEOBJECT (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(331);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_PLACEOBJECT);
   
@@ -2630,6 +2839,9 @@ parseSWF_PLACEOBJECT (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_PLACEOBJECT2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(332);
+#endif
   PAR_BEGIN (SWF_PLACEOBJECT2);
 
   byteAlign();
@@ -2671,6 +2883,9 @@ parseSWF_PLACEOBJECT2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_PLACEOBJECT3 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(333);
+#endif
   PAR_BEGIN (SWF_PLACEOBJECT3);
 
   byteAlign();
@@ -2750,6 +2965,9 @@ parseSWF_PREBUILTCLIP (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_PROTECT (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(334);
+#endif
   PAR_BEGIN (SWF_PROTECT);
 
   if( length != 0 ) {
@@ -2785,6 +3003,9 @@ parseSWF_REMOVEOBJECT2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_SERIALNUMBER (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(335);
+#endif
   PAR_BEGIN (SWF_SERIALNUMBER);
   parserrec->Id = readUInt32(f);
   parserrec->Edition = readUInt32(f);
@@ -2826,6 +3047,9 @@ parseMp3Stream(FILE *f, struct MP3STREAMSOUNDDATA *data, int blockEnd)
 SWF_Parserstruct *
 parseSWF_SOUNDSTREAMBLOCK (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(336);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_SOUNDSTREAMBLOCK);
   switch(m.soundStreamFmt)
@@ -2842,6 +3066,9 @@ parseSWF_SOUNDSTREAMBLOCK (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_SOUNDSTREAMHEAD (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(337);
+#endif
   PAR_BEGIN (SWF_SOUNDSTREAMHEAD);
 
   byteAlign ();
@@ -2863,6 +3090,9 @@ parseSWF_SOUNDSTREAMHEAD (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_SOUNDSTREAMHEAD2 (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(338);
+#endif
   PAR_BEGIN (SWF_SOUNDSTREAMHEAD2);
 
   byteAlign ();
@@ -2884,6 +3114,9 @@ parseSWF_SOUNDSTREAMHEAD2 (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESOUND (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(339);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_DEFINESOUND);
 
@@ -2909,6 +3142,9 @@ parseSWF_DEFINESOUND (FILE * f, int length)
 
 void parseSWF_SOUNDINFO(FILE *f, struct SWF_SOUNDINFO *si)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(340);
+#endif
   int i;
   
   si->Reserved = readBits (f, 2);
@@ -2969,6 +3205,9 @@ parseSWF_SYNCFRAME (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_INITACTION (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(341);
+#endif
   int end = fileOffset + length;
   PAR_BEGIN (SWF_INITACTION);
 
@@ -3015,6 +3254,9 @@ parseSWF_REFLEX (FILE * f, int length)
 SWF_Parserstruct *
 parseSWF_FILEATTRIBUTES (FILE * f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(342);
+#endif
   PAR_BEGIN (SWF_FILEATTRIBUTES);
   byteAlign();
   parserrec->Reserved = readBits(f, 3);
@@ -3112,6 +3354,9 @@ void parseABC_MULTINAME_L(struct ABC_MULTINAME_L *mnl, FILE *f)
 
 void parseABC_MULTINAME_INFO(struct ABC_MULTINAME_INFO *minfo, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(343);
+#endif
   minfo->Kind = readUInt8(f);
   switch(minfo->Kind)
   {
@@ -3142,6 +3387,9 @@ void parseABC_MULTINAME_INFO(struct ABC_MULTINAME_INFO *minfo, FILE *f)
 
 void parseABC_CONSTANT_POOL(struct ABC_CONSTANT_POOL *cpool, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(344);
+#endif
   int i;
   size_t s;
  
@@ -3201,6 +3449,9 @@ void parseABC_CONSTANT_POOL(struct ABC_CONSTANT_POOL *cpool, FILE *f)
 
 void parseABC_OPTION_INFO(struct ABC_OPTION_INFO *oinfo, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(345);
+#endif
   int i;
   oinfo->OptionCount = readEncUInt30(f);
   if (oinfo->OptionCount > INT_MAX / sizeof(struct ABC_OPTION_INFO))
@@ -3223,6 +3474,9 @@ void parseABC_PARAM_INFO(struct ABC_PARAM_INFO *pinfo, U30 count, FILE *f)
 
 void parseABC_METHOD_INFO(struct ABC_METHOD_INFO *method, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(346);
+#endif
   int i;
 
   method->ParamCount = readEncUInt30(f);
@@ -3242,6 +3496,9 @@ void parseABC_METHOD_INFO(struct ABC_METHOD_INFO *method, FILE *f)
 
 void parseABC_METADATA_INFO(struct ABC_METADATA_INFO *meta, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(347);
+#endif
   int i;
 
   meta->Name = readEncUInt30(f);
@@ -3285,6 +3542,9 @@ void parseABC_TRAIT_METHOD(struct ABC_TRAIT_METHOD *m, FILE *f)
 
 void parseABC_TRAITS_INFO(struct ABC_TRAITS_INFO *trait, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(348);
+#endif
   int i;
 
   trait->Name = readEncUInt30(f);
@@ -3326,6 +3586,9 @@ void parseABC_TRAITS_INFO(struct ABC_TRAITS_INFO *trait, FILE *f)
 
 void parseABC_CLASS_INFO(struct ABC_CLASS_INFO *cinfo, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(349);
+#endif
   int i;
 
   cinfo->CInit = readEncUInt30(f);
@@ -3339,6 +3602,9 @@ void parseABC_CLASS_INFO(struct ABC_CLASS_INFO *cinfo, FILE *f)
 
 void parseABC_SCRIPT_INFO(struct ABC_SCRIPT_INFO *sinfo, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(350);
+#endif
   int i;
 
   sinfo->Init = readEncUInt30(f);
@@ -3353,6 +3619,9 @@ void parseABC_SCRIPT_INFO(struct ABC_SCRIPT_INFO *sinfo, FILE *f)
 
 void parseABC_INSTANCE_INFO(struct ABC_INSTANCE_INFO *inst, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(351);
+#endif
   int i;
 
   inst->Name = readEncUInt30(f);
@@ -3390,6 +3659,9 @@ void parseABC_EXCEPTION_INFO(struct ABC_EXCEPTION_INFO *ex, FILE *f)
 
 void parseABC_METHOD_BODY_INFO(struct ABC_METHOD_BODY_INFO *minfo, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(352);
+#endif
   int i;
 
   minfo->Method = readEncUInt30(f);
@@ -3417,6 +3689,9 @@ void parseABC_METHOD_BODY_INFO(struct ABC_METHOD_BODY_INFO *minfo, FILE *f)
 
 void parseABC_FILE(struct ABC_FILE *abcFile, FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(353);
+#endif
   int i;
   size_t size;
 
@@ -3485,6 +3760,9 @@ parseSWF_DOABC (FILE *f, int length)
 SWF_Parserstruct *
 parseSWF_SYMBOLCLASS (FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(354);
+#endif
   int i, count;
   PAR_BEGIN(SWF_SYMBOLCLASS);
   count = readUInt16(f);
@@ -3513,6 +3791,9 @@ parseSWF_DEFINEBINARYDATA(FILE *f, int length)
 SWF_Parserstruct *
 parseSWF_DEFINESCENEANDFRAMEDATA(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(355);
+#endif
   int i;
   PAR_BEGIN(SWF_DEFINESCENEANDFRAMEDATA);
   parserrec->SceneCount = readEncUInt32(f);

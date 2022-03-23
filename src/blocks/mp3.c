@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -104,6 +109,9 @@ static unsigned short mp3_bitrate_tbl[4][4][16] =
  */	
 int readMP3Header(SWFInput input, struct mp3_header *mp3h)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(792);
+#endif
 	int frameSync, br, sr;
 	if(SWFInput_length(input) - SWFInput_tell(input) < 4)
 		return 0;
@@ -145,6 +153,9 @@ int readMP3Header(SWFInput input, struct mp3_header *mp3h)
 
 int nextMP3Frame(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(793);
+#endif
 	int frameLen, ret;
 	struct mp3_header mp3h;
 
@@ -177,6 +188,9 @@ int nextMP3Frame(SWFInput input)
  */
 int getMP3Flags(SWFInput input, byte *flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(794);
+#endif
 	struct mp3_header mp3h;	
 	int rate=0, channels, start = 0;
 	int ret;
@@ -228,6 +242,9 @@ int getMP3Flags(SWFInput input, byte *flags)
  */
 int getMP3Samples(SWFInput input, int flags, int *wanted)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(795);
+#endif
 	int frameSize, length;
 	int numSamples = 0;
 	int totalLength = 0;
@@ -265,6 +282,9 @@ int getMP3Samples(SWFInput input, int flags, int *wanted)
  */
 unsigned int getMP3Duration(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(796);
+#endif
 	int start, flags, samples = -1;
 	int sampleRate;
 

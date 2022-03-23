@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -46,6 +51,9 @@ struct SWFBlockList_s
 
 void destroySWFBlockList(SWFBlockList list)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(469);
+#endif
 	int i;
 
 	for ( i=0; i<list->nBlocks; ++i )
@@ -79,6 +87,9 @@ newSWFBlockList()
 void
 SWFBlockList_addBlock(SWFBlockList list, SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(470);
+#endif
 	if ( SWFBlock_isDefined(block) )
 		return;
 
@@ -105,6 +116,9 @@ SWFBlockList_addBlock(SWFBlockList list, SWFBlock block)
 void
 SWFBlockList_addToSprite(SWFBlockList list, SWFSprite sprite)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(471);
+#endif
 	int i;
 
 	for ( i=0; i<list->nBlocks; ++i )
@@ -120,6 +134,9 @@ SWFBlockList_addToSprite(SWFBlockList list, SWFSprite sprite)
 int
 SWFBlockList_completeBlocks(SWFBlockList list, int version)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(472);
+#endif
 	int i, total = 0;
 
 	for ( i=0; i<list->nBlocks; ++i )
@@ -137,6 +154,9 @@ int
 SWFBlockList_writeBlocksToMethod(SWFBlockList list,
 																 SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(473);
+#endif
 	int i, size = 0;
 
 	for ( i=0; i<list->nBlocks; ++i )

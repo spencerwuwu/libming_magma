@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
   take a stack, turn it into a tree.
   e.g.:
@@ -37,6 +42,9 @@ static void untangleBranches(Stack *statements, int start, int stop,
 
 static int isNum(char *s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(404);
+#endif
   float f = atof(s);
 
   if(f != 0 || s[0] == '0')
@@ -57,6 +65,9 @@ static Stack newStack()
 
 static void destroy(Stack s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(405);
+#endif
   if(!s)
     return;
 
@@ -73,6 +84,9 @@ static void destroy(Stack s)
 
 static Stack newTree(Stack left, Action action, Stack right)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(406);
+#endif
   Tree t = (Tree)malloc(sizeof(struct _tree));
   Stack s = newStack();
 
@@ -108,6 +122,9 @@ static Stack newProperty(Property prop)
 
 static Stack pop()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(407);
+#endif
   Stack s = stack;
 
   if(!stack)
@@ -126,6 +143,9 @@ static void push(Stack s)
 
 static char *negateString(char *s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(408);
+#endif
   int i, l = strlen(s)+1;
   char *New = realloc(s, l+1);
 
@@ -139,6 +159,9 @@ static char *negateString(char *s)
 
 static Property getSetProperty(int prop)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(409);
+#endif
   switch(prop)
   {
     case SWF_SETPROPERTY_X:		  return PROPERTY_X;
@@ -161,6 +184,9 @@ static Property getSetProperty(int prop)
 
 static Stack readActionRecord(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(410);
+#endif
   int length = 0, type = readUInt8(f);
 
   if((type&0x80) == 0x80)
@@ -398,6 +424,9 @@ static Stack readActionRecord(FILE *f)
 
 static void listProperty(Property prop)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(411);
+#endif
   switch(prop)
   {
     case PROPERTY_X:		   printf("x"); break;
@@ -426,6 +455,9 @@ static void listProperty(Property prop)
 
 static int precedence(Action type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(412);
+#endif
   switch(type)
   {
     case SWFACTION_SETVARIABLE:    return 0;
@@ -465,6 +497,9 @@ typedef enum
 
 static void listLessThan(Stack s, negateFlag negate)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(413);
+#endif
   Stack left = s->data.tree->left, right = s->data.tree->right;
 
   /* put variable on left */
@@ -495,6 +530,9 @@ static void listLessThan(Stack s, negateFlag negate)
 
 static void listNot(Stack s, Action parent)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(414);
+#endif
   /* check for !<, !=, !! */
   /* put variable on left */
 
@@ -527,6 +565,9 @@ static void listNot(Stack s, Action parent)
 
 static void listAssign(Stack s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(415);
+#endif
   /* check for ++a, a+=b */
 
   Stack left = s->data.tree->left;
@@ -615,6 +656,9 @@ static void listAssign(Stack s)
 
 static void listArithmetic(Stack s, Action parent)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(416);
+#endif
   int isShort, parens = 0;
   const char *op;
   Tree t = s->data.tree;
@@ -695,6 +739,9 @@ static void listArithmetic(Stack s, Action parent)
 
 static void listItem(Stack s, Action parent)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(417);
+#endif
   Tree t;
 
   if(s->type == 's')
@@ -1001,6 +1048,9 @@ static void listItem(Stack s, Action parent)
 
 static int isStatement(Stack s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(418);
+#endif
   Tree t;
 
   if(s->type != 't')
@@ -1043,6 +1093,9 @@ static int isStatement(Stack s)
 
 static Stack readStatement(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(419);
+#endif
   Stack s;
 
   for(;;)
@@ -1063,6 +1116,9 @@ static Stack readStatement(FILE *f)
 
 static Stack negateExpression(Stack s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(420);
+#endif
   Tree t = s->data.tree;
   Stack ret;
 
@@ -1083,6 +1139,9 @@ static Stack negateExpression(Stack s)
 
 void decompile4Action(FILE *f, int length, int indent)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(421);
+#endif
   Stack s, *statements = NULL;
   int /*i, j,*/ off, nStatements = 0;
 
@@ -1152,6 +1211,9 @@ void decompile4Action(FILE *f, int length, int indent)
 
 static void resolveOffsets(Stack *statements, int nStatements)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(422);
+#endif
   int i, j;
 
   /* first change branch byte offsets to statement offsets */
@@ -1204,6 +1266,9 @@ static void resolveOffsets(Stack *statements, int nStatements)
 static void untangleBranches(Stack *statements, int start, int stop,
 			     Branchtype type, int indent)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(423);
+#endif
   Stack s;
   Tree t;
   int i, offset, end, hasElse, wasIf = 0;

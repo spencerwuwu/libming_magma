@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
    Ming, an SWF output library
    Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -29,6 +34,9 @@
 
 static inline int readAudioHdr(FLVStream *flv, FLVTag *tag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(800);
+#endif
 	int ichar;
 	ichar = SWFInput_getChar(flv->input);
 	if(ichar == EOF)
@@ -42,6 +50,9 @@ static inline int readAudioHdr(FLVStream *flv, FLVTag *tag)
 
 static inline int readVideoHdr(FLVStream *flv, FLVTag *tag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(801);
+#endif
 	int ichar;
 	ichar = SWFInput_getChar(flv->input);
 	if(ichar == EOF)
@@ -69,6 +80,9 @@ void destroyFLVStream(FLVStream *flv)
 
 FLVStream *FLVStream_fromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(802);
+#endif
 	int ichar;
 	unsigned long ulchar;
 	FLVStream *flv;
@@ -122,6 +136,9 @@ void FLVStream_rewind(FLVStream *flv)
 
 int FLVStream_nextTag(FLVStream *flv, FLVTag *tag, FLVTag *prev) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(803);
+#endif
 	int ichar;
 	unsigned long ulchar;
 	
@@ -175,6 +192,9 @@ int FLVStream_nextTag(FLVStream *flv, FLVTag *tag, FLVTag *prev)
 
 int FLVStream_nextTagType(FLVStream *flv, FLVTag *tag, FLVTag *prev, int type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(804);
+#endif
 	
 	while(FLVStream_nextTag(flv, tag, prev) == 0)
 	{
@@ -188,6 +208,9 @@ int FLVStream_nextTagType(FLVStream *flv, FLVTag *tag, FLVTag *prev, int type)
 
 unsigned int FLVStream_getDuration(FLVStream *flv, int type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(805);
+#endif
 	unsigned int duration = 0;
 	FLVTag tag, *p_tag = NULL;
 	
@@ -205,6 +228,9 @@ unsigned int FLVStream_getDuration(FLVStream *flv, int type)
 
 int FLVStream_getNumFrames(FLVStream *flv, int type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(806);
+#endif
 	int numFrames = 0;
 	FLVTag tag, *p_tag = NULL;
 	
@@ -219,6 +245,9 @@ int FLVStream_getNumFrames(FLVStream *flv, int type)
 
 SWFInput FLVTag_getPayloadInput(FLVTag *tag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(807);
+#endif
 	int length;
 	SWFInput input;
 	if(tag == NULL || tag->stream == NULL)
@@ -250,6 +279,9 @@ SWFInput FLVTag_getPayloadInput(FLVTag *tag)
 
 int FLVStream_setStreamOffset(FLVStream *flv, unsigned int msecs)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(808);
+#endif
 	FLVTag tag, *p_tag = NULL;
 	
 	/* reset stream offset */

@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -29,6 +34,9 @@
 static void
 writeSWFSpriteToMethod(SWFBlock block, SWFByteOutputMethod method, void* data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(601);
+#endif
 	int i;
 	SWFSprite sprite = (SWFSprite)block;
 
@@ -43,6 +51,9 @@ writeSWFSpriteToMethod(SWFBlock block, SWFByteOutputMethod method, void* data)
 static int
 completeSWFSprite(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(602);
+#endif
 	int i, length = 0;
 	SWFSprite sprite = (SWFSprite)block;
 
@@ -73,6 +84,9 @@ completeSWFSprite(SWFBlock block)
 void
 destroySWFSprite(SWFSprite sprite)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(603);
+#endif
 	int i;
 
 	for ( i=0; i<sprite->nBlocks; ++i )
@@ -91,6 +105,9 @@ destroySWFSprite(SWFSprite sprite)
 
 static int onPlace(SWFDisplayItem item, SWFBlockList list)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(604);
+#endif
 	int ret = 0;
 	SWFSprite sprite = (SWFSprite)SWFDisplayItem_getCharacter(item);
 	
@@ -110,6 +127,9 @@ static int onPlace(SWFDisplayItem item, SWFBlockList list)
 SWFSprite
 newSWFSprite()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(605);
+#endif
 	SWFSprite sprite = (SWFSprite)malloc(sizeof(struct SWFSprite_s));
 
 	SWFCharacterInit((SWFCharacter)sprite);
@@ -142,6 +162,9 @@ SWFSprite_setNumberOfFrames(SWFSprite sprite, int totalFrames)
 void
 SWFSprite_addBlock(SWFSprite sprite, SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(606);
+#endif
 	if ( block->type == SWF_SHOWFRAME )
 		++sprite->frames;
 

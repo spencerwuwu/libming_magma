@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -91,6 +96,9 @@ struct SWFSoundStreamBlock_s
 
 void skipMP3(SWFSoundStream stream, float skip) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(894);
+#endif
 	int frameSize;
 	int skipFrames, l;
 	
@@ -130,6 +138,9 @@ completeSWFSoundStream(SWFBlock block)
 static void 
 write_flv(SWFSoundStreamBlock streamblock, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(895);
+#endif
 	SWFInput input; 
 	FLVStream *flv = streamblock->stream->source.flv.stream;
         FLVTag *tag = &streamblock->stream->source.flv.tag;
@@ -190,6 +201,9 @@ void
 writeSWFSoundStreamToMethod(SWFBlock block,
                             SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(896);
+#endif
 	SWFSoundStreamBlock streamblock = (SWFSoundStreamBlock)block;
 	int source = streamblock->stream->streamSource;
 	
@@ -213,6 +227,9 @@ writeSWFSoundStreamToMethod(SWFBlock block,
 static int
 fillBlock_flv_mp3(SWFSoundStream stream, SWFSoundStreamBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(897);
+#endif
 	FLVStream *flv = stream->source.flv.stream;
 	FLVTag *tag = &stream->source.flv.tag; 
 	int tagOffset = stream->source.flv.tagOffset;
@@ -282,6 +299,9 @@ fillBlock_flv_mp3(SWFSoundStream stream, SWFSoundStreamBlock block)
 static int
 fillBlock_flv_nelly(SWFSoundStream stream, SWFSoundStreamBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(898);
+#endif
 	FLVStream *flv = stream->source.flv.stream;
 	FLVTag *tag = &stream->source.flv.tag; 
 	int length, samples, ret;
@@ -330,6 +350,9 @@ fillBlock_flv_nelly(SWFSoundStream stream, SWFSoundStreamBlock block)
 static void 
 fillStreamBlock_flv(SWFSoundStream stream, SWFSoundStreamBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(899);
+#endif
 	int ret;
 	
 	if(AUDIO_CODEC(stream) == AUDIO_CODEC_MP3)
@@ -353,6 +376,9 @@ fillStreamBlock_flv(SWFSoundStream stream, SWFSoundStreamBlock block)
 static void 
 fillStreamBlock_mp3(SWFSoundStream stream, SWFSoundStreamBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(900);
+#endif
 	int delay, wanted;
 
 	/* see how many frames we can put in this block,
@@ -377,6 +403,9 @@ fillStreamBlock_mp3(SWFSoundStream stream, SWFSoundStreamBlock block)
 SWFBlock
 SWFSoundStream_getStreamBlock(SWFSoundStream stream)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(901);
+#endif
 	SWFSoundStreamBlock block;
 
 	if ( stream->isFinished )
@@ -438,6 +467,9 @@ unsigned int SWFSoundStream_getDuration(SWFSoundStream stream)
  */
 int SWFSoundStream_getFrames(SWFSoundStream stream)
 {	
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(902);
+#endif
 	int n, frameSize;
 	if(stream->streamSource == STREAM_FLV || stream->samplesPerFrame == 0)
 	{
@@ -460,6 +492,9 @@ int SWFSoundStream_getFrames(SWFSoundStream stream)
 static int
 getStreamFlag_mp3File(SWFSoundStream stream, float frameRate, float skip)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(903);
+#endif
 	SWFInput input = stream->source.mp3.input;
 	int start;
 	byte flags;
@@ -482,6 +517,9 @@ getStreamFlag_mp3File(SWFSoundStream stream, float frameRate, float skip)
 static int
 getStreamFlag_flv(SWFSoundStream stream, float frameRate, float skip)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(904);
+#endif
 	int flags = 0, ret;
 	FLVTag tag, *tag_p = NULL;
 	unsigned int skip_msec;
@@ -526,6 +564,9 @@ getStreamFlag_flv(SWFSoundStream stream, float frameRate, float skip)
 SWFBlock
 SWFSoundStream_getStreamHead(SWFSoundStream stream, float frameRate, float skip)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(905);
+#endif
 	int flags = 0;
 
 	SWFOutput out = newSizedSWFOutput(4);
@@ -585,6 +626,9 @@ SWFSoundStream_getFlags(SWFSoundStream stream)
 
 int SWFSoundStream_getLength(SWFSoundStream stream, SWFSoundStreamBlock streamblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(906);
+#endif
 	int source = stream->streamSource;
 	struct SWFSoundStreamBlock_s block;
 
@@ -608,6 +652,9 @@ void
 writeSWFSoundWithSoundStreamToMethod(SWFSoundStream stream,
                             SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(907);
+#endif
 	int source = stream->streamSource;
 	struct SWFSoundStreamBlock_s streamblock;
 
@@ -638,6 +685,9 @@ SWFSoundStream_rewind(SWFSoundStream stream)
 SWFSoundStream
 newSWFSoundStream_fromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(908);
+#endif
 	FLVStream *flvStream;
 	SWFSoundStream stream = (SWFSoundStream)malloc(sizeof(struct SWFSoundStream_s));
 
@@ -672,6 +722,9 @@ newSWFSoundStream_fromInput(SWFInput input)
 void
 destroySWFSoundStream(SWFSoundStream stream)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(909);
+#endif
 	if (stream->freeInput)
 	{
 		if(stream->streamSource == STREAM_MP3)

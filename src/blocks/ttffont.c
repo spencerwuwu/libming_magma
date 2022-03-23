@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -55,6 +60,9 @@ struct outl_data
 static int
 outl_moveto(FT_CONST FT_Vector *to, void *user)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(755);
+#endif
 	struct outl_data *data = (struct outl_data *)user;
 	SWFShape shape = data->shape;
 	double ratio_EM = data->ratio_EM;
@@ -70,6 +78,9 @@ outl_moveto(FT_CONST FT_Vector *to, void *user)
 static int
 outl_lineto(FT_CONST FT_Vector *to, void *user)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(756);
+#endif
 	struct outl_data *data = (struct outl_data *)user;
 	SWFShape shape = data->shape;
 	double ratio_EM = data->ratio_EM;
@@ -84,6 +95,9 @@ outl_lineto(FT_CONST FT_Vector *to, void *user)
 static int
 outl_conicto(FT_CONST FT_Vector *ctl, FT_CONST FT_Vector *to, void *user)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(757);
+#endif
 	struct outl_data *data = (struct outl_data *)user;
 	SWFShape shape = data->shape;
 	double ratio_EM = data->ratio_EM;
@@ -102,6 +116,9 @@ static int
 outl_cubicto(FT_CONST FT_Vector *ctl1, FT_CONST FT_Vector *ctl2,
              FT_CONST FT_Vector *to, void *user)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(758);
+#endif
 	FT_Vector midpnt;
 	int cx, cy, ax, ay;
 	struct outl_data *data = (struct outl_data *)user;
@@ -140,6 +157,9 @@ static FT_Outline_Funcs ft_outl_funcs = {
 	
 static void readGlyphs(SWFFont font, FT_Face face)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(759);
+#endif
 	int glyphCount = 0;
 	FT_UInt gindex;
 	FT_ULong charcode;
@@ -200,6 +220,9 @@ static void readGlyphs(SWFFont font, FT_Face face)
 
 static SWFFont loadFontFromFace(FT_Face face)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(760);
+#endif
 	// FT_CharMap charmap = NULL;
 	SWFFont font;
 	double ratio_EM;
@@ -250,6 +273,9 @@ static SWFFont loadFontFromFace(FT_Face face)
 
 SWFFontCollection loadTTFCollection(const char *filename)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(761);
+#endif
 	FT_Error error;
 	FT_Library library;
 	FT_Face face;
@@ -293,6 +319,9 @@ error_ft:
 
 SWFFont loadSWFFontTTF(const char *filename)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(762);
+#endif
 	FT_Error error;
 	FT_Library library;
 	FT_Face face;

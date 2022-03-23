@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -42,6 +47,9 @@ int Ming_cubicThreshold = 10000;
 
 int Ming_init()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(478);
+#endif
 	SWF_gNumCharacters = 0;
 	SWF_versionNum = 5;
 
@@ -127,6 +135,9 @@ SWFMsgFunc Ming_setErrorFunction(SWFMsgFunc error)
  */
 void Ming_useSWFVersion(int version /* Flash version */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(479);
+#endif
 	static int called=0;
 
 	if(version < 4 || version > 9)

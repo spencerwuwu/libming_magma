@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -95,6 +100,9 @@ void
 dumpJpegBlock(byte type,
 							SWFInput input, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(850);
+#endif
 	int i, l0, l1, length;
 
 	method(JPEG_MARKER, data);
@@ -124,6 +132,9 @@ skipJpegBlock(SWFInput input)
 void
 methodWriteJpegFile(SWFInput input, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(851);
+#endif
 	int c;
 
 	SWFInput_rewind(input);
@@ -226,6 +237,9 @@ writeSWFJpegBitmapToMethod(SWFBlock block, SWFByteOutputMethod method, void *dat
 void
 writeSWFJpegWithAlphaToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(852);
+#endif
 	SWFJpegWithAlpha jpeg = (SWFJpegWithAlpha)block;
 	int c;
 
@@ -263,6 +277,9 @@ struct jpegInfo
 static struct jpegInfo*
 scanJpegFile(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(853);
+#endif
 	int length = 0, l, c;
 	long pos, end;
 
@@ -371,6 +388,9 @@ scanJpegFile(SWFInput input)
 SWFJpegBitmap
 newSWFJpegBitmap_fromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(854);
+#endif
 	SWFJpegBitmap jpeg;
 	struct jpegInfo *info;
 	SWFRect temp_rect;
@@ -435,6 +455,9 @@ destroySWFJpegBitmap_andInputs(SWFJpegBitmap jpegBitmap)
 SWFJpegBitmap
 newSWFJpegBitmap(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(855);
+#endif
 	SWFJpegBitmap jpeg = newSWFJpegBitmap_fromInput(newSWFInput_file(f));
 
 	/* If newSWFJpegBitmap_fromInput() failed, return NULL to signify this */
@@ -451,6 +474,9 @@ newSWFJpegBitmap(FILE *f)
 SWFJpegWithAlpha
 newSWFJpegWithAlpha_fromInput(SWFInput input, SWFInput alpha)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(856);
+#endif
 	SWFRect temp_rect;
 	SWFJpegWithAlpha jpeg;
 	struct jpegInfo *info;
@@ -522,6 +548,9 @@ destroySWFJpegAlpha_andInputs(SWFJpegWithAlpha jpegWithAlpha)
 SWFJpegWithAlpha
 newSWFJpegWithAlpha(FILE *f, FILE *alpha)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(857);
+#endif
 	SWFJpegWithAlpha jpeg =
 		newSWFJpegWithAlpha_fromInput(newSWFInput_file(f), newSWFInput_file(alpha));
 

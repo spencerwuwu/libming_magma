@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -48,6 +53,9 @@ static void
 writeSWFDBLBitmapToMethod(SWFBlock block,
 													SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(680);
+#endif
 	SWFDBLBitmap dbl = (SWFDBLBitmap)block;
 	int i;
 
@@ -62,6 +70,9 @@ writeSWFDBLBitmapToMethod(SWFBlock block,
 SWFDBLBitmap
 newSWFDBLBitmap_fromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(681);
+#endif
 	SWFDBLBitmap dbl;
 	int version;
 	int width, height;
@@ -134,6 +145,9 @@ newSWFDBLBitmap_fromInput(SWFInput input)
 static void
 writeSWFDBLBitmapDataToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(682);
+#endif
 	SWFDBLBitmapData dbl = (SWFDBLBitmapData)block;
 	int i;
 	unsigned char *ptr;
@@ -155,6 +169,9 @@ writeSWFDBLBitmapDataToMethod(SWFBlock block, SWFByteOutputMethod method, void *
 static void
 destroySWFDBLBitmapData(SWFDBLBitmapData bitmap)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(683);
+#endif
 	if ( bitmap->data != NULL )
 	{
 		free(bitmap->data);
@@ -170,6 +187,9 @@ destroySWFDBLBitmapData(SWFDBLBitmapData bitmap)
 SWFDBLBitmapData
 newSWFDBLBitmapData_fromData(dblData data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(684);
+#endif
 	SWFDBLBitmapData dbl;
 
 	dbl = (SWFDBLBitmapData)malloc(sizeof(struct SWFDBLBitmapData_s));
@@ -214,6 +234,9 @@ newSWFDBLBitmapData_fromData(dblData data)
 static void
 destroySWFDBLBitmap_andInputs(SWFDBLBitmap bitmap)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(685);
+#endif
 	if ( bitmap->input != NULL )
 		destroySWFInput(bitmap->input);
 
@@ -227,6 +250,9 @@ destroySWFDBLBitmap_andInputs(SWFDBLBitmap bitmap)
 SWFDBLBitmap
 newSWFDBLBitmap(FILE* f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(686);
+#endif
 	SWFInput input = newSWFInput_file(f);
 	SWFDBLBitmap dbl = NULL;
 

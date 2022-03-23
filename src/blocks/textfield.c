@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -79,6 +84,9 @@ struct SWFTextField_s
 static void
 resetBounds(SWFTextField field)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(574);
+#endif
 	int minX, maxX, minY, maxY;
 
 	SWFRect_getBounds(CHARACTER(field)->bounds, &minX, &maxX, &minY, &maxY);
@@ -118,6 +126,9 @@ writeSWFTextFieldToMethod(SWFBlock block,
 int
 completeSWFTextField(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(575);
+#endif
 	SWFTextField field = (SWFTextField)block;
 
 	/* we're guessing how big the block's going to be.. */
@@ -177,6 +188,9 @@ completeSWFTextField(SWFBlock block)
 void
 destroySWFTextField(SWFTextField field)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(576);
+#endif
 	destroySWFOutput(field->out);
 
 	if ( field->varName != NULL )
@@ -195,6 +209,9 @@ destroySWFTextField(SWFTextField field)
 SWFTextField
 newSWFTextField()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(577);
+#endif
 	SWFRect temp_rect;
 
 	SWFTextField field = (SWFTextField)malloc(sizeof(struct SWFTextField_s));
@@ -258,6 +275,9 @@ newSWFTextField()
 
 static inline int checkSWFFontCharacter(SWFFontCharacter fc)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(578);
+#endif
 	int font_flags;
 	int nGlyphs;
 
@@ -280,6 +300,9 @@ static inline int checkSWFFontCharacter(SWFFontCharacter fc)
 void
 SWFTextField_setFont(SWFTextField field, SWFBlock font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(579);
+#endif
 	if(font == NULL)
 		return;
 	if ( BLOCK(font)->type == SWF_BROWSERFONT )
@@ -334,6 +357,9 @@ SWFTextField_getUnresolvedFont(SWFTextField field)
 void
 SWFTextField_addChars(SWFTextField field, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(580);
+#endif
 	int n, len = strlen(string);
 	if(field->fonttype == Font || field->fonttype == FontChar)
 	{	field->embeds = (unsigned short *)realloc(
@@ -346,6 +372,9 @@ SWFTextField_addChars(SWFTextField field, const char *string)
 void
 SWFTextField_addUTF8Chars(SWFTextField field, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(581);
+#endif
 	unsigned short *widestring;
 	int n, len;
 	if(field->fonttype == FontChar || field->fonttype == Font)
@@ -365,6 +394,9 @@ SWFTextField_addUTF8Chars(SWFTextField field, const char *string)
  */
 void SWFTextField_setFontCharacter(SWFTextField field, SWFFontCharacter fontchar)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(582);
+#endif
 	field->fonttype = FontChar;
 	field->font.fontchar = fontchar;
 	if((field->flags & SWFTEXTFIELD_NOEDIT) == 0)
@@ -411,6 +443,9 @@ SWFTextField_setVariableName(SWFTextField field, const char *name)
 static void
 SWFTextField_addStringOnly(SWFTextField field, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(583);
+#endif
 	int l;
 
 	for ( l=0; string[l]!='\0'; ++l )
@@ -433,6 +468,9 @@ SWFTextField_addStringOnly(SWFTextField field, const char *string)
 void
 SWFTextField_addString(SWFTextField field, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(584);
+#endif
 	int l, n;
 
 	l = strlen(string);
@@ -449,6 +487,9 @@ SWFTextField_addString(SWFTextField field, const char *string)
 void
 SWFTextField_addUTF8String(SWFTextField field, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(585);
+#endif
 	unsigned short *widestring;
 	int l, n;
 

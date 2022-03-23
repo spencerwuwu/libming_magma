@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -57,6 +62,9 @@ struct SWFDisplayList_s
 void
 destroySWFDisplayItem(SWFDisplayItem displayItem)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(484);
+#endif
 	if ( displayItem->position )
 		destroySWFPosition(displayItem->position);
 
@@ -72,6 +80,9 @@ destroySWFDisplayItem(SWFDisplayItem displayItem)
 void
 destroySWFDisplayList(SWFDisplayList displayList)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(485);
+#endif
 	SWFDisplayItem item = displayList->head, next;
 
 	while ( item != NULL )
@@ -88,6 +99,9 @@ destroySWFDisplayList(SWFDisplayList displayList)
 SWFDisplayList
 newSWFDisplayList()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(486);
+#endif
 	SWFDisplayList list = (SWFDisplayList)malloc(sizeof(struct SWFDisplayList_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -107,6 +121,9 @@ newSWFDisplayList()
 SWFDisplayList
 newSWFSpriteDisplayList()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(487);
+#endif
 	SWFDisplayList list = (SWFDisplayList)malloc(sizeof(struct SWFDisplayList_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -125,6 +142,9 @@ newSWFSpriteDisplayList()
 void
 SWFDisplayItem_replace(SWFDisplayItem item, SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(488);
+#endif
 	item->character = character;
  
 	if ( item->block )
@@ -139,6 +159,9 @@ SWFDisplayItem_replace(SWFDisplayItem item, SWFCharacter character)
 SWFDisplayItem
 SWFDisplayList_add(SWFDisplayList list, SWFBlockList blocklist, SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(489);
+#endif
 	SWFDisplayItem item = (SWFDisplayItem) malloc(sizeof(struct SWFDisplayItem_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -208,6 +231,9 @@ SWFDisplayItem_remove(SWFDisplayItem item)
 void 
 SWFDisplayItem_removeFromList(SWFDisplayItem item, SWFBlockList blocklist)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(490);
+#endif
 		SWFDisplayList list;
 		
 		if(item == NULL || item->list == NULL || blocklist == NULL)
@@ -260,6 +286,9 @@ SWFDisplayItem_getDepth(SWFDisplayItem item)
 void
 SWFDisplayItem_setDepth(SWFDisplayItem item, int depth)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(491);
+#endif
 	item->depth = depth;
 
 	checkBlock(item);
@@ -332,6 +361,9 @@ SWFDisplayItem_rotateTo(SWFDisplayItem item, double degrees)
 void
 SWFDisplayItem_getRotation(SWFDisplayItem item, double *degrees)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(492);
+#endif
 	// returns the current rotation of this display item into the given
 	// pointer, respects NULL value
 
@@ -434,6 +466,9 @@ SWFDisplayItem_setMatrix(SWFDisplayItem item,
 void
 SWFDisplayItem_setName(SWFDisplayItem item, const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(493);
+#endif
 	checkBlock(item);
 
 	if ( (item->flags & ITEM_NEW) == 0 )
@@ -454,6 +489,9 @@ SWFDisplayItem_setName(SWFDisplayItem item, const char *name)
 void
 SWFDisplayItem_setMaskLevel(SWFDisplayItem item, int masklevel)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(494);
+#endif
 	checkBlock(item);
 
 	if ( (item->flags & ITEM_NEW) == 0 )
@@ -478,6 +516,9 @@ SWFDisplayItem_endMask(SWFDisplayItem item)
 void
 SWFDisplayItem_setRatio(SWFDisplayItem item, float ratio)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(495);
+#endif
 	int res;
 	checkBlock(item);
 	if(ratio < 0)
@@ -523,6 +564,9 @@ SWFDisplayItem_setColorMult(SWFDisplayItem item,
 void
 SWFDisplayItem_addAction(SWFDisplayItem item, SWFAction action, int flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(496);
+#endif
 	checkBlock(item);
 
 	if ( (item->flags & ITEM_NEW) == 0 )
@@ -545,6 +589,9 @@ SWFDisplayItem_addAction(SWFDisplayItem item, SWFAction action, int flags)
 void SWFDisplayItem_addFilter(SWFDisplayItem item,
                               SWFFilter filter /* filter */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(497);
+#endif
 	SWFBlock block;
 	block = (SWFBlock)item->character;
 	if(!SWFFilter_testBlockType(block->type))
@@ -618,6 +665,9 @@ SWFDisplayList_rewindSoundStream(SWFDisplayList list)
 void
 SWFDisplayList_writeBlocks(SWFDisplayList list, SWFBlockList blocklist)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(498);
+#endif
 	SWFDisplayItem item = list->head, next;
 	SWFCharacter character;
 
@@ -681,6 +731,9 @@ SWFDisplayList_writeBlocks(SWFDisplayList list, SWFBlockList blocklist)
 void 
 SWFDisplayItem_flush(SWFDisplayItem item /* item to write */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(499);
+#endif
 	SWFCharacter character;
 	if(item == NULL)
 		return;

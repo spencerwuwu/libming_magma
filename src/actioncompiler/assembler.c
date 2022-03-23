@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -42,6 +47,9 @@ struct label labels[256];
 static int
 findLabel(char *l)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(543);
+#endif
 	int i;
 
 	for ( i=0; i<nLabels; ++i )
@@ -57,6 +65,9 @@ findLabel(char *l)
 static void
 addLabel(char *l)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(544);
+#endif
 	int i = findLabel(l);
 
 	if ( i == -1 )
@@ -73,6 +84,9 @@ addLabel(char *l)
 int
 bufferBranchTarget(Buffer output, char *l)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(545);
+#endif
 	int i = findLabel(l);
 
 	if ( i == -1 )
@@ -88,6 +102,9 @@ bufferBranchTarget(Buffer output, char *l)
 void
 bufferPatchTargets(Buffer buffer)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(546);
+#endif
 	int l, i = 0;
 	unsigned char *output = buffer->buffer;
 

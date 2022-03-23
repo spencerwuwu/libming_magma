@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -13,6 +18,9 @@ int gIndent;
 
 void println(const char *s, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(537);
+#endif
   va_list ap;
   int n = gIndent*INDENT_LEVEL;
 
@@ -72,6 +80,9 @@ unsigned long readUInt32(Buffer f)
 
 double readDouble(Buffer f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(538);
+#endif
   double d;
   unsigned char *p = (unsigned char *)&d;
 
@@ -89,6 +100,9 @@ double readDouble(Buffer f)
 
 char *readString(Buffer f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(539);
+#endif
   int len = 0, buflen = 256, tmp_char;
   char *buf, *p;
 
@@ -117,6 +131,9 @@ char *readString(Buffer f)
 
 void dumpBytes(Buffer f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(540);
+#endif
   int j=0, i, k;
   unsigned char buf[16];
 
@@ -165,6 +182,9 @@ char *dictionary[256];
 
 int printActionRecord(Buffer f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(541);
+#endif
   int length = 0, type;
 
   printf("(%i)\t", fileOffset);
@@ -614,6 +634,9 @@ int printActionRecord(Buffer f)
 
 void printDoAction(Buffer f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(542);
+#endif
   int end;
 
   if(!f)

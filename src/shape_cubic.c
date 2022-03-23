@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -71,6 +76,9 @@ static double errorPoints(double ax, double ay, double bx, double by)
 
 static void subdivideCubicLeft(cubic *New, cubic *old, double t)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(431);
+#endif
 	SWF_assert(t>0.0 && t<1.0);
 
 	if(New != old)
@@ -94,6 +102,9 @@ static void subdivideCubicLeft(cubic *New, cubic *old, double t)
 
 static void subdivideCubicRight(cubic *New, cubic *old, double t)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(432);
+#endif
 	SWF_assert(t>0.0 && t<1.0);
 
 	if(New != old)
@@ -119,6 +130,9 @@ static int SWFShape_approxCubic(SWFShape shape, cubic *c);
 
 static int subdivideCubic(SWFShape shape, cubic *c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(433);
+#endif
 	cubic New;
 	int nCurves;
 
@@ -133,6 +147,9 @@ static int subdivideCubic(SWFShape shape, cubic *c)
 
 static int SWFShape_approxCubic(SWFShape shape, cubic *c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(434);
+#endif
 	quadratic q;
 
 	double cx, cy, qx, qy;
@@ -200,6 +217,9 @@ static int SWFShape_approxCubic(SWFShape shape, cubic *c)
 int SWFShape_drawScaledCubicTo(SWFShape shape, int bx, int by,
 						 int cx, int cy, int dx, int dy)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(435);
+#endif
 	int ax = SWFShape_getScaledPenX(shape);
 	int ay = SWFShape_getScaledPenY(shape);
 
@@ -292,6 +312,9 @@ int
 SWFShape_drawCubic(SWFShape shape, double bx, double by,
 			 double cx, double cy, double dx, double dy)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(436);
+#endif
 	int sax = SWFShape_getScaledPenX(shape);
 	int say = SWFShape_getScaledPenY(shape);
 	int sbx = (int)rint(bx*Ming_scale) + sax;
@@ -307,6 +330,9 @@ SWFShape_drawCubic(SWFShape shape, double bx, double by,
 int SWFShape_drawCubicTo(SWFShape shape, double bx, double by,
 			 double cx, double cy, double dx, double dy)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(437);
+#endif
 	return SWFShape_drawScaledCubicTo(shape,
 						(int)rint(bx*Ming_scale),
 						(int)rint(by*Ming_scale),

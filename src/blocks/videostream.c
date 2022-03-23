@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     
    Ming, an SWF output library
@@ -76,6 +81,9 @@ int SWFVideoStream_getFrameNumber(SWFVideoFrame frame)
 
 int completeSWFVideoFrame(SWFBlock block) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(547);
+#endif
 	SWFVideoFrame frame = (SWFVideoFrame)block;
 	SWFInput input;
 		
@@ -88,6 +96,9 @@ int completeSWFVideoFrame(SWFBlock block)
 
 void writeSWFVideoFrameToMethod(SWFBlock block, SWFByteOutputMethod method, void *data) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(548);
+#endif
 	int i, ichar, len;
 	SWFVideoFrame frame = (SWFVideoFrame)block;
 	SWFVideoStream stream;
@@ -118,6 +129,9 @@ void writeSWFVideoFrameToMethod(SWFBlock block, SWFByteOutputMethod method, void
  */
 SWFBlock
 SWFVideoStream_getVideoFrame(SWFVideoStream stream /* associated video stream */) {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(549);
+#endif
 	SWFVideoFrame block;
 	int frame;
 
@@ -180,6 +194,9 @@ SWFVideoStream_getVideoFrame(SWFVideoStream stream /* associated video stream */
 		
 static int setH263CustomDimension(SWFVideoStream stream, SWFInput input, int flags) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(550);
+#endif
 	int ichar, rshift, mask;
 	int (*method) (SWFInput stream);
 
@@ -212,6 +229,9 @@ static int setH263CustomDimension(SWFVideoStream stream, SWFInput input, int fla
 
 static int setH263StreamDimension(SWFVideoStream stream, FLVTag *tag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(551);
+#endif
 	SWFInput input;
 	int ichar, flags;
 
@@ -268,6 +288,9 @@ static int setH263StreamDimension(SWFVideoStream stream, FLVTag *tag)
 
 static int setScreenStreamDimension(SWFVideoStream stream, FLVTag *tag) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(552);
+#endif
 	unsigned int ui16 = 0;
 	int ic;
 	SWFInput input;
@@ -310,6 +333,9 @@ static int setScreenStreamDimension(SWFVideoStream stream, FLVTag *tag)
 
 void writeSWFVideoStreamToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(553);
+#endif
 	SWFVideoStream stream = (SWFVideoStream)block;
 	
 	methodWriteUInt16(CHARACTERID(stream), method, data);
@@ -344,6 +370,9 @@ void destroySWFVideoStream(SWFVideoStream stream) {
 
 static int setVP6Dimension(SWFVideoStream stream, FLVTag *tag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(554);
+#endif
 	SWFInput input;
 	int ichar;
 	int render_x, render_y;
@@ -382,6 +411,9 @@ static int setVP6Dimension(SWFVideoStream stream, FLVTag *tag)
 
 static int setStreamProperties(SWFVideoStream stream) 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(555);
+#endif
 	int ret;
 	FLVTag tag, *tag_p = NULL;
 	
@@ -428,6 +460,9 @@ static int setStreamProperties(SWFVideoStream stream)
 
 static int onPlace(SWFDisplayItem item, SWFBlockList blocklist)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(556);
+#endif
 	SWFVideoStream stream = (SWFVideoStream)SWFDisplayItem_getCharacter(item); 
 	SWFBlock video = SWFVideoStream_getVideoFrame(stream);
 	if(video == NULL)
@@ -439,6 +474,9 @@ static int onPlace(SWFDisplayItem item, SWFBlockList blocklist)
 
 static int onFrame(SWFDisplayItem item, SWFBlockList blocklist)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(557);
+#endif
 	SWFPlaceObject2Block placeVideo;
 	SWFVideoStream stream;
 	SWFBlock video = NULL;
@@ -485,6 +523,9 @@ static int onFrame(SWFDisplayItem item, SWFBlockList blocklist)
  */
 int SWFVideoStream_seek(SWFVideoStream stream, int frame, int whence)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(558);
+#endif
 	int old, pos;
 
 	if(stream == NULL || stream->embedded == 0)
@@ -527,6 +568,9 @@ int SWFVideoStream_seek(SWFVideoStream stream, int frame, int whence)
  */
 int SWFVideoStream_nextFrame(SWFVideoStream stream)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(559);
+#endif
 	if(stream == NULL || !stream->embedded)
 		return -1;
 
@@ -554,6 +598,9 @@ int SWFVideoStream_nextFrame(SWFVideoStream stream)
  */
 int SWFVideoStream_setFrameMode(SWFVideoStream stream, int mode)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(560);
+#endif
 	int oldmode;
 	if(stream == NULL || !stream->embedded)
 		return -1;
@@ -581,6 +628,9 @@ int SWFVideoStream_setFrameMode(SWFVideoStream stream, int mode)
  */
 SWFVideoStream
 newSWFVideoStream_fromInput(SWFInput input) {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(561);
+#endif
 
 	SWFBlock block;
 	SWFVideoStream stream;
@@ -632,6 +682,9 @@ newSWFVideoStream_fromInput(SWFInput input) {
  * ActionScript to connect and display a streamed video (progessive download / rtmp).
  */
 SWFVideoStream newSWFVideoStream() {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(562);
+#endif
 	SWFBlock block;
 	SWFVideoStream stream = (SWFVideoStream)malloc(sizeof(struct SWFVideoStream_s));
         if(!stream)

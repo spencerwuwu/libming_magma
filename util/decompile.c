@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2006,2007 A.Kleine
@@ -122,6 +127,9 @@ dcputchar(char c)
 int
 dcprintf(char *format, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(34);
+#endif
 	char *s;
 	size_t size;
 	int ret;
@@ -156,6 +164,9 @@ struct strbufinfo
 
 static struct strbufinfo setTempString(void)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(35);
+#endif
 	struct strbufinfo current;
 	current.size=strsize;
 	current.maxsize=strmaxsize;
@@ -212,6 +223,9 @@ setNewLineString(const char* ch)
 static void
 println(const char* fmt, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(36);
+#endif
 	char *tmp;
 	int written;
 
@@ -236,6 +250,9 @@ println(const char* fmt, ...)
 #define BSC 2
 static int strlenext(char *str)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(37);
+#endif
 	int i=0;
 	while (*str)
 	{
@@ -248,6 +265,9 @@ static int strlenext(char *str)
 
 static char* strcpyext(char *dest,char *src)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(38);
+#endif
 	char *r=dest;
 	while (*src)
 	{
@@ -306,6 +326,9 @@ enum
 static char *
 getString(struct SWF_ACTIONPUSHPARAM *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(39);
+#endif
 	char *t;
 #ifdef DEBUG
 	printf("*getString* type=%d\n",act->Type);
@@ -381,6 +404,9 @@ getString(struct SWF_ACTIONPUSHPARAM *act)
 static char *
 getName(struct SWF_ACTIONPUSHPARAM *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(40);
+#endif
 	char *t;
 
 	switch( act->Type ) 	
@@ -437,6 +463,9 @@ getName(struct SWF_ACTIONPUSHPARAM *act)
 static int
 getInt(struct SWF_ACTIONPUSHPARAM *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(41);
+#endif
 #ifdef MAGMA_ENABLE_CANARIES
 	    MAGMA_LOG("MIN005", act == NULL);
 #endif
@@ -461,6 +490,9 @@ getInt(struct SWF_ACTIONPUSHPARAM *act)
 static char *
 getProperty(Property prop)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(42);
+#endif
 	switch(prop)
 	{
 	case SWF_SETPROPERTY_X: 	return("_x"); break;
@@ -514,6 +546,9 @@ newVar(char *var)
 struct SWF_ACTIONPUSHPARAM *
 newVar2(char *var,char *var2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(43);
+#endif
 	struct SWF_ACTIONPUSHPARAM *v;
 
 	v=malloc(sizeof(struct SWF_ACTIONPUSHPARAM));
@@ -528,6 +563,9 @@ newVar2(char *var,char *var2)
 struct SWF_ACTIONPUSHPARAM *
 newVar3(char *var,char *var2, char *var3)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(44);
+#endif
 	struct SWF_ACTIONPUSHPARAM *v;
 
 	v=malloc(sizeof(struct SWF_ACTIONPUSHPARAM));
@@ -542,6 +580,9 @@ newVar3(char *var,char *var2, char *var3)
 struct SWF_ACTIONPUSHPARAM *
 newVar5(char *var,char *var2, char *var3,char *var4,char *var5)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(45);
+#endif
 	struct SWF_ACTIONPUSHPARAM *v;
 
 	v=malloc(sizeof(struct SWF_ACTIONPUSHPARAM));
@@ -558,6 +599,9 @@ newVar5(char *var,char *var2, char *var3,char *var4,char *var5)
 void
 push(struct SWF_ACTIONPUSHPARAM *val)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(46);
+#endif
 	struct _stack *t;
 #ifdef DEBUG
 	printf("*push* type=%d\n",val->Type);
@@ -573,6 +617,9 @@ push(struct SWF_ACTIONPUSHPARAM *val)
 void
 pushdup()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(47);
+#endif
 	struct _stack *t;
 #ifdef DEBUG
 	printf("*pushdup*\n");
@@ -593,6 +640,9 @@ pushdup()
 void
 pushvar(struct SWF_ACTIONPUSHPARAM *val)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(48);
+#endif
 	struct _stack *t;
 #ifdef DEBUG
 	printf("*pushvar*\n");
@@ -606,6 +656,9 @@ pushvar(struct SWF_ACTIONPUSHPARAM *val)
 
 struct SWF_ACTIONPUSHPARAM * pop()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(49);
+#endif
 	struct _stack *t;
 	struct SWF_ACTIONPUSHPARAM * ret;
 
@@ -625,6 +678,9 @@ struct SWF_ACTIONPUSHPARAM * pop()
 
 struct SWF_ACTIONPUSHPARAM * peek()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(50);
+#endif
 #ifdef DEBUG
 	printf("*peek*\n");
 #endif
@@ -639,6 +695,9 @@ struct SWF_ACTIONPUSHPARAM * peek()
 void
 stackswap()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(51);
+#endif
 #ifdef DEBUG
 	printf("*stackswap*\n");
 #endif
@@ -654,6 +713,9 @@ stackswap()
 static struct SWF_ACTIONPUSHPARAM *
 newVar_N(char *var,char *var2, char *var3,char *var4,int pop_counter,char *final)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(52);
+#endif
 	struct SWF_ACTIONPUSHPARAM *v;
 	int psize=PARAM_STRSIZE;
 	int i;
@@ -688,6 +750,9 @@ newVar_N(char *var,char *var2, char *var3,char *var4,int pop_counter,char *final
 static struct SWF_ACTIONPUSHPARAM *
 newVar_N2(char *var,char *var2, char *var3,char *var4,int pop_counter,char *final)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(53);
+#endif
 	struct SWF_ACTIONPUSHPARAM *v;
 	int psize=PARAM_STRSIZE;
 	int i;
@@ -763,6 +828,9 @@ decompileWAITFORFRAME (SWF_ACTION *act)
 static void
 decompilePUSHPARAM (struct SWF_ACTIONPUSHPARAM *act, int wantstring)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(54);
+#endif
 	char *t;
 	switch( act->Type ) 
 	{
@@ -840,6 +908,9 @@ decompileGETURL (SWF_ACTION *act)
 static int
 decompileGETURL2 (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(55);
+#endif
 	struct SWF_ACTIONPUSHPARAM *a,*b;
 	OUT_BEGIN(SWF_ACTIONGETURL2);
 	INDENT
@@ -879,6 +950,9 @@ decompileGETURL2 (SWF_ACTION *act)
 
 static inline int OpCode(SWF_ACTION *actions, int n, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(56);
+#endif
 	if(!n || n >= maxn)
 	{
 #if DEBUG
@@ -895,6 +969,9 @@ static inline int OpCode(SWF_ACTION *actions, int n, int maxn)
 static int
 isStoreOp(int n, SWF_ACTION *actions,int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(57);
+#endif
 	switch(OpCode(actions, n, maxn))
 	{
 	case SWFACTION_STOREREGISTER:
@@ -910,6 +987,9 @@ isStoreOp(int n, SWF_ACTION *actions,int maxn)
 static int 
 decompileGOTOFRAME(int n, SWF_ACTION *actions,int maxn,int islabel)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(58);
+#endif
 	int i=0;
 	struct SWF_ACTIONGOTOLABEL *sactv2;
 	OUT_BEGIN2(SWF_ACTIONGOTOFRAME);
@@ -937,6 +1017,9 @@ decompileGOTOFRAME(int n, SWF_ACTION *actions,int maxn,int islabel)
 static int 
 decompileGOTOFRAME2(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(59);
+#endif
 	int i=0;
 	OUT_BEGIN2(SWF_ACTIONGOTOFRAME2);
 	INDENT
@@ -975,6 +1058,9 @@ decompileGOTOFRAME2(int n, SWF_ACTION *actions, int maxn)
 
 static int precedence(int op1,int op2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(60);
+#endif
 	static unsigned char ops[]= { 		// array of opcodes w rising precedence
 //	SWFACTION_SETVARIABLE,		// TAKE CARE: array is incomplete
 //	SWFACTION_TRACE,
@@ -1024,6 +1110,9 @@ check_switch(int firstcode)
 static int
 decompileArithmeticOp(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(61);
+#endif
 	struct SWF_ACTIONPUSHPARAM *left, *right;
 	int op_l = OpCode(actions, n, maxn);
 	int op_r = OpCode(actions, n+1, maxn);
@@ -1214,6 +1303,9 @@ decompileArithmeticOp(int n, SWF_ACTION *actions, int maxn)
 static int
 isLogicalOp(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(62);
+#endif
 	switch(OpCode(actions, n, maxn))
 	{
 	case SWFACTION_LESSTHAN:
@@ -1242,6 +1334,9 @@ isLogicalOp(int n, SWF_ACTION *actions, int maxn)
 static int 
 isLogicalOp2(int n, SWF_ACTION *actions,int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(63);
+#endif
 	switch(actions[n].SWF_ACTIONRECORD.ActionCode)
 	{
 	case SWFACTION_LOGICALNOT:
@@ -1256,6 +1351,9 @@ isLogicalOp2(int n, SWF_ACTION *actions,int maxn)
 static int
 stackVal(int n, SWF_ACTION *actions)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(64);
+#endif
 	if (!n) 
 		return 0;
 
@@ -1322,6 +1420,9 @@ stackVal(int n, SWF_ACTION *actions)
 static int
 decompileLogicalNot(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(65);
+#endif
 #ifdef STATEMENT_CLASS
 	if(OpCode(actions, n-1, maxn) == SWFACTION_GETVARIABLE &&
 	   OpCode(actions, n+1, maxn) == SWFACTION_LOGICALNOT &&
@@ -1339,6 +1440,9 @@ decompileLogicalNot(int n, SWF_ACTION *actions, int maxn)
 static void
 decompilePUSH (SWF_ACTION *act)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(66);
+#endif
 	int i;
 	OUT_BEGIN(SWF_ACTIONPUSH);
 
@@ -1371,6 +1475,9 @@ decompileSTACKSWAP (SWF_ACTION *act)
 static int
 decompileSETPROPERTY(int n, SWF_ACTION *actions,int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(67);
+#endif
 	struct SWF_ACTIONPUSHPARAM *val, *idx, *obj;
 
 	INDENT
@@ -1399,6 +1506,9 @@ decompileSETPROPERTY(int n, SWF_ACTION *actions,int maxn)
 static int
 decompileGETPROPERTY(int n, SWF_ACTION *actions,int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(68);
+#endif
 	struct SWF_ACTIONPUSHPARAM *idx, *obj;
 
 	INDENT
@@ -1438,6 +1548,9 @@ decompileCALLFRAME(int n, SWF_ACTION *actions, int maxn)
 static int
 decompileGETTIME(int n, SWF_ACTION *actions, int maxn)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(69);
+#endif
 	if (OpCode(actions, n+1, maxn) == SWFACTION_POP)
 	{
 		INDENT
@@ -1454,6 +1567,9 @@ decompileGETTIME(int n, SWF_ACTION *actions, int maxn)
 static int
 decompileINCR_DECR(int n, SWF_ACTION *actions, int maxn, int is_incr)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(70);
+#endif
 	int is_postop;
 	struct SWF_ACTIONPUSHPARAM *var=pop();
 	char *dblop=is_incr ? "++":"--";

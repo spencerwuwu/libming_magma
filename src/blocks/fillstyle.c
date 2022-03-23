@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -67,6 +72,9 @@ void SWFFillStyle_addDependency(SWFFillStyle fill, SWFCharacter c)
 SWFFillStyle
 newSWFSolidFillStyle(byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(770);
+#endif
 	SWFFillStyle fill = (SWFFillStyle)malloc(sizeof(struct SWFFillStyle_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -87,6 +95,9 @@ newSWFSolidFillStyle(byte r, byte g, byte b, byte a)
 SWFFillStyle
 newSWFGradientFillStyle(SWFGradient gradient, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(771);
+#endif
 	SWFFillStyle fill = (SWFFillStyle) malloc(sizeof(struct SWFFillStyle_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -117,6 +128,9 @@ newSWFGradientFillStyle(SWFGradient gradient, byte flags)
 SWFFillStyle
 newSWFBitmapFillStyle(SWFBitmap bitmap, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(772);
+#endif
 	SWFFillStyle fill = (SWFFillStyle) malloc(sizeof(struct SWFFillStyle_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -157,6 +171,9 @@ SWFFillStyle_getMatrix(SWFFillStyle fill)
 int
 SWFFillStyle_equals(SWFFillStyle fill1, SWFFillStyle fill2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(773);
+#endif
 	if ( fill1->type != fill2->type )
 		return 0;
 
@@ -190,6 +207,9 @@ void
 SWFOutput_writeFillStyle(SWFOutput out, SWFFillStyle fill, 
                          SWFBlocktype shapeType, SWFRect bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(774);
+#endif
 	int type = fill->type;
 	SWFOutput_writeUInt8(out, type);
 
@@ -225,6 +245,9 @@ SWFOutput_writeFillStyles(SWFOutput out,
                           SWFBlocktype shapeType,
                           SWFRect bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(775);
+#endif
 	int i;
 
 	if ( nFills < 255 )
@@ -246,6 +269,9 @@ void
 SWFOutput_writeMorphFillStyle(SWFOutput out, SWFFillStyle fill1, SWFRect bounds1,
                               SWFFillStyle fill2, SWFRect bounds2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(776);
+#endif
 	int type;
 	SWF_assert(fill1->type == fill2->type); 
 	type = fill1->type;
@@ -289,6 +315,9 @@ SWFOutput_writeMorphFillStyles(SWFOutput out,
                                SWFFillStyle *fills1, int nFills1, SWFRect bounds1,
                                SWFFillStyle *fills2, int nFills2, SWFRect bounds2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(777);
+#endif
 	int i;
 	SWF_assert(nFills1 == nFills2);
 	if ( nFills1 < 255 )

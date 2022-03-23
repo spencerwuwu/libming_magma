@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -83,6 +88,9 @@ struct SWFButtonSound_s
 static SWFButtonRecord newSWFButtonRecord(byte flags, SWFCharacter character,
 									 unsigned short layer, SWFMatrix matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(778);
+#endif
 	SWFButtonRecord record = (SWFButtonRecord) malloc(sizeof(struct SWFButtonRecord_s));
 
 	record->flags = flags;
@@ -99,6 +107,9 @@ static SWFButtonRecord newSWFButtonRecord(byte flags, SWFCharacter character,
 
 static void SWFButton_addRecord(SWFButton button, SWFButtonRecord record)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(779);
+#endif
 	if ( button->nRecords % BUTTONRECORD_INCREMENT == 0 )
 	{
 		button->records = (SWFButtonRecord*) realloc(button->records,
@@ -116,6 +127,9 @@ static void SWFButton_addRecord(SWFButton button, SWFButtonRecord record)
 /* note: replaces action, doesn't append.. */
 void SWFButton_addAction(SWFButton button, SWFAction action, int flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(780);
+#endif
 	if ( SWFCharacter_isFinished((SWFCharacter)button) )
 		SWF_error("Can't alter a button after it's been added to another character");
 
@@ -143,6 +157,9 @@ void SWFButton_addAction(SWFButton button, SWFAction action, int flags)
  */
 void SWFButton_addShape(SWFButton button, SWFCharacter character, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(781);
+#endif
 	SWFMatrix m;
 	SWF_warnOnce("SWFButton_addShape is deprecated\nUse SWFButton_addCharacter instead\n");
 	if ( SWFCharacter_isFinished((SWFCharacter)button) )
@@ -175,6 +192,9 @@ SWFButton_addCharacter(SWFButton button /* button object */,
                        SWFCharacter character /* character to be added */, 
                        byte state /* state description */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(782);
+#endif
 	SWFMatrix m;
 	SWFButtonRecord record;
 	SWFCharacter **depsPtr = &CHARACTER(button)->dependencies;
@@ -325,6 +345,9 @@ void writeSWFButtonToMethod(SWFBlock block,
 
 int completeSWFButton(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(783);
+#endif
 	SWFButton button = (SWFButton)block;
 	SWFButtonRecord record;
 	SWFOutput out = newSWFOutput();
@@ -384,6 +407,9 @@ int completeSWFButton(SWFBlock block)
 
 void destroySWFButton(SWFButton button)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(784);
+#endif
 	int i;
 
 	for ( i=0; i<button->nRecords; ++i )
@@ -434,6 +460,9 @@ static int onSWFButtonFrame(SWFDisplayItem item, SWFBlockList list)
 SWFButton
 newSWFButton()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(785);
+#endif
 	SWFButton button = (SWFButton) malloc(sizeof(struct SWFButton_s));
 
 	SWFCharacterInit((SWFCharacter)button);
@@ -461,6 +490,9 @@ newSWFButton()
 SWFSoundInstance
 SWFButton_addSound(SWFButton button, SWFSound sound, byte flag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(786);
+#endif
 	if ( SWFCharacter_isFinished((SWFCharacter)button) )
 		SWF_error("Can't alter a button after it's been added to another character");
 
@@ -492,6 +524,9 @@ void
 writeSWFButtonSoundToMethod(SWFBlock block,
 														SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(787);
+#endif
 	SWFButtonSound buttonSound = (SWFButtonSound)block;
 	int i;
 
@@ -511,6 +546,9 @@ writeSWFButtonSoundToMethod(SWFBlock block,
 int
 completeSWFButtonSound(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(788);
+#endif
 	int size = 2;	 /* button ID */
 	int i;
 	SWFButtonSound buttonSound = (SWFButtonSound)block;
@@ -531,6 +569,9 @@ completeSWFButtonSound(SWFBlock block)
 SWFButtonSound
 newSWFButtonSound(SWFButton button)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(789);
+#endif
 	SWFButtonSound buttonSound = (SWFButtonSound) malloc(sizeof(struct SWFButtonSound_s));
 	SWFBlock block = (SWFBlock)buttonSound;
 
@@ -556,6 +597,9 @@ newSWFButtonSound(SWFButton button)
 SWFSoundInstance
 SWFButtonSound_setSound(SWFButtonSound sounds, SWFSound sound, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(790);
+#endif
 	if ( flags == SWFBUTTON_OVERUPTOIDLE )
 		return (sounds->sounds[0] = newSWFSoundInstance(sound));
 

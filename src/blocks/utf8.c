@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
   Licence: LGPL(?)
   author: goto <harpy@lily.freemail.ne.jp>
@@ -16,6 +21,9 @@
 
 int UTF8Length(const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(797);
+#endif
 	int l, str_len, i;
 
 	str_len = 0;
@@ -65,6 +73,9 @@ int UTF8Length(const char *string)
 
 unsigned short UTF8GetChar(const char** strptr)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(798);
+#endif
 	const char* p = *strptr;
 	unsigned int byte0, byte1, byte2;
 	unsigned short mbcode;
@@ -124,6 +135,9 @@ unsigned short UTF8GetChar(const char** strptr)
 
 int UTF8ExpandString(const char* string, unsigned short** outstr)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(799);
+#endif
 	unsigned short* output = NULL;
 	unsigned short c;
 	int count = 0;

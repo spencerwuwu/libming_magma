@@ -1,8 +1,16 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 
 #include "blocks/blocktypes.h"
 
 const char *blockName(int header)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(364);
+#endif
   switch(header)
   {
     case 2:  return "DefineShape";	       	break;

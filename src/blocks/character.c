@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -33,6 +38,9 @@ int SWF_gNumCharacters;
 void
 SWFCharacterInit(SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(811);
+#endif
 	SWFBlockInit((SWFBlock)character);
 
 	character->id = 0;
@@ -51,6 +59,9 @@ SWFCharacterInit(SWFCharacter character)
 void
 destroySWFCharacter(SWFCharacter character)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(812);
+#endif
 	if ( character->dependencies != NULL )
 		free(character->dependencies);
 
@@ -66,6 +77,9 @@ destroySWFCharacter(SWFCharacter character)
 void
 SWFCharacter_addDependency(SWFCharacter character, SWFCharacter dependency)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(813);
+#endif
 #if 1
 	int n;
 	for(n = 0 ; n < character->nDependencies ; n++)
@@ -97,6 +111,9 @@ BOOL
 SWFCharacter_getDependencies(SWFCharacter character,
 														 SWFCharacter** depsPtr, int* nDepsPtr)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(814);
+#endif
 	int i;
 	int nDeps = *nDepsPtr;
 	SWFCharacter* deps = *depsPtr;
@@ -153,6 +170,9 @@ SWFCharacter_getBounds(SWFCharacter character)
 BOOL
 SWFBlock_isCharacter(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(815);
+#endif
 	SWFBlocktype type = block->type;
 
 	if ( type == SWF_DEFINETEXT		 || type == SWF_DEFINETEXT2			 ||

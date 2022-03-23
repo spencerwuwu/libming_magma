@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -46,6 +51,9 @@ SWFCXform
 newSWFCXform(int rAdd, int gAdd, int bAdd, int aAdd,
 						 float rMult, float gMult, float bMult, float aMult)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(848);
+#endif
 	SWFCXform cXform = (SWFCXform) malloc(sizeof(struct SWFCXform_s));
 
 	cXform->rMult = (int)floor(256*rMult);
@@ -120,6 +128,9 @@ destroySWFCXform(SWFCXform cXform)
 void
 SWFOutput_writeCXform(SWFOutput out, SWFCXform cXform, SWFBlocktype type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(849);
+#endif
 	int nBits = 0;
 	int hasAdd, hasMult;
 

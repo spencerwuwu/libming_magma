@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2007 Klaus Rechert
@@ -27,6 +32,9 @@
 
 static inline int isValidGridChar(SWFCharacter c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(892);
+#endif
 	switch(BLOCK(c)->type)
 	{
 		case SWF_DEFINEBUTTON:
@@ -68,6 +76,9 @@ destroySWFScalingGrid(SWFScalingGrid grid)
 SWFScalingGrid
 newSWFScalingGrid(SWFCharacter c, int x, int y, int w, int h)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(893);
+#endif
         SWFScalingGrid grid;
 
 	if(!isValidGridChar(c))

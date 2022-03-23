@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -53,6 +58,9 @@ struct SWFMovieClip_s
 void
 destroySWFMovieClip(SWFMovieClip movieClip)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(440);
+#endif
 #if TRACK_ALLOCS
 	ming_gc_remove_node(movieClip->gcnode);
 #endif
@@ -73,6 +81,9 @@ destroySWFMovieClip(SWFMovieClip movieClip)
 SWFMovieClip
 newSWFMovieClip()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(441);
+#endif
 	SWFMovieClip clip = (SWFMovieClip)newSWFSprite();
 	clip = (SWFMovieClip)realloc(clip, sizeof(struct SWFMovieClip_s));
 
@@ -114,6 +125,9 @@ SWFMovieClip_setSoundStreamAt(SWFMovieClip clip,
                               float rate /* framerate */, 
                               float skip /* skip in seconds */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(442);
+#endif
 	SWFBlock block = SWFSoundStream_getStreamHead(sound, rate, skip);
 	
 	if ( block != NULL )
@@ -177,6 +191,9 @@ SWFMovieClip_stopSound(SWFMovieClip clip, SWFSound sound)
 SWFDisplayItem
 SWFMovieClip_add(SWFMovieClip clip, SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(443);
+#endif
 	if ( SWFBlock_getType(block) == SWF_DEFINEBITS ||
 			 SWFBlock_getType(block) == SWF_DEFINEBITSJPEG2 ||
 			 SWFBlock_getType(block) == SWF_DEFINEBITSJPEG3 ||

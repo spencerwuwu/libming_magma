@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -137,6 +142,9 @@ completeSWFShapeBlock(SWFBlock block)
 void
 destroySWFShape(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(915);
+#endif
 	int i;
 	if(shape->fills != NULL)
 	{
@@ -177,6 +185,9 @@ destroySWFShape(SWFShape shape)
 SWFShape 
 newSWFGlyphShape()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(916);
+#endif
 	SWFShape shape = (SWFShape)malloc(sizeof(struct SWFShape_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -221,6 +232,9 @@ newSWFGlyphShape()
 SWFShape
 newSWFShape()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(917);
+#endif
 	SWFShape shape = (SWFShape)malloc(sizeof(struct SWFShape_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -271,6 +285,9 @@ newSWFShape()
 SWFShape
 newSWFShapeFromBitmap(SWFBitmap bitmap, int flag)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(918);
+#endif
 	SWFShape shape = newSWFShape();
 	SWFFillStyle fill;
 	int width, height;
@@ -302,6 +319,9 @@ newSWFShapeFromBitmap(SWFBitmap bitmap, int flag)
 void
 SWFOutput_writeGlyphShape(SWFOutput out, SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(919);
+#endif
 	unsigned char c;
 	int styleDone = 0;
 	int i;
@@ -333,6 +353,9 @@ SWFOutput_writeGlyphShape(SWFOutput out, SWFShape shape)
 void
 SWFShape_end(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(920);
+#endif
 	int i;
 	byte* buffer;
 
@@ -417,6 +440,9 @@ SWFShape_setMorphFlag(SWFShape shape)
 void
 SWFShape_addStyleHeader(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(921);
+#endif
 	SWFOutput out = newSWFOutput();
 	SWFOutput_writeUInt16(out, CHARACTERID(shape));
 	SWFOutput_writeRect(out, SWFCharacter_getBounds(CHARACTER(shape)));
@@ -448,6 +474,9 @@ SWFShape_addStyleHeader(SWFShape shape)
 static ShapeRecord addShapeRecord(SWFShape shape, ShapeRecord record, 
                                   int *vx, int *vy, float scale)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(922);
+#endif
 	if ( shape->nRecords % SHAPERECORD_INCREMENT == 0 )
 	{
 		shape->records = (ShapeRecord*) realloc(shape->records,
@@ -521,6 +550,9 @@ static ShapeRecord addShapeRecord(SWFShape shape, ShapeRecord record,
 static ShapeRecord
 newShapeRecord(SWFShape shape, shapeRecordType type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(923);
+#endif
 	if ( shape->nRecords % SHAPERECORD_INCREMENT == 0 )
 	{
 		shape->records = (ShapeRecord*) realloc(shape->records,
@@ -561,6 +593,9 @@ newShapeRecord(SWFShape shape, shapeRecordType type)
 void
 SWFShape_writeShapeRecord(SWFShape shape, ShapeRecord record, SWFOutput out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(924);
+#endif
 	switch(record.type)
 	{
 		case SHAPERECORD_STATECHANGE:
@@ -702,6 +737,9 @@ SWFShape_drawScaledLineTo(SWFShape shape, int x, int y)
 void
 SWFShape_drawScaledLine(SWFShape shape, int dx, int dy)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(925);
+#endif
 	ShapeRecord record;
 
 	if ( shape->isEnded )
@@ -742,6 +780,9 @@ SWFShape_drawScaledCurve(SWFShape shape,
 												 int controldx, int controldy,
 												 int anchordx, int anchordy)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(926);
+#endif
 	ShapeRecord record;
 
 	if ( shape->isEnded )
@@ -786,6 +827,9 @@ SWFShape_drawScaledCurve(SWFShape shape,
 
 static inline void growLineArray(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(927);
+#endif
 	int size;
 
 	if ( shape->nLines % STYLE_INCREMENT != 0 )
@@ -800,6 +844,9 @@ SWFShape_addLineStyle2filled(SWFShape shape, unsigned short width,
                              SWFFillStyle fill,
                              int flags, float miterLimit)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(928);
+#endif
 	growLineArray(shape);
 	SWFShape_useVersion(shape, SWF_SHAPE4);
 	SWFFillStyle_addDependency(fill, (SWFCharacter)shape);
@@ -832,6 +879,9 @@ SWFShape_addLineStyle(SWFShape shape, unsigned short width,
 static ShapeRecord
 addStyleRecord(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(929);
+#endif
 	if ( shape->nRecords > 0 &&
 			 shape->records[shape->nRecords-1].type == SHAPERECORD_STATECHANGE )
 	{
@@ -845,6 +895,9 @@ addStyleRecord(SWFShape shape)
 void
 SWFShape_hideLine(SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(930);
+#endif
 	ShapeRecord record;
 
 	if ( shape->isEnded )
@@ -861,6 +914,9 @@ SWFShape_hideLine(SWFShape shape)
 
 static void finishSetLine(SWFShape shape, int line, unsigned short width)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(931);
+#endif
 	ShapeRecord record;
 	
 	if ( width == 0 )
@@ -927,6 +983,9 @@ SWFShape_setLineStyle2filled_internal(SWFShape shape, unsigned short width,
                        SWFFillStyle fill,
                        int flags, float miterLimit)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(932);
+#endif
 	int line;
 
 	if ( shape->isEnded )
@@ -994,6 +1053,9 @@ SWFShape_setLineStyle2_internal(SWFShape shape, unsigned short width,
                        byte r, byte g, byte b, byte a,
                        int flags, float miterLimit)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(933);
+#endif
 	int line;
 
 	if ( shape->isEnded )
@@ -1027,6 +1089,9 @@ void
 SWFShape_setLineStyle_internal(SWFShape shape, unsigned short width,
                       byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(934);
+#endif
 	int line;
 		
 	if ( shape->isEnded )
@@ -1050,6 +1115,9 @@ SWFShape_setLineStyle_internal(SWFShape shape, unsigned short width,
 /* fill 0 is no fill, so set idx to one more than the shape's fill index */
 static int getFillIdx(SWFShape shape, SWFFillStyle fill)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(935);
+#endif
 	int i;
 
 	for ( i=0; i<shape->nFills; ++i )
@@ -1062,6 +1130,9 @@ static int getFillIdx(SWFShape shape, SWFFillStyle fill)
 
 static int addFillStyle(SWFShape shape, SWFFillStyle fill)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(936);
+#endif
 	int i;
 	
 	for ( i=0; i<shape->nFills; ++i )
@@ -1088,6 +1159,9 @@ static int addFillStyle(SWFShape shape, SWFFillStyle fill)
 SWFFillStyle
 SWFShape_addSolidFillStyle(SWFShape shape, byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(937);
+#endif
 	int  ret;
 
 	SWFFillStyle fill = newSWFSolidFillStyle(r, g, b, a);
@@ -1113,6 +1187,9 @@ SWFShape_addSolidFillStyle(SWFShape shape, byte r, byte g, byte b, byte a)
 SWFFillStyle
 SWFShape_addGradientFillStyle(SWFShape shape, SWFGradient gradient, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(938);
+#endif
 	SWFFillStyle fill = newSWFGradientFillStyle(gradient, flags);
 	if(addFillStyle(shape, fill) < 0)
 	{
@@ -1126,6 +1203,9 @@ SWFShape_addGradientFillStyle(SWFShape shape, SWFGradient gradient, byte flags)
 SWFFillStyle
 SWFShape_addBitmapFillStyle(SWFShape shape, SWFBitmap bitmap, byte flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(939);
+#endif
 	SWFFillStyle fill;
 
 	if ( bitmap )
@@ -1147,6 +1227,9 @@ SWFShape_addBitmapFillStyle(SWFShape shape, SWFBitmap bitmap, byte flags)
 void
 SWFShape_setLeftFillStyle(SWFShape shape, SWFFillStyle fill)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(940);
+#endif
 	ShapeRecord record;
 	int idx;
 
@@ -1179,6 +1262,9 @@ SWFShape_setLeftFillStyle(SWFShape shape, SWFFillStyle fill)
 void
 SWFShape_setRightFillStyle(SWFShape shape, SWFFillStyle fill)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(941);
+#endif
 	ShapeRecord record;
 	int idx;
 
@@ -1216,6 +1302,9 @@ SWFShape_setRightFillStyle(SWFShape shape, SWFFillStyle fill)
 void
 SWFShape_moveScaledPenTo(SWFShape shape, int x, int y)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(942);
+#endif
 	ShapeRecord record;
 	if ( shape->isEnded )
 		return;
@@ -1261,6 +1350,9 @@ void
 SWFShape_drawScaledGlyph(SWFShape shape,
                          SWFFont font, unsigned short c, int size)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(943);
+#endif
 	SWFShape glyph;
 	int i, vx, vy;
 	if(font == NULL)
@@ -1340,6 +1432,9 @@ struct out
 	  	 
 static void oprintf(struct out *op, const char *fmt, ...) 	 
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(944);
+#endif
 	va_list ap; 	 
 	char buf[256]; 	 
 	int d, l; 	 
@@ -1357,6 +1452,9 @@ static void oprintf(struct out *op, const char *fmt, ...)
 
 char * SWFShape_dumpOutline(SWFShape s) 	 
 { 	 
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(945);
+#endif
 	struct out o; 	 
 	int i;
 	int x = 0, y = 0;

@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /* $Id$ */
 
 #ifndef __C2MAN__
@@ -12,6 +17,9 @@
 int
 writeSWFImportBlockToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 {	SWFImportBlock imports = (SWFImportBlock) block;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(609);
+#endif
 	struct importitem *ip;
 	int length, count;
 	char *p;
@@ -44,6 +52,9 @@ writeSWFImportBlockToMethod(SWFBlock block, SWFByteOutputMethod method, void *da
 int
 completeSWFImportBlock(SWFBlock block)
 {	SWFImportBlock imports = (SWFImportBlock) block;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(610);
+#endif
 	struct importitem *ip;
 	int length = 3 + strlen(imports->filename);
 	for(ip = imports->importlist ; ip ; ip = ip->next)
@@ -62,6 +73,9 @@ completeSWFImportBlock(SWFBlock block)
 void
 destroySWFImportBlock(SWFImportBlock importBlock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(611);
+#endif
 	struct importitem *ip, *nip;
 	if(importBlock->filename)
 		free(importBlock->filename);
@@ -85,6 +99,9 @@ static char *cpy(const char *text)
 SWFImportBlock
 newSWFImportBlock(const char *filename)
 {	SWFImportBlock iblock = (SWFImportBlock) malloc(sizeof(struct SWFImportBlock_s));
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(612);
+#endif
 	
 	BLOCK(iblock)->type = SWF_IMPORTASSETS;
 

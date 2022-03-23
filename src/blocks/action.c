@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -64,6 +69,9 @@ struct SWFInitAction_s
 
 static char *readActionFile(FILE *file)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(590);
+#endif
 	int len;
 	char *script;
 	SWFInput input = newSWFInput_file(file);
@@ -82,6 +90,9 @@ static char *readActionFile(FILE *file)
 
 void SWFOutput_writeAction(SWFOutput out, SWFAction action)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(591);
+#endif
 	int len;
 	byte *data;
 
@@ -105,6 +116,9 @@ int SWFAction_compile(SWFAction action,
                       int swfVersion /* target SWF version */, 
                       int *length /* output length */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(592);
+#endif
 	char *script = NULL;
 	Buffer b;
 	int parserError;
@@ -173,6 +187,9 @@ int SWFAction_compile(SWFAction action,
  */
 byte *SWFAction_getByteCode(SWFAction action, int *length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(593);
+#endif
 	int ret = 0;
 	if(action == NULL) 
 		return NULL;
@@ -232,6 +249,9 @@ writeSWFInitActionToMethod(SWFBlock block, SWFByteOutputMethod method, void* dat
  */
 void destroySWFAction(SWFAction action)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(594);
+#endif
 	if(!action)
 		return;
 
@@ -255,6 +275,9 @@ void destroySWFAction(SWFAction action)
 
 void destroySWFInitAction(SWFInitAction init)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(595);
+#endif
 	if(!init)
 		return;
 
@@ -267,6 +290,9 @@ void destroySWFInitAction(SWFInitAction init)
 
 static SWFAction createEmptyAction()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(596);
+#endif
 	SWFAction action = (SWFAction)malloc(sizeof(struct SWFAction_s));
 
         SWFBlockInit(BLOCK(action));
@@ -319,6 +345,9 @@ SWFAction newSWFAction(const char *script)
  */
 SWFAction newSWFAction_fromFile(const char *filename)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(597);
+#endif
 	SWFAction action = createEmptyAction();
 	action->inputType = INPUT_FILE;
 	action->input.file = fopen(filename, "r");
@@ -343,6 +372,9 @@ SWFMovieClip SWFInitAction_getMovieClip(SWFInitAction action)
  */
 SWFInitAction newSWFInitAction_withId(SWFAction action, int id /* mc character id */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(598);
+#endif
 	SWFInitAction init = (SWFInitAction)malloc(sizeof(struct SWFInitAction_s));
 	SWFBlockInit(BLOCK(init));
 	BLOCK(init)->writeBlock = writeSWFInitActionToMethod;
@@ -363,6 +395,9 @@ SWFInitAction newSWFInitAction_withId(SWFAction action, int id /* mc character i
  */
 SWFInitAction newSWFInitAction(SWFAction action)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(599);
+#endif
 	SWFInitAction init = (SWFInitAction)malloc(sizeof(struct SWFInitAction_s));
 	SWFBlockInit(BLOCK(init));
 	BLOCK(init)->writeBlock = writeSWFInitActionToMethod;
@@ -377,6 +412,9 @@ SWFInitAction newSWFInitAction(SWFAction action)
 
 SWFInitAction newSWFInitAction_MovieClip(SWFMovieClip clip, SWFAction action)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(600);
+#endif
 	SWFInitAction init = (SWFInitAction)malloc(sizeof(struct SWFInitAction_s));
 	SWFBlockInit(BLOCK(init));
 	BLOCK(init)->writeBlock = writeSWFInitActionToMethod;

@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2008 Klaus Rechert
@@ -50,6 +55,9 @@ newSWFShadow(float angle /* angle in radians */,
              float distance /* distance in px*/, 
              float strength /* strength */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(816);
+#endif
 	SWFShadow shadow = (SWFShadow)malloc(sizeof(struct Shadow_s));
 	
 	shadow->angle = angle;
@@ -82,6 +90,9 @@ newSWFBlur(float blurX /* horiz. blur amount */,
            float blurY /* vert. blur amount */, 
            int passes /* number of passes. shoub be <= 3 */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(817);
+#endif
 	SWFBlur blur = (SWFBlur)malloc(sizeof(struct Blur_s));
 
 	blur->blurX = blurX;
@@ -160,6 +171,9 @@ newSWFFilterMatrix(int cols /* number of cols */,
                    int rows /* number of rows */, 
                    float *vals /* vals[cols * rows]. Will be copied */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(818);
+#endif
 	SWFFilterMatrix matrix;
 
 	if(cols <= 0 || rows <= 0)
@@ -217,6 +231,9 @@ struct SWFFilter_s
 
 static void writeDropShadowFilter(SWFOutput out, struct DropShadowFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(819);
+#endif
 	int flags = FILTER_MODE_COMPOSITE;
 
 	SWFOutput_writeUInt8(out, filter->color.red);
@@ -238,6 +255,9 @@ static void writeDropShadowFilter(SWFOutput out, struct DropShadowFilter *filter
 
 static void writeBlurFilter(SWFOutput out, struct BlurFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(820);
+#endif
 	int flags = 0;
 
 	SWFOutput_writeFixed(out, filter->blur->blurX);
@@ -249,6 +269,9 @@ static void writeBlurFilter(SWFOutput out, struct BlurFilter *filter)
 
 static void writeGlowFilter(SWFOutput out, struct GlowFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(821);
+#endif
 	int flags = FILTER_MODE_COMPOSITE;
 
 	SWFOutput_writeUInt8(out, filter->color.red);
@@ -267,6 +290,9 @@ static void writeGlowFilter(SWFOutput out, struct GlowFilter *filter)
 
 static void writeBevelFilter(SWFOutput out, struct BevelFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(822);
+#endif
 	int flags = FILTER_MODE_COMPOSITE;
 
 	SWFOutput_writeUInt8(out, filter->shadowColor.red);
@@ -293,6 +319,9 @@ static void writeBevelFilter(SWFOutput out, struct BevelFilter *filter)
 
 static void writeGradientGlowFilter(SWFOutput out, struct GradientGlowFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(823);
+#endif
 	int flags = FILTER_MODE_COMPOSITE;
 
 	SWFOutput_writeGradientAsFilter(out, filter->gradient);
@@ -311,6 +340,9 @@ static void writeGradientGlowFilter(SWFOutput out, struct GradientGlowFilter *fi
 
 static void writeConvolutionFilter(SWFOutput out, struct ConvolutionFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(824);
+#endif
 	int i;
 
 	SWFOutput_writeUInt8(out, filter->matrix->cols);
@@ -340,6 +372,9 @@ static void writeColorMatrixFilter(SWFOutput out, struct ColorMatrixFilter *filt
 
 static void writeGradientBevelFilter(SWFOutput out, struct GradientBevelFilter *filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(825);
+#endif
 	int flags = FILTER_MODE_COMPOSITE;
 
 	SWFOutput_writeGradientAsFilter(out, filter->gradient);
@@ -359,6 +394,9 @@ static void writeGradientBevelFilter(SWFOutput out, struct GradientBevelFilter *
 void 
 SWFOutput_writeSWFFilter(SWFOutput out, SWFFilter filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(826);
+#endif
 	if(out == NULL || filter == NULL)
 		return;
 
@@ -398,6 +436,9 @@ SWFOutput_writeSWFFilter(SWFOutput out, SWFFilter filter)
 void 
 destroySWFFilter(SWFFilter filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(827);
+#endif
 	if(filter == NULL)
 		return;
 
@@ -444,6 +485,9 @@ destroySWFFilter(SWFFilter filter)
 SWFFilter
 newColorMatrixFilter(SWFFilterMatrix matrix /* matrix */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(828);
+#endif
 	SWFFilter filter;
 
 	if(matrix == NULL)
@@ -473,6 +517,9 @@ newConvolutionFilter(SWFFilterMatrix matrix /* matrix */,
                      SWFColor color /* default color */,
                      int flags /* FILTER_FLAG_CLAMP , FILTER_FLAG_PRESERVE_ALPHA */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(829);
+#endif
 	SWFFilter filter;
 	struct ConvolutionFilter *convolution;
 
@@ -506,6 +553,9 @@ newGradientBevelFilter(SWFGradient gradient /* gradient */,
                        SWFShadow shadow /* shadow */,
                        int flags /* FILTER_MODE_INNER,  FILTER_MODE_KO, FILTER_MODE_ONTOP */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(830);
+#endif
 	SWFFilter filter;
 	struct GradientBevelFilter *gBevel;
 	
@@ -536,6 +586,9 @@ newGradientGlowFilter(SWFGradient gradient /* gradient */,
                       SWFShadow shadow /* shadow */,
                       int flags /* FILTER_MODE_INNER,  FILTER_MODE_KO, FILTER_MODE_ONTOP */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(831);
+#endif
 	SWFFilter filter;
 	struct GradientGlowFilter *gGlow;
 
@@ -566,6 +619,9 @@ newBevelFilter(SWFColor shadowColor /* shadow color */,
                SWFShadow shadow /* shadow */,
                int flags /* FILTER_MODE_INNER,  FILTER_MODE_KO, FILTER_MODE_ONTOP */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(832);
+#endif
 	SWFFilter filter;
 	struct BevelFilter *bevel;
 
@@ -596,6 +652,9 @@ newGlowFilter(SWFColor color /* color of shadow */,
               float strength /* strength */, 
               int flags /* FILTER_MODE_INNER,  FILTER_MODE_KO */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(833);
+#endif
 	SWFFilter filter;
 	struct GlowFilter *glow;
 	
@@ -622,6 +681,9 @@ newGlowFilter(SWFColor color /* color of shadow */,
 SWFFilter 
 newBlurFilter(SWFBlur blur /* blur */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(834);
+#endif
 	SWFFilter filter;
 	struct BlurFilter *b;
 	if(blur == NULL)
@@ -645,6 +707,9 @@ newDropShadowFilter(SWFColor color /* color of shadow */,
                     SWFShadow shadow /* shadow */, 
                     int flags /* FILTER_MODE_INNER,  FILTER_MODE_KO */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(835);
+#endif
 	struct DropShadowFilter *dropShadow;
 	SWFFilter filter;
 
@@ -683,6 +748,9 @@ void SWFFilterList_add(SWFFilterList list, SWFFilter filter)
 
 void SWFOutput_writeFilterList(SWFOutput out, SWFFilterList list)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(836);
+#endif
 	int i;
 	if(list->numFilter <= 0)
 		return;

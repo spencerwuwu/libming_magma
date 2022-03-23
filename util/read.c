@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2011      Sandro Santilli <strk@keybit.net>
@@ -43,6 +48,9 @@ void byteAlign()
 
 int readBits(FILE *f, int number)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(18);
+#endif
   int ret = buffer;
   int tmp_char;
 
@@ -114,6 +122,9 @@ int readSBits(FILE *f, int number)
 
 void readRect(FILE *f, struct Rect *s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(19);
+#endif
   int nBits;
   byteAlign();
 
@@ -126,6 +137,9 @@ void readRect(FILE *f, struct Rect *s)
 
 int readUInt8(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(20);
+#endif
   int tmp_char = fgetc(f);
   // the rest of the code does not handle errors and use EOF as a valid unsigned char value
   if (tmp_char == EOF)
@@ -167,6 +181,9 @@ unsigned long readUInt32(FILE *f)
 
 double readDouble(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(21);
+#endif
   union {
     char c[8];
     double d;
@@ -198,6 +215,9 @@ double readDouble(FILE *f)
 
 float readFloat(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(22);
+#endif
   union {
     char c[4];
     float f;
@@ -221,6 +241,9 @@ float readFloat(FILE *f)
 
 char *readBytes(FILE *f,int size)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(23);
+#endif
   int i;
   char *buf;
 
@@ -236,6 +259,9 @@ char *readBytes(FILE *f,int size)
 
 char *readString(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(24);
+#endif
   int len = 0, buflen = 256;
   char c, *buf, *p;
 
@@ -285,6 +311,9 @@ static inline int hasNextByte(unsigned int b)
 
 signed long readEncSInt32(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(25);
+#endif
 	signed long result = 0, temp;
 	int shift = 0;
 	do
@@ -301,6 +330,9 @@ signed long readEncSInt32(FILE *f)
 
 unsigned long readEncUInt30(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(26);
+#endif
 	unsigned long result = 0, temp;
 	int shift = 0;
 	do
@@ -321,6 +353,9 @@ unsigned long readEncUInt30(FILE *f)
 
 unsigned long readEncUInt32(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(27);
+#endif
 	unsigned long result = 0, temp;
 	int shift = 0;
 	do
@@ -338,6 +373,9 @@ unsigned long readEncUInt32(FILE *f)
 
 char *readSizedString(FILE *f,int size)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(28);
+#endif
   int len = 0, buflen = 256, i;
   char c, *buf, *p;
 
@@ -376,6 +414,9 @@ char *readSizedString(FILE *f,int size)
 
 void _dumpBytes(FILE *f, int length, int restore)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(29);
+#endif
   int j=0, i, k, l=0, offset=0;
   unsigned char buf[16];
 
@@ -449,6 +490,9 @@ void peekBytes(FILE *f, int length)
 
 void dumpBuffer(unsigned char *buf, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(30);
+#endif
   int j=0, i, k, l=0;
 
   if(length<=0)

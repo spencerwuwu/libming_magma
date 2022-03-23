@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -120,6 +125,9 @@ static int numBlocks = sizeof (blocks) / sizeof (struct SWFBlock);
 const char *
 blockName (SWFBlocktype header)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(32);
+#endif
   int i;
 
   for (i = 0; i < numBlocks; i++)
@@ -136,6 +144,9 @@ blockName (SWFBlocktype header)
 SWF_Parserstruct *
 blockParse (FILE *f, int length, SWFBlocktype header)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(33);
+#endif
   int i;
 
   for (i = 0; i < numBlocks; i++)

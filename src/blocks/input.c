@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -69,6 +74,9 @@ SWFInput_byteAlign(SWFInput input)
 int
 SWFInput_readBits(SWFInput input, int number)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(663);
+#endif
 	int ret = input->buffer;
 	if ( number == input->bufbits )
 	{
@@ -253,6 +261,9 @@ SWFInput_dtor(SWFInput input)
 static void
 SWFInput_file_seek(SWFInput input, long offset, int whence)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(664);
+#endif
 	if ( fseek((FILE *)input->data, offset, whence) == -1 )
 	{
 		if ( errno == EBADF )
@@ -284,6 +295,9 @@ SWFInput_file_eof(SWFInput input)
 static int
 SWFInput_file_getChar(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(665);
+#endif
 	int c = fgetc((FILE *)input->data);
 
 	if ( c == EOF )
@@ -303,6 +317,9 @@ static int SWFInput_file_read(SWFInput input, unsigned char *buffer, int count)
 SWFInput
 newSWFInput_file(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(666);
+#endif
 	SWFInput input;
 	struct stat buf;
 
@@ -348,6 +365,9 @@ static void SWFInput_dtor_close(SWFInput input)
 SWFInput
 newSWFInput_filename(const char *filename)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(667);
+#endif
 	FILE *file;
 	SWFInput input;
 	
@@ -390,6 +410,9 @@ SWFInput_buffer_eof(SWFInput input)
 static int
 SWFInput_buffer_read(SWFInput input, unsigned char* buffer, int count)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(668);
+#endif
 	if ( count > input->length - input->offset )
 		count = input->length - input->offset;
 
@@ -403,6 +426,9 @@ SWFInput_buffer_read(SWFInput input, unsigned char* buffer, int count)
 static void
 SWFInput_buffer_seek(SWFInput input, long offset, int whence)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(669);
+#endif
 	if ( whence == SEEK_CUR )
 	{
 		if ( offset >= 0 )
@@ -422,6 +448,9 @@ SWFInput_buffer_seek(SWFInput input, long offset, int whence)
 SWFInput
 newSWFInput_buffer(unsigned char* buffer, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(670);
+#endif
 	SWFInput input = (SWFInput) malloc(sizeof(struct SWFInput_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -474,6 +503,9 @@ newSWFInput_allocedBuffer(unsigned char *buffer, int length)
 SWFInput
 newSWFInput_bufferCopy(unsigned char *buffer, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(671);
+#endif
 	SWFInput input;
 	unsigned char *data = (unsigned char *)malloc(length);
 	if(data == NULL)
@@ -506,6 +538,9 @@ struct SWFInputStreamData
 static void
 SWFInput_stream_seek(SWFInput input, long offset, int whence)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(672);
+#endif
 	int len, l, readOffset;
 	struct SWFInputStreamData *data;
 
@@ -556,6 +591,9 @@ SWFInput_stream_seek(SWFInput input, long offset, int whence)
 static int
 SWFInput_stream_getChar(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(673);
+#endif
 	struct SWFInputStreamData *data = (struct SWFInputStreamData *) input->data;
 
 	if (input->offset >= MAX_INPUTSTREAM)
@@ -598,6 +636,9 @@ SWFInput_stream_getChar(SWFInput input)
 static int
 SWFInput_stream_read(SWFInput input, unsigned char* buffer, int count)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(674);
+#endif
 	struct SWFInputStreamData *data = (struct SWFInputStreamData *) input->data;
 	int need = input->offset + count - input->length;
 
@@ -645,6 +686,9 @@ static int SWFInput_stream_eof(SWFInput input)
 SWFInput
 newSWFInput_stream(FILE* f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(675);
+#endif
 	SWFInput input = (SWFInput)malloc(sizeof(struct SWFInput_s));
 	struct SWFInputStreamData *data;
 
@@ -694,6 +738,9 @@ struct SWFInputPtr
 static int
 SWFInput_input_getChar(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(676);
+#endif
 	struct SWFInputPtr *ptr;
  	int old_offset, result;
 
@@ -715,6 +762,9 @@ SWFInput_input_getChar(SWFInput input)
 static void
 SWFInput_input_seek(SWFInput input, long offset, int whence)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(677);
+#endif
 	if ( whence == SEEK_CUR )
 	{
 		if ( offset >= 0 )
@@ -751,6 +801,9 @@ SWFInput_input_dtor(SWFInput input)
 static int
 SWFInput_input_read(SWFInput input, unsigned char* buffer, int count)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(678);
+#endif
 	int ret;
 	struct SWFInputPtr *ptr;
 	int old_offset;
@@ -775,6 +828,9 @@ SWFInput_input_read(SWFInput input, unsigned char* buffer, int count)
 SWFInput
 newSWFInput_input(SWFInput in, unsigned int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(679);
+#endif
 	SWFInput input;
 	struct SWFInputPtr *data;
 

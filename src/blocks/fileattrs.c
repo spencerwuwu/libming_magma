@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2001  Opaque Industries - http://www.opaque.net/
@@ -32,6 +37,9 @@
 static void
 writeSWFFileAttributesToMethod(SWFBlock block, SWFByteOutputMethod method, void* data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(846);
+#endif
 
 	int flags = 0;
 	SWFFileAttributes fattrs = (SWFFileAttributes)block;
@@ -79,6 +87,9 @@ SWFFileAttributes_useNetwork(SWFFileAttributes fattrs, int flag)
 SWFFileAttributes
 newSWFFileAttributes()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(847);
+#endif
         SWFFileAttributes fattrs= (SWFFileAttributes)malloc(sizeof(struct SWFFileAttributes_s));
 
         SWFBlockInit(BLOCK(fattrs));

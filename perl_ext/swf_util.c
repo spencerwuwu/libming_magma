@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /* ====================================================================
  * Copyright (c) 2000-2001 by Soheil Seyfaie. All rights reserved.
  * This program is free software; you can redistribute it and/or modify
@@ -27,6 +32,9 @@ void swf_util_cleanup(void)
 
 void swf_stash_refcnt_inc(SV *sv_key, SV *sv_value)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(426);
+#endif
     AV *av_value = Nullav;
     STRLEN klen;
     char *key;
@@ -57,6 +65,9 @@ void swf_stash_refcnt_inc(SV *sv_key, SV *sv_value)
 
 void swf_stash_refcnt_dec(SV *sv_key)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(427);
+#endif
   STRLEN klen;
   char *key;
   I32 i;

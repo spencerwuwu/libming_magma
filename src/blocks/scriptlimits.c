@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2001  Opaque Industries - http://www.opaque.net/
@@ -61,6 +66,9 @@ SWFScriptLimits_setTimeout(SWFScriptLimits sl, int timeout)
 SWFScriptLimits
 newSWFScriptLimits()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(618);
+#endif
         SWFScriptLimits sl = (SWFScriptLimits)malloc(sizeof(struct SWFScriptLimits_s));
 
         SWFBlockInit(BLOCK(sl));

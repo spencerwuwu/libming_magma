@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2001  Opaque Industries - http://www.opaque.net/
@@ -49,6 +54,9 @@ destroySWFMetadata(SWFMetadata metadata)
 SWFMetadata
 newSWFMetadata(const char *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(791);
+#endif
 	SWFMetadata metadata = (SWFMetadata)malloc(sizeof(struct SWFMetadata_s));
 
 	SWFBlockInit(BLOCK(metadata));

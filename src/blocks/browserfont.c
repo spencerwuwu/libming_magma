@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -50,6 +55,9 @@ void writeSWFBrowserFontToMethod(SWFBlock block,
 static void
 finishBrowserFont(SWFBrowserFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(910);
+#endif
 	unsigned int i;
 	SWFOutput out;
 	SWF_assert(BLOCK(font)->swfVersion);
@@ -105,6 +113,9 @@ destroySWFBrowserFont(SWFBrowserFont font)
 SWFBrowserFont
 newSWFBrowserFont(const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(911);
+#endif
 	SWFBrowserFont font = (SWFBrowserFont) malloc(sizeof(struct SWFBrowserFont_s));
 
 	SWFCharacterInit((SWFCharacter)font);

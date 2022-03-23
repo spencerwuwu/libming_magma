@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
  * raw2adpcm converts a raw sound data to adpcm compressed.
  * This is based on adpcm.cpp found at http://www.openswf.org .
@@ -56,6 +61,9 @@ static const int piStepSizeTable[89] =
 };
 
 void writeADPCMData(short *samples, int stereo, int sample_count, SWFOutput output) {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(73);
+#endif
   int nBits = 4;  /* number of bits per ADPCM sample */
   int iSignBit = 1 << (nBits-1);  /* Sign bit mask */
   const int*  piIndexTable = ppiIndexTables[nBits-2];  /* Select index table to use */

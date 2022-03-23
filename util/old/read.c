@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -31,6 +36,9 @@ void warning(char *s, ...)
 
 char *indent()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(356);
+#endif
   int i;
 
   if(gIndent>63)
@@ -63,6 +71,9 @@ void byteAlign()
 
 int readBits(FILE *f, int number)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(357);
+#endif
   int ret = buffer;
   int tmp_char;
 
@@ -134,6 +145,9 @@ int readSBits(FILE *f, int number)
 
 int readUInt8(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(358);
+#endif
   int tmp_char = fgetc(f);
   // the rest of the code does not handle errors and use EOF as a valid unsigned char value
   if (tmp_char == EOF)
@@ -175,6 +189,9 @@ unsigned long readUInt32(FILE *f)
 
 double readDouble(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(359);
+#endif
   char data[8];
 
   data[4] = readUInt8(f);
@@ -191,6 +208,9 @@ double readDouble(FILE *f)
 
 char *readString(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(360);
+#endif
   int len = 0, buflen = 256;
   char c, *buf, *p;
 
@@ -228,6 +248,9 @@ char *readString(FILE *f)
 
 void dumpBytes(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(361);
+#endif
   int j=0, i, k, l=0;
   unsigned char buf[16];
 
@@ -283,6 +306,9 @@ void dumpBytes(FILE *f, int length)
 
 void dumpBuffer(unsigned char *buf, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(362);
+#endif
   int j=0, i, k, l=0;
 
   if(length<=0)

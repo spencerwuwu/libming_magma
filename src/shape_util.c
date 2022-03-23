@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -220,6 +225,9 @@ void SWFShape_drawCircle(SWFShape shape, double r)
 
 void SWFShape_drawArc(SWFShape shape, double r, double startAngle, double endAngle)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(474);
+#endif
 	int i, nSegs;
 	double controlx, controly, anchorx, anchory, x, y;
 	double angle, subangle, controlRadius;

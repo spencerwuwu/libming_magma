@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  makeswf - a command line actionscript compiler
@@ -93,6 +98,9 @@ makeswf_set_swfversion(int value)
 SWFAction
 makeswf_compile_source(const char* filename, const char* ppfile, int debug)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(81);
+#endif
 	SWFAction ac;
 	char *code;
 	char ppfile_fallback[PATH_MAX];        /* preprocessed file */
@@ -153,6 +161,9 @@ makeswf_compile_source(const char* filename, const char* ppfile, int debug)
 static void
 printCompileMessage(SWFMsgFunc func)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(82);
+#endif
    char *ptr1;
 
    fprintf(stderr, "  %s\n", strtok(lastcompilemessage, "\n"));
@@ -171,6 +182,9 @@ printCompileMessage(SWFMsgFunc func)
 static void 
 compileError(const char *fmt, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(83);
+#endif
 	char *msg;
 	va_list ap;
 	size_t msglen;
@@ -203,6 +217,9 @@ compileError(const char *fmt, ...)
 static char *
 makeswf_readfile (const char *file)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(84);
+#endif
    FILE *fd;
    struct stat buf;
    int size;
@@ -238,6 +255,9 @@ makeswf_readfile (const char *file)
 static int
 makeswf_preprocess (const char *file, const char *out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(85);
+#endif
 	char buf[1024];
 	int ret;
 	struct stat statbuf;

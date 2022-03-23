@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /* $Id$ */
 
 
@@ -47,6 +52,9 @@ SWFDBLBitmapData newSWFDBLBitmapData_fromGifFile(const char * fileName)
  */
 int getTransparentColor(GifFileType * file)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(725);
+#endif
 	int i,returnvalue=-1;
 	ExtensionBlock * ext = file->SavedImages[0].ExtensionBlocks;
  
@@ -65,6 +73,9 @@ int getTransparentColor(GifFileType * file)
 int
 readGif(GifFileType *file, dblData result)
 {	
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(726);
+#endif
 	ColorMapObject *colorMap;
 	unsigned char *bits;
 	unsigned char *data;
@@ -229,6 +240,9 @@ readGif(GifFileType *file, dblData result)
 
 SWFDBLBitmapData newSWFDBLBitmapData_fromGifFile(const char *fileName)
 {	GifFileType *file;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(727);
+#endif
 	SWFDBLBitmapData ret;
 	struct dbl_data gifdata;
 
@@ -252,6 +266,9 @@ static int gifReadFunc(GifFileType *gif, unsigned char *buf, int len)
 
 SWFDBLBitmapData newSWFDBLBitmapData_fromGifInput(SWFInput input)
 {	GifFileType *file;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(728);
+#endif
 	SWFDBLBitmapData ret;
 	struct dbl_data gifdata;
 

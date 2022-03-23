@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -50,6 +55,9 @@ struct SWFSoundInstance_s
 void writeSWFSoundInstanceToMethod(SWFBlock block,
 																	 SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(750);
+#endif
 	SWFSoundInstance sound;
 	byte flags;
 	int i;
@@ -99,6 +107,9 @@ void writeSWFSoundInstanceToMethod(SWFBlock block,
 
 int completeSWFSoundInstance(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(751);
+#endif
 	SWFSoundInstance sound;
 	byte flags;
 
@@ -125,6 +136,9 @@ void SWFSoundInstance_addEnvelope(SWFSoundInstance inst,
                                   short left /* volume left channel */, 
                                   short right /* volume right channel */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(752);
+#endif
 	inst->flags |= SWF_SOUNDINFO_HASENVELOPE;
 	inst->envPoints = (envPoint*) realloc(inst->envPoints, 
 		(inst->numEnvPoints + 1) * sizeof(envPoint));
@@ -140,6 +154,9 @@ void SWFSoundInstance_addEnvelope(SWFSoundInstance inst,
  */
 SWFSoundInstance newSWFSoundInstance(SWFSound sound)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(753);
+#endif
 	SWFSoundInstance instance = (SWFSoundInstance)malloc(sizeof(struct SWFSoundInstance_s));
 	SWFBlock block = (SWFBlock)instance;
 

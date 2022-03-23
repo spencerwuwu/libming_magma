@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
 		Ming, an SWF output library
 		Copyright (C) 2002	Opaque Industries - http://www.opaque.net/
@@ -69,6 +74,9 @@ struct SWFFontCharacter_s
 void
 SWFFont_buildReverseMapping(SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(858);
+#endif
 	int i;
 
 	if ( font->flags & SWF_FONT_WIDECODES )
@@ -117,6 +125,9 @@ SWFFontCharacter_dumpTable(SWFFontCharacter);
 static int
 completeSWFFontCharacter(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(859);
+#endif
 	SWFFontCharacter inst = (SWFFontCharacter)block;
 	SWFFont font = inst->font;
 	SWFOutput buffer;
@@ -206,6 +217,9 @@ writeSWFFontCharacterToMethod(SWFBlock block,
 void
 destroySWFFont(SWFFont font)
 {	
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(860);
+#endif
 	if(font->shapes)
 	{
 		int i = 0;
@@ -254,6 +268,9 @@ destroySWFFont(SWFFont font)
 void
 destroySWFFontCharacter(SWFFontCharacter font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(861);
+#endif
 	struct textList* text = font->textList;
 
 	while ( text != NULL )
@@ -274,6 +291,9 @@ destroySWFFontCharacter(SWFFontCharacter font)
 SWFFont
 newSWFFont()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(862);
+#endif
 	SWFFont font = (SWFFont) malloc(sizeof(struct SWFFont_s));
 
 	SWFBlockInit((SWFBlock)font);
@@ -308,6 +328,9 @@ newSWFFont()
 // file magic: fonts:0 string  \000\001\000\000\000    TrueType font data
 static inline int true_type_check(char *header)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(863);
+#endif
 	if(header[0] == 0 && 
 		header[1] == 1 && 
 		header[2] == 0 && 
@@ -341,6 +364,9 @@ static inline int ttc_check(char *header)
  */
 SWFFontCollection newSWFFontCollection_fromFile(const char *filename /* filename */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(864);
+#endif
 	FILE *file;
 	char header[5];
 	file = fopen(filename, "rb");	
@@ -384,6 +410,9 @@ SWFFontCollection newSWFFontCollection_fromFile(const char *filename /* filename
  */
 SWFFont newSWFFont_fromFile(const char *filename /* filename for fontfile */)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(865);
+#endif
 	FILE *file;
 	char header[5];
 	file = fopen(filename, "rb");	
@@ -429,6 +458,9 @@ SWFFont newSWFFont_fromFile(const char *filename /* filename for fontfile */)
 SWFFontCharacter
 newSWFFontCharacter(SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(866);
+#endif
 	SWFFontCharacter inst;
 
 	inst = (SWFFontCharacter) malloc(sizeof(struct SWFFontCharacter_s));
@@ -457,6 +489,9 @@ newSWFFontCharacter(SWFFont font)
 SWFFontCharacter
 newSWFDummyFontCharacter()
 {	SWFFontCharacter ret = (SWFFontCharacter) malloc(sizeof (struct SWFFontCharacter_s));
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(867);
+#endif
 	SWFCharacterInit((SWFCharacter) ret);
 	BLOCK(ret)->type = SWF_DEFINEFONT;
 	BLOCK(ret)->complete = completeSWFImportCharacter;
@@ -475,6 +510,9 @@ newSWFDummyFontCharacter()
 int
 SWFFont_findGlyphCode(SWFFont font, unsigned short c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(868);
+#endif
 	if ( font->flags & SWF_FONT_WIDECODES )
 	{
 		byte high = c >> 8;
@@ -509,6 +547,9 @@ SWFFontCharacter_addTextToList(SWFFontCharacter font, SWFTextRecord text)
 static int
 findCodeValue(unsigned short c, unsigned short* list, int start, int end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(869);
+#endif
 	int pos;
 
 	if ( start == end )
@@ -533,6 +574,9 @@ findCodeValue(unsigned short c, unsigned short* list, int start, int end)
 void
 SWFFontCharacter_addCharToTable(SWFFontCharacter font, unsigned short c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(870);
+#endif
 	// insert the char into font's codeTable if it isn't already there
 
 	int p;
@@ -608,6 +652,9 @@ void
 SWFFontCharacter_exportCharacterRange(SWFFontCharacter font,
 						 unsigned short start, unsigned short end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(871);
+#endif
 	// insert the char into font's codeTable if it isn't already there
 
 	//int p = findCodeValue(start, font->codeTable, 0, font->nGlyphs);
@@ -620,6 +667,9 @@ SWFFontCharacter_exportCharacterRange(SWFFontCharacter font,
 int
 SWFFontCharacter_findGlyphCode(SWFFontCharacter font, unsigned short c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(872);
+#endif
 	// return the index in font->codeTable for the given character
 
 	int p = findCodeValue(c, font->codeTable, 0, font->nGlyphs);
@@ -633,6 +683,9 @@ SWFFontCharacter_findGlyphCode(SWFFontCharacter font, unsigned short c)
 static void 
 SWFFontCharacter_dumpTable(SWFFontCharacter fc)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(873);
+#endif
 	int i;
 	SWFFont font = fc->font;
 	for (i = 0; i < font->nGlyphs; ++i)
@@ -645,6 +698,9 @@ SWFFontCharacter_dumpTable(SWFFontCharacter fc)
 static void
 SWFFontCharacter_resolveTextCodes(SWFFontCharacter font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(874);
+#endif
 	struct textList* text = font->textList;
 	unsigned short* string;
 	int len, i;
@@ -716,6 +772,9 @@ SWFFontCharacter_getNGlyphs(SWFFontCharacter font)
 int
 SWFFont_getScaledWideStringWidth(SWFFont font,const unsigned short* string, int len)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(875);
+#endif
 	/* return length of given string in whatever units these are we're using */
 
 	int i;
@@ -746,6 +805,9 @@ SWFFont_getScaledWideStringWidth(SWFFont font,const unsigned short* string, int 
 int
 SWFFont_getScaledStringWidth(SWFFont font, const char* string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(876);
+#endif
 	unsigned short* widestr;
 	int len = strlen(string);
 	int n, width;
@@ -760,6 +822,9 @@ SWFFont_getScaledStringWidth(SWFFont font, const char* string)
 int
 SWFFont_getScaledUTF8StringWidth(SWFFont font, const char* string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(877);
+#endif
 	unsigned short* widestr;
 	int len = UTF8ExpandString(string, &widestr);
 	int width = SWFFont_getScaledWideStringWidth(font, widestr, len);
@@ -824,6 +889,9 @@ SWFFont_getGlyphBounds(SWFFont font, unsigned short glyphcode)
 int
 SWFFont_getCharacterAdvance(SWFFont font, unsigned short glyphcode)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(878);
+#endif
 	if ( font->advances )
 	{
 		if ( glyphcode >= font->nGlyphs )
@@ -839,6 +907,9 @@ SWFFont_getCharacterAdvance(SWFFont font, unsigned short glyphcode)
 int
 SWFFont_getCharacterKern(SWFFont font, unsigned short code1, unsigned short code2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(879);
+#endif
 	int j = font->kernCount;
 
 	// XXX - kernTable should be sorted to make this faster
@@ -873,6 +944,9 @@ SWFFont_getCharacterKern(SWFFont font, unsigned short code1, unsigned short code
 
 SWFShape SWFFont_getGlyph(SWFFont font, unsigned short c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(880);
+#endif
 	int index;
 
 	index = SWFFont_findGlyphCode(font, c);
@@ -884,6 +958,9 @@ SWFShape SWFFont_getGlyph(SWFFont font, unsigned short c)
 
 void SWFFontCollection_addFont(SWFFontCollection collection, SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(881);
+#endif
 	if(!collection || !font)
 		return;
 
@@ -895,6 +972,9 @@ void SWFFontCollection_addFont(SWFFontCollection collection, SWFFont font)
 
 void destroySWFFontCollection(SWFFontCollection collection)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(882);
+#endif
 	int i;
 	if(!collection)
 		return;
@@ -907,6 +987,9 @@ void destroySWFFontCollection(SWFFontCollection collection)
 
 SWFFontCollection newSWFFontCollection()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(883);
+#endif
 	SWFFontCollection collection;
 
 	collection = (SWFFontCollection) malloc(sizeof(struct SWFFontCollection_s));
@@ -933,6 +1016,9 @@ SWFFont SWFFontCollection_getFont(SWFFontCollection collection, int index)
 
 SWFFont *SWFFontCollection_getFonts(SWFFontCollection collection, int *count)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(884);
+#endif
 	if(!collection)
 	{
 		*count = 0;

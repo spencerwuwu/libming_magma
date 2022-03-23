@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /****************************************************************************
  *
  *  Copyright (C) 2005-2006 "Stuart R. Anderson" <anderson@netsweng.com>
@@ -142,6 +147,9 @@ outputswfSWF_RECT (SWFOutput out,SWF_RECT * rect)
 void
 outputSWF_MATRIX (SWF_MATRIX * matrix, char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(182);
+#endif
   printf (" Matrix: ");
   if (matrix->HasScale)
     {
@@ -160,6 +168,9 @@ outputSWF_MATRIX (SWF_MATRIX * matrix, char *name)
 void
 outputSWF_BUTTONRECORD (SWF_BUTTONRECORD *brec)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(183);
+#endif
   printf (" BUTTONRECORD: ");
   printf ("  ButtonStateHitTest: %d ", brec->ButtonStateHitTest);
   printf ("  ButtonStateDown: %d ", brec->ButtonStateDown);
@@ -172,6 +183,9 @@ outputSWF_BUTTONRECORD (SWF_BUTTONRECORD *brec)
 void
 outputSWF_BUTTONCONDACTION (SWF_BUTTONCONDACTION *bcarec)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(184);
+#endif
 #if 0
 #ifdef NODECOMPILE
   int i;
@@ -204,6 +218,9 @@ outputSWF_BUTTONCONDACTION (SWF_BUTTONCONDACTION *bcarec)
 void
 outputSWF_CLIPEVENTFLAGS (SWF_CLIPEVENTFLAGS * clipevflags )
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(185);
+#endif
   printf ("  ClipEventKeyUp: %d ", clipevflags->ClipEventKeyUp);
   printf ("  ClipEventKeyDown: %d ", clipevflags->ClipEventKeyDown);
   printf ("  ClipEventMouseUp: %d ", clipevflags->ClipEventMouseUp);
@@ -228,6 +245,9 @@ outputSWF_CLIPEVENTFLAGS (SWF_CLIPEVENTFLAGS * clipevflags )
 void
 outputSWF_CLIPACTIONRECORD (SWF_CLIPACTIONRECORD * carec )
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(186);
+#endif
 #if 0
 #ifdef NODECOMPILE
   int i;
@@ -250,6 +270,9 @@ outputSWF_CLIPACTIONRECORD (SWF_CLIPACTIONRECORD * carec )
 void
 outputSWF_CLIPACTIONS (SWF_CLIPACTIONS * clipactions )
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(187);
+#endif
   int i;
 #if !defined(ACTIONONLY)
   outputSWF_CLIPEVENTFLAGS (&clipactions->AllEventFlags);
@@ -280,6 +303,9 @@ outputSWF_GRADIENT (SWF_GRADIENT * gradient, char *name)
 void
 outputSWF_FILLSTYLE (SWF_FILLSTYLE * fillstyle, char *name, int i)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(188);
+#endif
   printf (" FillStyle: ");
   printf (" FillStyleType: %x\n", fillstyle->FillStyleType);
   switch (fillstyle->FillStyleType)
@@ -305,6 +331,9 @@ outputSWF_FILLSTYLE (SWF_FILLSTYLE * fillstyle, char *name, int i)
 void
 outputSWF_FILLSTYLEARRAY (SWF_FILLSTYLEARRAY * fillstylearray, char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(189);
+#endif
   int count, i;
 
   printf (" FillStyleArray: ");
@@ -332,6 +361,9 @@ outputSWF_LINESTYLE (SWF_LINESTYLE * fillstyle, char *name, int i)
 void
 outputSWF_LINESTYLEARRAY (SWF_LINESTYLEARRAY * linestylearray, char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(190);
+#endif
 
   int count, i;
 
@@ -353,6 +385,9 @@ outputSWF_LINESTYLEARRAY (SWF_LINESTYLEARRAY * linestylearray, char *name)
 void
 outputswfSWF_SHAPERECORD (SWF_SHAPERECORD * shaperec, SWFOutput out, int fillBits, int lineBits)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(191);
+#endif
   SWFOutput_writeBits(out,shaperec->EndShape.TypeFlag,1);
   if (shaperec->EndShape.TypeFlag)
     {
@@ -420,6 +455,9 @@ outputswfSWF_SHAPERECORD (SWF_SHAPERECORD * shaperec, SWFOutput out, int fillBit
 SWFOutput
 outputswfSWF_SHAPE (SWF_SHAPE * shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(192);
+#endif
   SWFOutput out;
   int i;
 
@@ -438,6 +476,9 @@ outputswfSWF_SHAPE (SWF_SHAPE * shape)
 void
 outputSWF_SHAPEWITHSTYLE (SWF_SHAPEWITHSTYLE * shape, int level, char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(193);
+#endif
 /*
   int i;
 
@@ -462,6 +503,9 @@ outputSWF_GLYPHENTRY (SWF_GLYPHENTRY *gerec)
 void
 outputSWF_TEXTRECORD (SWF_TEXTRECORD *trec, int level)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(194);
+#endif
   int i;
   printf (" TEXTRECORD: ");
   printf ("  TextRecordType: %d ", trec->TextRecordType);
@@ -545,6 +589,9 @@ outputSWF_DEFINEBUTTON (SWF_Parserstruct * pblock)
 void
 outputSWF_DEFINEBUTTON2 (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(195);
+#endif
   int i;
   OUT_BEGIN (SWF_DEFINEBUTTON2);
 
@@ -586,6 +633,9 @@ outputSWF_DEFINECOMMANDOBJ (SWF_Parserstruct * pblock)
 void
 outputSWF_DEFINEEDITTEXT (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(196);
+#endif
   OUT_BEGIN (SWF_DEFINEEDITTEXT);
 
   printf (" CharacterID: %d\n", sblock->CharacterID);
@@ -644,6 +694,9 @@ outputSWF_DEFINEFONT (SWF_Parserstruct * pblock)
 SWFOutput
 outputSWF_DEFINEFONT2 (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(197);
+#endif
   SWFOutput hdr0,hdr1,offsettbl,*glyphdata;
   int i,size, glyphbase;
   OUT_BEGIN (SWF_DEFINEFONT2);
@@ -861,6 +914,9 @@ outputSWF_DEFINESPRITE (SWF_Parserstruct * pblock)
 void
 outputSWF_DEFINETEXT (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(198);
+#endif
   int i;
   OUT_BEGIN (SWF_DEFINETEXT);
 
@@ -879,6 +935,9 @@ outputSWF_DEFINETEXT (SWF_Parserstruct * pblock)
 void
 outputSWF_DEFINETEXT2 (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(199);
+#endif
   int i;
   OUT_BEGIN (SWF_DEFINETEXT2);
 
@@ -917,6 +976,9 @@ outputSWF_DEFINEVIDEOSTREAM (SWF_Parserstruct * pblock)
 void
 outputSWF_DOACTION (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(200);
+#endif
 #if 0
 #ifdef NODECOMPILE
 	int i;
@@ -951,6 +1013,9 @@ outputSWF_END (SWF_Parserstruct * pblock)
 void
 outputSWF_EXPORTASSETS (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(201);
+#endif
   int i;
   OUT_BEGIN (SWF_EXPORTASSETS);
 
@@ -1008,6 +1073,9 @@ outputSWF_GENCOMMAND (SWF_Parserstruct * pblock)
 void
 outputSWF_IMPORTASSETS (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(202);
+#endif
   int i;
   OUT_BEGIN (SWF_IMPORTASSETS);
 
@@ -1052,6 +1120,9 @@ outputSWF_PLACEOBJECT (SWF_Parserstruct * pblock)
 void
 outputSWF_PLACEOBJECT2 (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(203);
+#endif
   OUT_BEGIN (SWF_PLACEOBJECT2);
 
 #if !defined(ACTIONONLY)
@@ -1181,6 +1252,9 @@ outputSWF_SYNCFRAME (SWF_Parserstruct * pblock)
 void
 outputSWF_INITACTION (SWF_Parserstruct * pblock)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(204);
+#endif
 #if 0
 #ifdef NODECOMPILE
 	int i;
@@ -1216,6 +1290,9 @@ swfout=newSWFOutput();
 void
 outputTrailer (struct Movie *m)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(205);
+#endif
 SWFOutput out;
 
 out=newSizedSWFOutput(30);
@@ -1245,6 +1322,9 @@ destroySWFOutput(out);
 void
 outputBlock (int type, SWF_Parserstruct * blockp, FILE* stream)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(206);
+#endif
   SWFOutput blkout;
   int i;
 

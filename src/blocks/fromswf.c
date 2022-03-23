@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -72,6 +77,9 @@ destroySWFPrebuiltClip(SWFPrebuiltClip clip)
 SWFPrebuiltClip
 newSWFPrebuiltClip()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(687);
+#endif
 	SWFPrebuiltClip clip = (SWFPrebuiltClip)malloc(sizeof(struct SWFPrebuiltClip_s));
 
 	SWFCharacterInit((SWFCharacter)clip);
@@ -110,6 +118,9 @@ destroySWFPrebuilt(SWFPrebuilt defines)
 SWFPrebuilt
 newSWFPrebuilt()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(688);
+#endif
 	SWFPrebuilt data = (SWFPrebuilt)malloc(sizeof(struct SWFPrebuilt_s));
 	
 	SWFBlockInit((SWFBlock)data);
@@ -138,6 +149,9 @@ typedef struct bitstream *BITS;
 static int
 getbits(BITS bp, int nbits)
 {	int res = 0, nb, db;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(689);
+#endif
 	for(nb = 0 ; nb < nbits ; nb += db)
 	{	if(bp->bitoff == 0)
 		{	bp->lastch = bp->readc(bp);
@@ -163,6 +177,9 @@ getsbits(BITS bp, int nbits)
 /* rectangle */
 static void rect(BITS bp)
 {	int nbits, xmin, xmax, ymin, ymax;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(690);
+#endif
 	nbits = getbits(bp, 5);
 	xmin = getbits(bp, nbits);
 	xmax = getbits(bp, nbits);
@@ -174,6 +191,9 @@ static void rect(BITS bp)
 /* matrix */
 static void matrix(BITS bp)
 {	int hasscale, nscalebits, scalex, scaley;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(691);
+#endif
 	int hasrotate, nrotatebits, rotateskew0, rotateskew1;
 	int ntranslatebits, translatex, translatey;
 	if((hasscale = getbits(bp, 1)))
@@ -269,6 +289,9 @@ static void swfseek(struct swfile *sp, int delta)
 
 static struct swfile *openswf(SWFInput input)
 {	struct swfile *res = (struct swfile *)malloc(sizeof(struct swfile));
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(692);
+#endif
 	SWFInput_read(input, res->vers, 4);
 	if(memcmp(res->vers, "FWS", 3) && memcmp(res->vers, "CWS", 3))
 		SWF_error("input not a SWF stream\n");
@@ -326,6 +349,9 @@ static unsigned char treadc(TAG tp)
 
 static TAG readtag_common(BITS bp)
 {	TAG res = (TAG) malloc(sizeof(struct swftag));
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(693);
+#endif
 	res->type = readint2(bp);
 	res->size = res->type & 63;
 	putint2(res->hdr, res->type);
@@ -343,6 +369,9 @@ static TAG readtag_common(BITS bp)
 }
 static TAG readtag_file(struct swfile *sp)
 {	TAG res = (TAG) readtag_common((BITS) sp);
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(694);
+#endif
 	if(res->size)
 	{	res->datbuf = res->datptr = (unsigned char *)malloc(res->size);
 		res->datend = res->datbuf + res->size;
@@ -364,6 +393,9 @@ static TAG readtag_sprite(TAG tp)
 static int idoffset = {0}, maxid = {0};
 static int change_id(TAG tp)
 {	int val = readint2((BITS) tp);
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(695);
+#endif
 	if(val != 0 && val != 65535)
 	{	val += idoffset;
 		if(val > maxid)
@@ -391,6 +423,9 @@ static void morphlinestyle2(TAG tp);
 
 static int drop_tag(TAG tp)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(696);
+#endif
 	switch(tp->type)
 	{
 		case SWF_FILEATTRIBUTES:
@@ -404,6 +439,9 @@ static int drop_tag(TAG tp)
 
 static int handle_tag(TAG tp)
 {	int id;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(697);
+#endif
 	int displaylist = 0;
 	if(verbose)
 	{	char *tagnam = "inknown";
@@ -633,6 +671,9 @@ static int handle_tag(TAG tp)
 
 static void definesprite(TAG sp)
 {	TAG tp;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(698);
+#endif
 	int type;
 	int id, frames;
 	id = change_id(sp);
@@ -652,6 +693,9 @@ static void definesprite(TAG sp)
 /* shape */
 static void shaperecord(TAG tp, int nfillbits, int nlinebits, int lev)
 {	int type, statenewstyles, statelinestyle, statefillstyle1, statefillstyle0;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(699);
+#endif
 	int statemoveto, movebits, movex, movey, fill0style, fill1style, linestyle;
 	int edgeflag, nbits, genlineflag, dx, dy, vertlineflag;
 	int cdx, cdy, adx, ady;
@@ -731,6 +775,9 @@ static void shaperecord(TAG tp, int nfillbits, int nlinebits, int lev)
 
 static void gradient(TAG tp, int alpha, int cod)
 {	int n, ngrad, r1;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(700);
+#endif
 	
 	alignbits(tp);
 	ngrad = tp->readc(tp);
@@ -746,6 +793,9 @@ static void gradient(TAG tp, int alpha, int cod)
 
 static void fillstyle(TAG tp, int lev)
 {	unsigned short id;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(701);
+#endif
 	char cod;
 
 	alignbits(tp);
@@ -786,6 +836,9 @@ static void fillstyle(TAG tp, int lev)
 
 static void morphgradient(TAG tp)
 {	int n, ngrad, r1, r2;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(702);
+#endif
 	
 	alignbits(tp);
 	ngrad = tp->readc(tp);
@@ -803,6 +856,9 @@ static void morphgradient(TAG tp)
 
 static void morphfillstyle(TAG tp)
 {	unsigned short id;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(703);
+#endif
 	char cod;
 
 	alignbits(tp);
@@ -848,6 +904,9 @@ static void morphfillstyle(TAG tp)
 
 static void fillandlinestyles(TAG tp, int lev)
 {	int n, nfill, nline;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(704);
+#endif
 
 	alignbits(tp);
 	nfill = tp->readc(tp);
@@ -889,6 +948,9 @@ static void morphlinestyle(TAG tp)
 
 static void morphlinestyle2(TAG tp)
 {	unsigned short w1;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(705);
+#endif
 	int join_style;
 	int has_fill;
 	int is_morph = (tp->type == SWF_DEFINEMORPHSHAPE2);
@@ -924,6 +986,9 @@ static void morphlinestyle2(TAG tp)
 
 static void defineshape(TAG tp, int lev)
 {	unsigned short id;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(706);
+#endif
 
 	id = change_id(tp);
 	if(verbose)
@@ -950,6 +1015,9 @@ static void shape(TAG tp, int lev)
 
 static void definemorphshape(TAG tp, int lev)
 {	unsigned short id, fcnt, lcnt;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(707);
+#endif
 	unsigned long loff;
 	unsigned char *endp;
 	int n;
@@ -1001,6 +1069,9 @@ static void definemorphshape(TAG tp, int lev)
 
 static void definetext(TAG tp, int lev)
 {	unsigned short textid;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(708);
+#endif
 	int nglyphbits, nadvancebits;
 	int n, nglyphs, chcode, dx;
 	int hasfont, hascolor, hasyoffset, hasxoffset;
@@ -1058,6 +1129,9 @@ static void definetext(TAG tp, int lev)
 
 static void placeobject(TAG tp, int lv)
 {	int hasname, hasratio, hascxform, hasmatrix, haschar, hasmove, hasactions, hasmask;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(709);
+#endif
 	short depth, charid;
 	int hasfilters, hasbitmapcaching, hasblendmode;
 	if (lv == 3) {
@@ -1083,6 +1157,9 @@ static void placeobject(TAG tp, int lv)
 
 static void definebutton(TAG tp)
 {	short butid, charid, layer;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(710);
+#endif
 	unsigned char bstate;
 
 	butid = change_id(tp);
@@ -1108,6 +1185,9 @@ static void definebutton(TAG tp)
 
 static void cxform(TAG tp, int alpha)
 {	int hasadd, hasmult, nbits;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(711);
+#endif
 	int ra, ga, ba, aa, rm, gm, bm, am=0;
 	hasadd = getbits((BITS) tp, 1);
 	hasmult = getbits((BITS) tp, 1);
@@ -1134,6 +1214,9 @@ static void cxform(TAG tp, int alpha)
 
 static void definebutton2(TAG tp)
 {	short id, charid, offs, layer;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(712);
+#endif
 	unsigned char ch, bstate;
 
 	id = change_id(tp);
@@ -1163,6 +1246,9 @@ static void definebutton2(TAG tp)
 
 static void definetextfield(TAG tp)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(713);
+#endif
 	short textid, fontid=0;
 	int haslength, noedit, password, multiline, wordwrap, drawbox, noselect, html, usefont;
 	int hascolor, haslayout, hastext, hasfont;
@@ -1205,6 +1291,9 @@ static void definetextfield(TAG tp)
 
 static void exportassets(TAG tp)
 {	short n, nobj, id;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(714);
+#endif
 	char ch;
 	nobj = readint2((BITS) tp);
 	for(n = 0 ; n < nobj ; n++)
@@ -1219,6 +1308,9 @@ static void exportassets(TAG tp)
 
 static void soundinfo(TAG tp)
 {	char flags, hasenvelope, hasloops, hasoutpoint, hasinpoint, npoints;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(715);
+#endif
 	signed short loops, lev0, lev1;
 	int soundpoint, n;
 	flags = getbits((BITS) tp, 4);
@@ -1257,6 +1349,9 @@ static void soundinfo(TAG tp)
 
 static void definebuttonsound(TAG tp)
 {	int id, n, snds[4];
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(716);
+#endif
 	id = change_id(tp);
 	if(verbose)
 		printf("id %d\n", id);
@@ -1277,6 +1372,9 @@ extern int SWF_gNumCharacters;
 SWFPrebuiltClip
 newSWFPrebuiltClip_fromInput(SWFInput input)
 {	SWFPrebuiltClip clip;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(717);
+#endif
 	SWFOutput display, defines, out;
 	SWFPrebuilt deps;
 	TAG tp;
@@ -1332,6 +1430,9 @@ newSWFPrebuiltClip_fromInput(SWFInput input)
 SWFPrebuiltClip
 newSWFPrebuiltClip_fromFile(const char *filename)
 {	FILE *fp;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(718);
+#endif
 	SWFPrebuiltClip clip;
 	SWFInput input;
 	if(!(fp = fopen(filename, "rb")))

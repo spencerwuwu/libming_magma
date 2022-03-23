@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /* ====================================================================
  * Copyright (c) 2000-2003 by Soheil Seyfaie. All rights reserved.
  * This program is free software; you can redistribute it and/or modify
@@ -150,6 +155,9 @@ static char *SWF_Video_tag[] = {
 
 
 static char **export_tags(char *tag) {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(428);
+#endif
    switch (*tag) {
    case 'B':
      if(strEQ("Button", tag))
@@ -184,6 +192,9 @@ static char **export_tags(char *tag) {
 
 void export_cv(SV *class, SV *caller, char *sub) 
 { 
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(429);
+#endif
     GV *gv; 
 #if 0
     fprintf(stderr, "Here is the result: *%s::%s = \\&%s::%s\n", 
@@ -197,6 +208,9 @@ void export_cv(SV *class, SV *caller, char *sub)
 
 static void my_import(SV *pclass, SV *caller, SV *sv)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(430);
+#endif
     char *sym = SvPV(sv,na), **tags;
     int i;
 

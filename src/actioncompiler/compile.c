@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -42,6 +47,9 @@ static char **constants = NULL;
 
 char *stringConcat(char *a, char *b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(500);
+#endif
 	if ( a != NULL )
 	{
 		if ( b != NULL )
@@ -74,6 +82,9 @@ void bufferPatchLength(Buffer buffer, int back)
 
 void bufferPatchPushLength(Buffer buffer, int len)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(501);
+#endif
 	int oldsize;
 
 	if(buffer->pushloc != NULL)
@@ -96,6 +107,9 @@ void Ming_useConstants(int flag)
 
 int addConstant(const char *s)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(502);
+#endif
 	int i;
 
 	for(i=0; i<nConstants; ++i)
@@ -116,6 +130,9 @@ int addConstant(const char *s)
 
 int bufferWriteConstants(Buffer out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(503);
+#endif
 	int i, len=2;
 
 	if(nConstants == 0)
@@ -140,6 +157,9 @@ int bufferWriteConstants(Buffer out)
 
 Buffer newBuffer()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(504);
+#endif
 	Buffer out = (Buffer)malloc(BUFFER_SIZE);
 	if(out == NULL)
 		return NULL;
@@ -172,6 +192,9 @@ int bufferLength(Buffer out)
 /* make sure there's enough space for bytes bytes */
 void bufferCheckSize(Buffer out, int bytes)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(505);
+#endif
 	if(bytes > out->free)
 	{
 		int New = BUFFER_INCREMENT * ((bytes-out->free-1)/BUFFER_INCREMENT + 1);
@@ -200,6 +223,9 @@ void bufferCheckSize(Buffer out, int bytes)
 
 int bufferWriteData(Buffer b, const byte *data, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(506);
+#endif
 	int i;
 
 	bufferCheckSize(b, length);
@@ -212,6 +238,9 @@ int bufferWriteData(Buffer b, const byte *data, int length)
 
 int bufferWriteBuffer(Buffer a, Buffer b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(507);
+#endif
 	if(!a)
 		return 0;
 
@@ -225,6 +254,9 @@ int bufferWriteBuffer(Buffer a, Buffer b)
 
 int bufferWriteDataAndPush(Buffer a, Buffer b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(508);
+#endif
 	int i, pushd = 0;
 
 	byte *data = b->buffer;
@@ -259,6 +291,9 @@ int bufferWriteDataAndPush(Buffer a, Buffer b)
 
 int bufferConcatSimple(Buffer a, Buffer b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(509);
+#endif
 	int len = 0;
 
 	if(!a)
@@ -274,6 +309,9 @@ int bufferConcatSimple(Buffer a, Buffer b)
 
 int bufferConcat(Buffer a, Buffer b)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(510);
+#endif
 	int len = 0;
 
 	if(!a)
@@ -315,6 +353,9 @@ int bufferWriteU8(Buffer out, int data)
 
 int bufferWriteS16(Buffer out, int data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(511);
+#endif
 	if(data < 0)
 		data = (1<<16)+data;
 
@@ -337,6 +378,9 @@ int bufferWriteHardString(Buffer out, const char *string, int length)
 
 int bufferWriteConstantString(Buffer out, const char *string, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(512);
+#endif
 	int n;
 
 	if(swfVersion < 5)
@@ -367,6 +411,9 @@ int bufferWriteConstantString(Buffer out, const char *string, int length)
 /* allow pushing STRINGs for SWF>=5 */
 int bufferWritePushString(Buffer out, char *string, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(513);
+#endif
 	int l, len = 0;
 	if(out->pushloc == NULL || swfVersion < 5)
 	{
@@ -383,6 +430,9 @@ int bufferWritePushString(Buffer out, char *string, int length)
 
 int bufferWriteString(Buffer out, const char *string, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(514);
+#endif
 	if(swfVersion < 5)
 	{
 		bufferWritePushOp(out);
@@ -411,6 +461,9 @@ int bufferWriteString(Buffer out, const char *string, int length)
 
 int bufferWriteInt(Buffer out, int i)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(515);
+#endif
 	int len = 0;
 	unsigned char *p = (unsigned char *)&i;
 
@@ -442,6 +495,9 @@ int bufferWriteInt(Buffer out, int i)
 
 int bufferWriteFloat(Buffer out, float f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(516);
+#endif
 	int len = 0;
 	unsigned char *p = (unsigned char *)&f;
 
@@ -472,6 +528,9 @@ int bufferWriteFloat(Buffer out, float f)
 
 int bufferWriteDouble(Buffer out, double d)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(517);
+#endif
 	int len = 0;
 	unsigned char *p = (unsigned char *)&d;
 
@@ -511,6 +570,9 @@ int bufferWriteDouble(Buffer out, double d)
 
 int bufferWriteNull(Buffer out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(518);
+#endif
 	int len = 0;
 
 	if(out->pushloc == NULL || swfVersion < 5)
@@ -529,6 +591,9 @@ int bufferWriteNull(Buffer out)
 
 int bufferWriteUndef(Buffer out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(519);
+#endif
 	int len = 0;
 
 	if(out->pushloc == NULL || swfVersion < 5)
@@ -547,6 +612,9 @@ int bufferWriteUndef(Buffer out)
 
 int bufferWriteBoolean(Buffer out, int val)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(520);
+#endif
 	int len = 0;
 
 	if(out->pushloc == NULL || swfVersion < 5)
@@ -566,6 +634,9 @@ int bufferWriteBoolean(Buffer out, int val)
 
 int bufferWriteRegister(Buffer out, int num)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(521);
+#endif
 	int len = 0;
 
 	if(out->pushloc == NULL || swfVersion < 5)
@@ -623,6 +694,9 @@ void delctx(enum ctx val)
 
 int chkctx(enum ctx val)
 {	int n, ret = 0;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(522);
+#endif
 	switch(val)
 	{	case CTX_FUNCTION:
 			for(n = ctx_count ; --n >= 0 ; )
@@ -673,6 +747,9 @@ int chkctx(enum ctx val)
 
 void bufferResolveJumpsFull(Buffer out, byte *break_ptr, byte *continue_ptr)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(523);
+#endif
 	byte *p = out->buffer;
 	int l, target;
 
@@ -721,6 +798,9 @@ void bufferResolveJumpsFull(Buffer out, byte *break_ptr, byte *continue_ptr)
 
 void bufferResolveSwitch(Buffer buffer, struct switchcases *slp)
 {	struct switchcase *scp;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(524);
+#endif
 	int n, len;
 	unsigned char *output;
 			
@@ -763,6 +843,9 @@ void bufferResolveSwitch(Buffer buffer, struct switchcases *slp)
 	
 int lookupProperty(char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(525);
+#endif
 	lower(string);
 
 	if(strcmp(string, "_x") == 0)		return PROPERTY_X;
@@ -801,6 +884,9 @@ int bufferWriteProperty(Buffer out, char *string)
 // XXX: ???
 int bufferWriteWTHITProperty(Buffer out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(526);
+#endif
 	bufferWriteU8(out, SWFACTION_PUSH);
 	bufferWriteS16(out, 5);
 	bufferWriteU8(out, PUSH_FLOAT);
@@ -823,6 +909,9 @@ int bufferWriteWTHITProperty(Buffer out)
 static int bufferWriteDefineFunction2(Buffer out, char *func_name, 
 		Buffer args, Buffer code, int flags, int num_regs)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(527);
+#endif
 	Buffer c;
 	char buf[1024];
 	int num_args = 0, i;
@@ -912,6 +1001,9 @@ void destroyASFunction(ASFunction func)
 
 int bufferWriteFunction(Buffer out, ASFunction function, int version)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(528);
+#endif
 	int tagLen; 
 	
 	if(version == 2)
@@ -943,6 +1035,9 @@ int bufferWriteFunction(Buffer out, ASFunction function, int version)
 
 ASFunction newASFunction()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(529);
+#endif
 	ASFunction func;
 	func = (ASFunction) malloc(sizeof(struct function_s));
 	func->flags = 0;
@@ -955,6 +1050,9 @@ ASFunction newASFunction()
 
 void destroyASClass(ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(530);
+#endif
 	ASClassMember member;
 	if(clazz->name)
 		free(clazz->name);
@@ -973,6 +1071,9 @@ void destroyASClass(ASClass clazz)
 
 ASFunction ASClass_getConstructor(ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(531);
+#endif
 	ASClassMember member;
 	member = clazz->members;
 	while(member)
@@ -997,6 +1098,9 @@ ASFunction ASClass_getConstructor(ASClass clazz)
 
 static int bufferWriteClassConstructor(Buffer out, ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(532);
+#endif
 	int len = 0;
 	ASFunction func;
 
@@ -1035,6 +1139,9 @@ static int bufferWriteClassConstructor(Buffer out, ASClass clazz)
 
 static int bufferWriteClassMethods(Buffer out, ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(533);
+#endif
 	ASClassMember member = clazz->members;
 	int len = 0;
 	while(member)
@@ -1066,6 +1173,9 @@ static int bufferWriteClassMethods(Buffer out, ASClass clazz)
 
 static int bufferWriteClassVariable(Buffer out, ASVariable var)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(534);
+#endif
 	int len = 0;
 	if(var->initCode != NULL)
 	{
@@ -1081,6 +1191,9 @@ static int bufferWriteClassVariable(Buffer out, ASVariable var)
 
 static int bufferWriteClassMembers(Buffer out, ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(535);
+#endif
 	ASClassMember member = clazz->members;
 	int len = 0;
 	while(member)
@@ -1102,6 +1215,9 @@ static int bufferWriteClassMembers(Buffer out, ASClass clazz)
 
 int bufferWriteClass(Buffer out, ASClass clazz)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(536);
+#endif
 	int len = 0;
 	len += bufferWriteClassConstructor(out, clazz);
 	len += bufferWriteClassMembers(out, clazz);	

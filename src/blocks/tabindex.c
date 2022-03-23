@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2007 Klaus Rechert
@@ -48,6 +53,9 @@ destroySWFTabIndex(SWFTabIndex ti)
 SWFTabIndex
 newSWFTabIndex(int depth, int index)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(607);
+#endif
         SWFTabIndex ti = (SWFTabIndex)malloc(sizeof(struct SWFTabIndex_s));
 
         SWFBlockInit(BLOCK(ti));

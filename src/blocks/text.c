@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
 		Ming, an SWF output library
 		Copyright (C) 2002	Opaque Industries - http://www.opaque.net/
@@ -90,6 +95,9 @@ struct SWFTextRecord_s
 static void
 writeSWFTextToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(641);
+#endif
 	SWFText text = (SWFText)block;
 	int length = 0;
 	SWFOutput out;
@@ -119,6 +127,9 @@ writeSWFTextToMethod(SWFBlock block, SWFByteOutputMethod method, void *data)
 static int
 completeSWFText(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(642);
+#endif
 	int length = 4;
 
 	SWFText text = (SWFText)block;
@@ -140,6 +151,9 @@ completeSWFText(SWFBlock block)
 void
 destroySWFText(SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(643);
+#endif
 	SWFTextRecord record = text->initialRecord, next;
 
 	destroySWFOutput(text->out);
@@ -165,6 +179,9 @@ destroySWFText(SWFText text)
 SWFText
 newSWFText()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(644);
+#endif
 	SWFRect temp_rect;
 
 	SWFText text = (SWFText)malloc(sizeof(struct SWFText_s));
@@ -220,6 +237,9 @@ newSWFText()
 SWFText
 newSWFText2()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(645);
+#endif
 	SWFText text = newSWFText();
 
 	/* If malloc failed, return NULL to signify this */
@@ -234,6 +254,9 @@ newSWFText2()
 SWFTextRecord
 SWFText_addTextRecord(SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(646);
+#endif
 	SWFTextRecord textRecord = (SWFTextRecord)malloc(sizeof(struct SWFTextRecord_s));
 	SWFTextRecord current = NULL;
 
@@ -289,6 +312,9 @@ SWFText_addTextRecord(SWFText text)
 void
 destroySWFTextRecord(SWFTextRecord record)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(647);
+#endif
 	if ( record->string != NULL )
 		free(record->string);
 
@@ -344,6 +370,9 @@ SWFTextRecord_setFontCharacter(SWFTextRecord record, SWFFontCharacter font)
 int
 SWFText_getScaledStringWidth(SWFText text, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(648);
+#endif
 	SWFFont font;
 	int height;
 	unsigned short* widestr;
@@ -376,6 +405,9 @@ SWFText_getScaledStringWidth(SWFText text, const char *string)
 int
 SWFText_getScaledUTF8StringWidth(SWFText text, const char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(649);
+#endif
 	SWFFont font;
 	int height;
 	unsigned short* widestr;
@@ -399,6 +431,9 @@ SWFText_getScaledUTF8StringWidth(SWFText text, const char *string)
 int
 SWFText_getScaledWideStringWidth(SWFText text, const unsigned short *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(650);
+#endif
 	SWFFont font;
 	int height;
 	int len;
@@ -422,6 +457,9 @@ SWFText_getScaledWideStringWidth(SWFText text, const unsigned short *string)
 short
 SWFText_getScaledAscent(SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(651);
+#endif
 	SWFFont font;
 	int height;
 
@@ -437,6 +475,9 @@ SWFText_getScaledAscent(SWFText text)
 short
 SWFText_getScaledDescent(SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(652);
+#endif
 	SWFFont font;
 	int height;
 
@@ -461,6 +502,9 @@ SWFText_getScaledLeading(SWFText text)
 void 
 SWFText_setFont(SWFText text, SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(653);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 	if ( textRecord == NULL || textRecord->string != NULL )
 		textRecord = SWFText_addTextRecord(text);
@@ -477,6 +521,9 @@ SWFText_setFont(SWFText text, SWFFont font)
 void
 SWFText_setScaledHeight(SWFText text, int height)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(654);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 
 	if ( textRecord == NULL ||
@@ -493,6 +540,9 @@ SWFText_setScaledHeight(SWFText text, int height)
 void
 SWFText_setScaledSpacing(SWFText text, int spacing)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(655);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 
 	if ( textRecord == NULL || textRecord->string != NULL )
@@ -509,6 +559,9 @@ SWFText_setScaledSpacing(SWFText text, int spacing)
 void
 SWFText_setColor(SWFText text, byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(656);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 
 	if ( textRecord == NULL || textRecord->string != NULL )
@@ -529,6 +582,9 @@ SWFText_setColor(SWFText text, byte r, byte g, byte b, byte a)
 void
 SWFText_scaledMoveTo(SWFText text, int x, int y)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(657);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 
 	if ( textRecord == NULL || textRecord->string != NULL )
@@ -560,6 +616,9 @@ void
 SWFText_addWideString(SWFText text, const unsigned short* widestring,
 											int len, int* advance)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(658);
+#endif
 	SWFTextRecord textRecord = text->currentRecord;
 
 	/* marginally sloppy to tack on a new record,
@@ -593,6 +652,9 @@ SWFText_addWideString(SWFText text, const unsigned short* widestring,
 void
 SWFText_addUTF8String(SWFText text, const char* string, int* advance)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(659);
+#endif
 	unsigned short* widestring;
 	int len = UTF8ExpandString(string, &widestring);
 
@@ -620,6 +682,9 @@ SWFText_addUTF8String(SWFText text, const char* string, int* advance)
 void
 SWFText_addString(SWFText text, const char* string, int* advance)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(660);
+#endif
 	int len = strlen(string);
 	int i;
 	unsigned short* widestring = (unsigned short*) malloc(len * sizeof(unsigned short) );
@@ -638,6 +703,9 @@ SWFText_addString(SWFText text, const char* string, int* advance)
 static void
 SWFTextRecord_computeAdvances(SWFTextRecord textRecord)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(661);
+#endif
 	int i;
 	int len = textRecord->strlen;
 	unsigned short* widestring = textRecord->string;
@@ -690,6 +758,9 @@ SWFTextRecord_computeAdvances(SWFTextRecord textRecord)
 void
 SWFText_resolveCodes(SWFText text)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(662);
+#endif
 	SWFTextRecord textRecord, oldRecord;
 	SWFOutput out = text->out;
 	int nGlyphBits = 0;

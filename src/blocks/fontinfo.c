@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -35,6 +40,9 @@ struct SWFFontInfo_s
 static void writeDefineSWFFontInfoBlock(SWFBlock block,
 					SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(844);
+#endif
 	SWFFontInfo info = (SWFFontInfo)block;
 	SWFFontCharacter font = info->font;
 	const char* fontname = SWFFont_getName(font);
@@ -72,6 +80,9 @@ static int completeDefineSWFFontInfoBlock(SWFBlock block)
 
 SWFFontInfo newDefineSWFFontInfo(SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(845);
+#endif
 	SWFFontInfo fontInfo = malloc(sizeof(struct SWFFontInfo_s));
 
 	SWFCharacterInit((SWFCharacter)fontInfo);

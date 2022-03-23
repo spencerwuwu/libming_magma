@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -47,6 +52,9 @@ struct pngdata
 
 struct pngdata readDBL(FILE *fp)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(179);
+#endif
   struct pngdata png;
   byte header[13],*data;
   unsigned long outsize,readsize=0,datsize;
@@ -158,6 +166,9 @@ struct pngdata readDBL(FILE *fp)
 // expecting pixel_depth==32, bit_depth==8, color_type==PNG_COLOR_TYPE_RGB_ALPHA
 void alpha_apply(png_structp png_ptr, png_row_infop row_info, png_bytep p)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(180);
+#endif
   int i;
   byte a, r, g, b;
   for(i=0;i<row_info->width;i++)
@@ -176,6 +187,9 @@ void alpha_apply(png_structp png_ptr, png_row_infop row_info, png_bytep p)
 
 void writePNG(FILE *fp, struct pngdata png)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(181);
+#endif
   png_structp png_ptr;
   png_infop info_ptr;
   int i,chan;

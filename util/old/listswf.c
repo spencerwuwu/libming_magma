@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -28,6 +33,9 @@ extern const char *blockName(int header);
 
 void print(const char *s, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(367);
+#endif
   va_list ap;
   int n = gIndent*INDENT_LEVEL;
 
@@ -40,6 +48,9 @@ void print(const char *s, ...)
 }
 void println(const char *s, ...)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(368);
+#endif
   va_list ap;
   int n = gIndent*INDENT_LEVEL;
 
@@ -55,6 +66,9 @@ void println(const char *s, ...)
 
 void printMatrix(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(369);
+#endif
   int nBits;
   float num;
 
@@ -84,6 +98,9 @@ void printMatrix(FILE *f)
 
 void printCXForm(FILE *f, boolean hasAlpha)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(370);
+#endif
   int hasAdd, hasMult, nBits;
 
   byteAlign();
@@ -120,6 +137,9 @@ void printCXForm(FILE *f, boolean hasAlpha)
 
 void printRect(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(371);
+#endif
   int nBits, xMin, xMax, yMin, yMax;
 
   byteAlign();
@@ -154,6 +174,9 @@ void printRGBA(FILE *f)
 
 void printGradient(FILE *f, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(372);
+#endif
   int i;
   int numGrads = readUInt8(f);
 
@@ -173,6 +196,9 @@ void printGradient(FILE *f, int shapeType)
 
 void printMorphGradient(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(373);
+#endif
   int i;
   int numGrads = readUInt8(f);
 
@@ -192,6 +218,9 @@ void printMorphGradient(FILE *f)
 
 void printLineStyleArray(FILE *f, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(374);
+#endif
   int count, i;
 
   count = readUInt8(f);
@@ -226,6 +255,9 @@ void printLineStyleArray(FILE *f, int shapeType)
 
 void printFillStyle(FILE *f, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(375);
+#endif
   int type;
 	
   type = readUInt8(f);
@@ -331,6 +363,9 @@ void printFillStyle(FILE *f, int shapeType)
 
 void printFillStyleArray(FILE *f, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(376);
+#endif
   int count, i;
 
   count = readUInt8(f);
@@ -350,6 +385,9 @@ void printFillStyleArray(FILE *f, int shapeType)
 
 int printShapeRec(FILE *f, int *lineBits, int *fillBits, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(377);
+#endif
   int type;
 
   //  printf("(%i:%i)",fileOffset,bufbits);
@@ -432,6 +470,9 @@ int printShapeRec(FILE *f, int *lineBits, int *fillBits, int shapeType)
 
 void printShape(FILE *f, int length, SWFBlocktype type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(378);
+#endif
   int start = fileOffset;
   int fillBits, lineBits;
 
@@ -466,6 +507,9 @@ void printShape(FILE *f, int length, SWFBlocktype type)
 
 void printMorphShape(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(379);
+#endif
   int offset, start = fileOffset;
   int fillBits, lineBits, here;
 
@@ -527,6 +571,9 @@ void printMorphShape(FILE *f, int length)
 
 void printJpegStream(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(380);
+#endif
   int end = fileOffset+length;
   int c, l;
 
@@ -573,6 +620,9 @@ void printDefineBitsJpeg(FILE *f, int length)
 
 void printDefineBitsJpeg3(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(381);
+#endif
   int offset;
 
   println("Bitmap id: %i", readUInt16(f));
@@ -589,6 +639,9 @@ void printDefineBitsJpeg3(FILE *f, int length)
 
 void printDefineBitsLossless(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(382);
+#endif
 	int format, start = fileOffset;
 	int width, height, tablesize, bpp;
 
@@ -660,6 +713,9 @@ static char *dictionary[65536];
 
 int printActionRecord(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(383);
+#endif
   int length = 0, type = readUInt8(f);
 
   if((type&0x80) == 0x80)
@@ -1062,6 +1118,9 @@ void printDecompiledAction(FILE *f, int l, int n)
 
 void printDoAction(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(384);
+#endif
   int start = fileOffset, end = fileOffset+length;
 
   while(fileOffset<end)
@@ -1074,6 +1133,9 @@ void printDoAction(FILE *f, int length)
 
 int printButtonRecord(FILE *f, int recordType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(385);
+#endif
   int character, layer;
   int flags = readUInt8(f);
 
@@ -1103,6 +1165,9 @@ int printButtonRecord(FILE *f, int recordType)
 
 void printDefineButton(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(386);
+#endif
   int offset = fileOffset;
 
   println("Button id: %i", readUInt16(f));
@@ -1116,6 +1181,9 @@ void printDefineButton(FILE *f, int length)
 
 int printButton2ActionCondition(FILE *f, int end)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(387);
+#endif
   int offset = readUInt16(f);
   int condition = readUInt16(f);
 
@@ -1142,6 +1210,9 @@ int printButton2ActionCondition(FILE *f, int end)
 
 void printDefineButton2(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(388);
+#endif
   int flags, offset, end = fileOffset+length;
 
   println("Button id: %i", readUInt16(f));
@@ -1161,6 +1232,9 @@ void printDefineButton2(FILE *f, int length)
 
 void printPlaceObject(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(389);
+#endif
   int start = fileOffset;
 
   println("Character ID: %i", readUInt16(f));
@@ -1187,6 +1261,9 @@ void printPlaceObject(FILE *f, int length)
 
 void printPlaceObject2(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(390);
+#endif
   int start = fileOffset;
   int flags = readUInt8(f);
   int l;
@@ -1264,6 +1341,9 @@ void printFrameLabel(FILE *f)
 
 void printDefineFont(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(391);
+#endif
   int here, off0, off, i, nShapes, fillBits=1, lineBits=1;
   int *offset;
 
@@ -1319,6 +1399,9 @@ void printDefineFont(FILE *f, int length)
 
 void printDefineFont2(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(392);
+#endif
   int flags, nGlyphs, namelen, i, fillBits, lineBits;
   int here = fileOffset;
   int *offset;
@@ -1422,6 +1505,9 @@ void printDefineFont2(FILE *f, int length)
 
 void printFontInfo(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(393);
+#endif
   int namelen, nGlyphs, flags, i;
 
   println("FontID: %i", readUInt16(f));
@@ -1473,6 +1559,9 @@ void printFontInfo(FILE *f, int length)
 
 int printTextRecord(FILE *f, int glyphBits, int advanceBits, int type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(394);
+#endif
   int i, numGlyphs;
   int flags = readUInt8(f);
 
@@ -1521,6 +1610,9 @@ int printTextRecord(FILE *f, int glyphBits, int advanceBits, int type)
 
 void printDefineText(FILE *f, int length, int type) /* type 2 allows transparency */
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(395);
+#endif
   int glyphBits, advanceBits, end = fileOffset+length;
 
   println("character id: %i", readUInt16(f));
@@ -1539,6 +1631,9 @@ void printDefineText(FILE *f, int length, int type) /* type 2 allows transparenc
 
 void printSoundInfo(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(396);
+#endif
   int flags = readUInt8(f), nPoints, i;
 
   ++gIndent;
@@ -1634,6 +1729,9 @@ void silentSkipBytes(FILE *f, int length)
 
 void printMP3Headers(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(397);
+#endif
   unsigned long flags;
   int frameLen, frameNum = 0;
   int bitrate, bitrate_idx, samplerate, samplerate_idx;
@@ -1735,6 +1833,9 @@ void printMP3Headers(FILE *f, int length)
 
 void printDefineSound(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(398);
+#endif
   int flags;
 
   println("Character ID: %i", readUInt16(f));
@@ -1787,6 +1888,9 @@ int streamflags;
    and 8-bit if uncompressed */
 void printSoundStreamHead(FILE *f, int type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(399);
+#endif
   int recFormat = readUInt8(f);
   int flags = readUInt8(f);
 
@@ -1807,6 +1911,9 @@ void printSoundStreamHead(FILE *f, int type)
 
 void printSoundStreamBlock(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(400);
+#endif
   int samplesperframe, delay;
 
   if((streamflags&0xf0) == 0x00)
@@ -1834,6 +1941,9 @@ void printSoundStreamBlock(FILE *f, int length)
 
 void printSprite(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(401);
+#endif
   int start = fileOffset;
   int block, type, l;
 
@@ -1894,6 +2004,9 @@ void printSprite(FILE *f, int length)
 
 void printTextField(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(402);
+#endif
   int flags, num, end = fileOffset+length;
 
   println("Character id: %i", readUInt16(f));
@@ -1977,6 +2090,9 @@ void skipBytes(FILE *f, int length)
 
 void printImportAssets(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(403);
+#endif
       int n, i;
       println("\tAsset URL: %s", readString(f));
       n = readUInt16(f);

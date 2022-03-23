@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -39,6 +44,9 @@ void destroySWFPosition(SWFPosition position)
 SWFPosition
 newSWFPosition(SWFMatrix matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(438);
+#endif
 	SWFPosition p = (SWFPosition)malloc(sizeof(struct SWFPosition_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -62,6 +70,9 @@ newSWFPosition(SWFMatrix matrix)
 static void
 updateMatrix(SWFPosition p)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(439);
+#endif
 	double cRot = cos(p->rot*M_PI/180);
 	double sRot = sin(p->rot*M_PI/180);
 	double xS = p->xSkew, yS = p->ySkew;

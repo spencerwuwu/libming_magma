@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 
 #ifndef __C2MAN__
 #include <string.h>
@@ -20,6 +25,9 @@ static int Ming_numFonts = 0;
 SWFFont
 Ming_getFont(const char* name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(475);
+#endif
   int i;
 
   for ( i = 0; i < Ming_numFonts; ++i )
@@ -35,6 +43,9 @@ Ming_getFont(const char* name)
 SWFFont
 Ming_loadFont(const char* path, const char* name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(476);
+#endif
   SWFFont font = newSWFFont_fromFile(path);
 
   if ( font == NULL )
@@ -54,6 +65,9 @@ Ming_loadFont(const char* path, const char* name)
 void
 Ming_cleanupFonts()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(477);
+#endif
   int i;
 
   for ( i = 0; i < Ming_numFonts; ++i )

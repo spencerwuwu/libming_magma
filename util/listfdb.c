@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -22,6 +27,9 @@ typedef unsigned char boolean;
 
 char *indent()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(86);
+#endif
   int i;
 
   if(gIndent>63)
@@ -54,6 +62,9 @@ void byteAlign()
 
 int readBits(FILE *f, int number)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(87);
+#endif
   int ret = buffer;
 
   if(number == bufbits)
@@ -120,6 +131,9 @@ int readSBits(FILE *f, int number)
 
 int readUInt8(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(88);
+#endif
   int tmp_char = fgetc(f);
   // the rest of the code does not handle errors and use EOF as a valid unsigned char value
   if (tmp_char == EOF)
@@ -162,6 +176,9 @@ unsigned long readUInt32(FILE *f)
 
 char *readString(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(89);
+#endif
   int len = 0, buflen = 256;
   char c, *buf, *p;
 
@@ -188,6 +205,9 @@ char *readString(FILE *f)
 
 void dumpBytes(FILE *f, int length)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(90);
+#endif
   int j=0, i, k;
   unsigned char buf[16];
 
@@ -242,6 +262,9 @@ void dumpBytes(FILE *f, int length)
 
 void printMatrix(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(91);
+#endif
   int nBits;
   float num;
 
@@ -271,6 +294,9 @@ void printMatrix(FILE *f)
 
 void printRect(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(92);
+#endif
   int nBits, xMin, xMax, yMin, yMax;
 
   byteAlign();
@@ -286,6 +312,9 @@ void printRect(FILE *f)
 
 int printShapeRec(FILE *f, int *lineBits, int *fillBits, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(93);
+#endif
   int type;
 
   printf("(%i:%i)",fileOffset,bufbits);
@@ -368,6 +397,9 @@ int printShapeRec(FILE *f, int *lineBits, int *fillBits, int shapeType)
 
 void printDefineFont2(FILE *f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(94);
+#endif
   int flags, nGlyphs, namelen, off, i, fillBits, lineBits;
   int here = fileOffset;
   unsigned int *offset;

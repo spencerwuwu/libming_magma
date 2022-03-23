@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -126,6 +131,9 @@ void
 SWFGradient_addEntry(SWFGradient gradient,
                      float ratio, byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(763);
+#endif
 	int nGrads = gradient->nGrads;
 
 	if ( nGrads == 15 )
@@ -143,6 +151,9 @@ SWFGradient_addEntry(SWFGradient gradient,
 void 
 SWFOutput_writeGradientAsFilter(SWFOutput out, SWFGradient gradient)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(764);
+#endif
 	int i;
 	int nGrads = gradient->nGrads;
 	
@@ -172,6 +183,9 @@ SWFOutput_writeGradientAsFilter(SWFOutput out, SWFGradient gradient)
 void 
 SWFGradientMatrix_update(SWFMatrix matrix, SWFRect bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(765);
+#endif
 	int w, h;
 	float scaleX, scaleY;
 	SWFMatrix tmp;
@@ -200,6 +214,9 @@ SWFGradientMatrix_update(SWFMatrix matrix, SWFRect bounds)
 void
 SWFOutput_writeGradient(SWFOutput out, SWFGradient gradient, SWFBlocktype shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(766);
+#endif
 	int i;
 	int nGrads = gradient->nGrads;
 
@@ -238,6 +255,9 @@ void
 SWFOutput_writeMorphGradient(SWFOutput out,
                              SWFGradient gradient1, SWFGradient gradient2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(767);
+#endif
 	int i;
 	int nGrads = min(min(gradient1->nGrads, gradient2->nGrads), 8);
 

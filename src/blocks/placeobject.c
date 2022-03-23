@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -80,6 +85,9 @@ struct SWFPlaceObject2Block_s
 
 static void writeActions(SWFPlaceObject2Block place)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(742);
+#endif
 	int i;
 	SWFBlock block = BLOCK(place);
 	
@@ -131,6 +139,9 @@ writeSWFPlaceObject2BlockToStream(SWFBlock block, SWFByteOutputMethod method, vo
 int
 completeSWFPlaceObject2Block(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(743);
+#endif
 	SWFPlaceObject2Block place = (SWFPlaceObject2Block)block;
 	SWFOutput out = newSizedSWFOutput(42);
 
@@ -189,6 +200,9 @@ completeSWFPlaceObject2Block(SWFBlock block)
 void
 destroySWFPlaceObject2Block(SWFPlaceObject2Block place)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(744);
+#endif
 	if ( place->actions != NULL )
 		free(place->actions);
 
@@ -223,6 +237,9 @@ destroySWFPlaceObject2Block(SWFPlaceObject2Block place)
 static inline void
 setPlaceObjectVersion(SWFPlaceObject2Block block, int version)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(745);
+#endif
 	switch(version)
 	{
 		case 2: 
@@ -242,6 +259,9 @@ setPlaceObjectVersion(SWFPlaceObject2Block block, int version)
 SWFPlaceObject2Block
 newSWFPlaceObject2Block(int depth)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(746);
+#endif
 	SWFPlaceObject2Block place = (SWFPlaceObject2Block)malloc(sizeof(struct SWFPlaceObject2Block_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -373,6 +393,9 @@ void
 SWFPlaceObject2Block_addAction(SWFPlaceObject2Block block,
 															 SWFAction action, int flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(747);
+#endif
 	block->actions =
 		(SWFAction*)realloc(block->actions, (block->nActions+1) * sizeof(SWFAction));
 
@@ -410,6 +433,9 @@ SWFPlaceObject2Block_setCacheFlag(SWFPlaceObject2Block block, int flag)
 void 
 SWFPlaceObject2Block_setBlendMode(SWFPlaceObject2Block block, int mode)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(748);
+#endif
 	if(mode < 0 || mode > 255)
 	{
 		SWF_warn("SWFPlaceObject2Block_setBlendMode: mode must be in between [0...255]");
@@ -430,6 +456,9 @@ SWFPlaceObject2Block_setBlendMode(SWFPlaceObject2Block block, int mode)
 void 
 SWFPlaceObject2Block_addFilter(SWFPlaceObject2Block block, SWFFilter filter)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(749);
+#endif
 	if(block->filterList == NULL)
 	{
 		setPlaceObjectVersion(block, 3);

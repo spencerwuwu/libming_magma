@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -51,6 +56,9 @@ struct SWFLineStyle_s
 SWFLineStyle newSWFLineStyle(unsigned short width,
                              byte r, byte g, byte b, byte a)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(729);
+#endif
 	SWFLineStyle line = (SWFLineStyle)malloc(sizeof(struct SWFLineStyle_s));
 
 	line->width = width;
@@ -102,6 +110,9 @@ SWFLineStyle newSWFLineStyle(unsigned short width,
 SWFLineStyle newSWFLineStyle2(unsigned short width, byte r, byte g, byte b, byte a, 
                               int flags, float miterLimit)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(730);
+#endif
 	SWFLineStyle line = (SWFLineStyle)malloc(sizeof(struct SWFLineStyle_s));
 
 	line->width = width;
@@ -160,6 +171,9 @@ SWFLineStyle newSWFLineStyle2(unsigned short width, byte r, byte g, byte b, byte
 SWFLineStyle newSWFLineStyle2_filled(unsigned short width, SWFFillStyle fill, 
                                      int flags, float miterLimit)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(731);
+#endif
 	SWFLineStyle line;
 
 	if(fill == NULL)
@@ -176,6 +190,9 @@ SWFLineStyle newSWFLineStyle2_filled(unsigned short width, SWFFillStyle fill,
 byte SWFLineStyle_equals(SWFLineStyle line, unsigned short width,
 			 byte r, byte g, byte b, byte a, int flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(732);
+#endif
 //	if(line->width == 0 && width == 0)
 //		return TRUE;
 
@@ -195,6 +212,9 @@ byte SWFLineStyle_equals(SWFLineStyle line, unsigned short width,
 byte SWFLineStyle_equals2filled(SWFLineStyle line, unsigned short width,
                                 SWFFillStyle fill, int flags)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(733);
+#endif
 	if(line->width == width &&
            line->flags == flags && 
            SWFFillStyle_equals(line->fill, fill))
@@ -213,6 +233,9 @@ unsigned short SWFLineStyle_getWidth(SWFLineStyle line)
 
 static inline void writeLineStyle1(SWFOutput out, SWFLineStyle line, int shapeType)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(734);
+#endif
 	SWFOutput_writeUInt16(out, line->width);
 	SWFOutput_writeUInt8(out, line->r);
 	SWFOutput_writeUInt8(out, line->g);
@@ -224,6 +247,9 @@ static inline void writeLineStyle1(SWFOutput out, SWFLineStyle line, int shapeTy
 
 static inline void writeLineStyle2(SWFOutput out, SWFLineStyle line, SWFBlocktype shapeType, SWFRect bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(735);
+#endif
 	SWFOutput_writeUInt16(out, line->width);
 	SWFOutput_writeUInt8(out, (line->flags >> 8));
 	SWFOutput_writeUInt8(out, line->flags);
@@ -245,6 +271,9 @@ void SWFOutput_writeLineStyles(SWFOutput out,
                                SWFBlocktype shapeType,
                                SWFRect bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(736);
+#endif
 	SWFLineStyle line;
 	int i;
 	
@@ -271,6 +300,9 @@ void SWFOutput_writeMorphLineStyles2(SWFOutput out,
 		SWFLineStyle *lines1, int nLines1,
 		SWFLineStyle *lines2, int nLines2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(737);
+#endif
 	SWFLineStyle line1, line2;
 	int i;
 
@@ -321,6 +353,9 @@ void SWFOutput_writeMorphLineStyles(SWFOutput out,
 						SWFLineStyle *lines1, int nLines1,
 						SWFLineStyle *lines2, int nLines2)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(738);
+#endif
 	SWFLineStyle line1, line2;
 	int i;
 

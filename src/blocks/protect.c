@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -42,6 +47,9 @@ writeSWFProtectToMethod(SWFBlock block, SWFByteOutputMethod method, void* data)
 static int
 completeSWFProtect(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(768);
+#endif
 	SWFProtect protect = (SWFProtect)block;
 
 	if( protect->Password ) {
@@ -65,6 +73,9 @@ destroySWFProtect(SWFProtect protect)
 SWFBlock
 newSWFProtect(const char *password)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(769);
+#endif
 	SWFProtect protect = (SWFProtect)malloc(sizeof(struct SWFProtect_s));
 
 	SWFBlockInit(BLOCK(protect));

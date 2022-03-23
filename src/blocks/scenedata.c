@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2007 Klaus Rechert
@@ -50,6 +55,9 @@ static void writeSWFSceneDataToMethod(SWFBlock block,
 
 static int completeSWFSceneData(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(613);
+#endif
 	SWFSceneData sdata = (SWFSceneData)block;
 	int i;
 
@@ -76,6 +84,9 @@ static int completeSWFSceneData(SWFBlock block)
 void
 destroySWFSceneData(SWFSceneData sdata)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(614);
+#endif
 	int i;
 	if(sdata->sceneCount > 0)
 	{
@@ -98,6 +109,9 @@ destroySWFSceneData(SWFSceneData sdata)
 void 
 SWFSceneData_addScene(SWFSceneData sdata, unsigned int offset, const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(615);
+#endif
 	sdata->sceneName = (char **)realloc(sdata->sceneName, 
 		(sdata->sceneCount + 1) * sizeof(char *));
 	sdata->sceneOffset = (unsigned int*) realloc(sdata->sceneOffset,
@@ -111,6 +125,9 @@ void
 SWFSceneData_addFrameLabel(SWFSceneData sdata, unsigned int fnum, 
                            const char *label)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(616);
+#endif
 	sdata->frameLabel = (char **)realloc(sdata->frameLabel, 
 		(sdata->frameLabelCount + 1) * sizeof(char *));
 	sdata->frameNumber = (unsigned int*)realloc(sdata->frameNumber,
@@ -123,6 +140,9 @@ SWFSceneData_addFrameLabel(SWFSceneData sdata, unsigned int fnum,
 SWFSceneData
 newSWFSceneData()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(617);
+#endif
 	SWFSceneData sdata= (SWFSceneData)malloc(sizeof(struct SWFSceneData_s));
 
 	SWFCharacterInit((SWFCharacter)sdata);

@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -87,6 +92,9 @@ destroySWFOutputBlock(SWFOutputBlock outputBlock)
 SWFOutputBlock
 newSWFOutputBlock(SWFOutput out, SWFBlocktype type)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(885);
+#endif
 	SWFOutputBlock block = (SWFOutputBlock)malloc(sizeof(struct SWFOutputBlock_s));
 
 	SWFBlockInit((SWFBlock)block);
@@ -108,6 +116,9 @@ SWFOutputBlock
 newSWFPlaceObjectBlock(SWFCharacter character, int depth,
 											 SWFMatrix matrix, SWFCXform cXform)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(886);
+#endif
 	SWFOutput out = newSizedSWFOutput(40);
 
 	SWFOutput_writeUInt16(out, CHARACTERID(character));
@@ -179,6 +190,9 @@ newSWFNamedAnchorBlock(const char *string)
 SWFOutputBlock
 newSWFExportBlock(SWFExports exports, int nExports)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(887);
+#endif
 	int n, sum;
 	SWFOutput out;
 

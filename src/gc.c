@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
 
@@ -44,6 +49,9 @@ static void dumpNodeList();
 #endif
 mem_node *ming_gc_add_node(void *ptr, dtorfunctype dtor)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(480);
+#endif
 	mem_node *node = (mem_node*) calloc(1, sizeof(mem_node));
 	node->ptr = ptr;
 	node->dtor = dtor;
@@ -64,6 +72,9 @@ mem_node *ming_gc_add_node(void *ptr, dtorfunctype dtor)
 void
 ming_gc_remove_node(mem_node *node)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(481);
+#endif
 	if ( node->prev ) {
 		node->prev->next = node->next;
 	} else {
@@ -85,6 +96,9 @@ ming_gc_remove_node(mem_node *node)
 void
 Ming_collectGarbage()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(482);
+#endif
 	mem_node *ptr;
 #if DEBUG
 	printf("GC called\n");
@@ -108,6 +122,9 @@ Ming_collectGarbage()
 static void
 dumpNodeList()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(483);
+#endif
 	mem_node *ptr;
 	printf("First node %p \n", firstnode);
 	printf("Last node %p \n", lastnode);

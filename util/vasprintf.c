@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -10,6 +15,9 @@
 int
 vasprintf(char **ret, const char *format, va_list ap)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(75);
+#endif
 	va_list ap2;
 	int len = 100;        /* First guess at the size */
 	if ((*ret = (char *) malloc(len)) == NULL)

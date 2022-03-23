@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /* gif2dbl: convert a gif file to a DBL file using a RGB palette
  * for non-transparent gifs and RGBA palette for transparent ones.
  *
@@ -33,6 +38,9 @@ void error(char *msg, int errorCode)
  */
 int getTransparentColor(GifFileType * file)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(79);
+#endif
   int i,returnvalue=-1;
   ExtensionBlock * ext = file->SavedImages[0].ExtensionBlocks;
  
@@ -52,6 +60,9 @@ int getTransparentColor(GifFileType * file)
 
 unsigned char *readGif(char *fileName, int *length, int *bytesPerColor)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(80);
+#endif
   GifFileType *file;
   ColorMapObject *colorMap;
   unsigned char *bits;

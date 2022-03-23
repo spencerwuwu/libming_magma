@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -39,6 +44,9 @@
 SWFMatrix
 newSWFMatrix(double a, double b, double c, double d, int x, int y)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(837);
+#endif
 	SWFMatrix m = (SWFMatrix)malloc(sizeof(struct SWFMatrix_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -131,6 +139,9 @@ SWFMatrix_clearTransform(SWFMatrix m)
 SWFMatrix
 SWFMatrix_dup(SWFMatrix matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(838);
+#endif
 	SWFMatrix m = (SWFMatrix)malloc(sizeof(struct SWFMatrix_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -152,6 +163,9 @@ destroySWFMatrix(SWFMatrix matrix)
 int
 SWFMatrix_numBits(SWFMatrix matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(839);
+#endif
 	int bits = 7;
 
 	if ( !((matrix->scaleX == 0 && matrix->scaleY == 0) ||
@@ -180,6 +194,9 @@ SWFMatrix_numBits(SWFMatrix matrix)
 void
 SWFOutput_writeMatrix(SWFOutput out, SWFMatrix matrix)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(840);
+#endif
 	int nBits;
 
 	SWFOutput_byteAlign(out);
@@ -245,6 +262,9 @@ SWFOutput_writeMatrix(SWFOutput out, SWFMatrix matrix)
 void
 SWFMatrix_apply(SWFMatrix m, double *x, double *y, int xlate)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(841);
+#endif
 	int newx, newy;
 
 	if ( m == NULL )
@@ -264,6 +284,9 @@ SWFMatrix_apply(SWFMatrix m, double *x, double *y, int xlate)
 /* ma = ma*mb */
 void SWFMatrix_multiply(SWFMatrix ma, SWFMatrix mb)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(842);
+#endif
 	double a = ma->scaleX, b = ma->rotate0, c = ma->rotate1, d = ma->scaleY;
 	double e = mb->scaleX, f = mb->rotate0, g = mb->rotate1, h = mb->scaleY;
 	double tmp;
@@ -283,6 +306,9 @@ void SWFMatrix_multiply(SWFMatrix ma, SWFMatrix mb)
 void
 SWFMatrix_leftMultiply(SWFMatrix ma, SWFMatrix mb)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(843);
+#endif
 	double a = ma->scaleX, b = ma->rotate0, c = ma->rotate1, d = ma->scaleY;
 	double e = mb->scaleX, f = mb->rotate0, g = mb->rotate1, h = mb->scaleY;
 

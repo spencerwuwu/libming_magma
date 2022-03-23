@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -45,6 +50,9 @@ struct SWFOutput_s
 SWFOutput
 newSWFOutput()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(623);
+#endif
 	SWFOutput out = (SWFOutput) malloc(sizeof(struct SWFOutput_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -76,6 +84,9 @@ newSWFOutput()
 SWFOutput
 newSizedSWFOutput(int size)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(624);
+#endif
 	SWFOutput out = (SWFOutput)malloc(sizeof(struct SWFOutput_s));
 
 	/* If malloc failed, return NULL to signify this */
@@ -104,6 +115,9 @@ newSizedSWFOutput(int size)
 void
 SWFOutput_writeToMethod(SWFOutput out, SWFByteOutputMethod method, void *data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(625);
+#endif
 	int i, l;
 	SWFOutput o = out;
 	byte *buffer;
@@ -126,6 +140,9 @@ SWFOutput_writeToMethod(SWFOutput out, SWFByteOutputMethod method, void *data)
 void
 destroySWFOutput(SWFOutput out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(626);
+#endif
 	SWFOutput o = out, next;
 
 	while(o != NULL)
@@ -141,6 +158,9 @@ destroySWFOutput(SWFOutput out)
 void
 SWFOutput_grow(SWFOutput out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(627);
+#endif
 	int num = out->pos - out->buffer; /* in case buffer gets displaced.. */
 
 	unsigned char* newbuf =
@@ -158,6 +178,9 @@ SWFOutput_grow(SWFOutput out)
 int
 SWFOutput_getLength(SWFOutput out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(628);
+#endif
 	int size = 0;
 
 	while ( out!=NULL )
@@ -174,6 +197,9 @@ SWFOutput_getLength(SWFOutput out)
 void
 SWFOutput_checkSize(SWFOutput out, int bytes)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(629);
+#endif
 	if ( bytes >= out->free )
 	{
 		int New = OUTPUT_BUFFER_INCREMENT *
@@ -196,6 +222,9 @@ SWFOutput_checkSize(SWFOutput out, int bytes)
 void
 SWFOutput_byteAlign(SWFOutput out)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(630);
+#endif
 	if ( out->bitpos > 0 )
 	{
 		SWFOutput_checkSize(out, 1);
@@ -237,6 +266,9 @@ SWFOutput_getCurPos(SWFOutput out)
 void
 SWFOutput_writeBits(SWFOutput out, int data, int bits)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(631);
+#endif
 	int bitpos = out->bitpos;
 
 	if ( bitpos == 0 )
@@ -280,6 +312,9 @@ SWFOutput_writeSBits(SWFOutput out, int data, int bits)
 void
 SWFOutput_writeUInt8(SWFOutput out, int data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(632);
+#endif
 	/* think we have to byte align when we write whole bytes */
 	SWFOutput_byteAlign(out);
 
@@ -330,6 +365,9 @@ SWFOutput_writeSInt16(SWFOutput out, int data)
 void
 SWFOutput_writeUInt32(SWFOutput out, long data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(633);
+#endif
 	SWFOutput_writeUInt8(out, data&0xff);
 	data >>= 8;
 	SWFOutput_writeUInt8(out, data&0xff);
@@ -343,6 +381,9 @@ SWFOutput_writeUInt32(SWFOutput out, long data)
 void
 SWFOutput_writeSInt32(SWFOutput out, long data)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(634);
+#endif
 	if ( data < 0 )
 		data = (0xffffffff + data) + 1;
 
@@ -369,6 +410,9 @@ SWFOutput_writeBuffer(SWFOutput out, unsigned char *buffer, int bytes)
 int
 SWFOutput_numBits(int num)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(635);
+#endif
 	int i=0;
 
 	while ( num > 0 )
@@ -395,6 +439,9 @@ SWFOutput_numSBits(int num)
 void
 SWFOutput_writeString(SWFOutput out, const unsigned char *string)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(636);
+#endif
 	char c;
 
 	SWFOutput_byteAlign(out);
@@ -431,6 +478,9 @@ SWFOutput_writeFixed8(SWFOutput out, double val)
 void
 SWFOutput_writeFloat(SWFOutput out, float f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(637);
+#endif
 	unsigned char *p = (unsigned char *)&f;
 #if SWF_LITTLE_ENDIAN
 	SWFOutput_writeUInt8(out, p[0]);
@@ -448,6 +498,9 @@ SWFOutput_writeFloat(SWFOutput out, float f)
 void
 SWFOutput_writeDouble(SWFOutput out, double d)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(638);
+#endif
 	unsigned char *p = (unsigned char *)&d;
 
 #if SWF_LITTLE_ENDIAN
@@ -492,6 +545,9 @@ SWFOutput_writeDouble(SWFOutput out, double d)
 void
 SWFOutput_writeFloat16(SWFOutput out, float f)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(639);
+#endif
 	unsigned char buf[4];
 	float *pf = (float *)buf;
 	int sig, exp, mat;
@@ -523,6 +579,9 @@ SWFOutput_writeFloat16(SWFOutput out, float f)
 void 
 SWFOutput_writeEncUInt32(SWFOutput out, unsigned int i)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(640);
+#endif
 	if(i == 0) // special case 
 	{
 		SWFOutput_writeUInt8(out, 0);

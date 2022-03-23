@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2002  Opaque Industries - http://www.opaque.net/
@@ -45,6 +50,9 @@ struct SWFMorph_s
 static int
 completeSWFMorphBlock(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(912);
+#endif
 	SWFMorph morph = (SWFMorph)block;
 
 	SWFOutput out = morph->out;
@@ -147,6 +155,9 @@ writeSWFMorphBlockToStream(SWFBlock block,
 void
 destroySWFMorph(SWFMorph morph)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(913);
+#endif
 	destroySWFOutput(morph->out);
 
 	/* these must be destroyed by hand, since script wrappers can't
@@ -177,6 +188,9 @@ SWFMorph_getShape2(SWFMorph morph)
 SWFMorph
 newSWFMorphShape()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(914);
+#endif
 	SWFMorph morph = (SWFMorph) malloc(sizeof(struct SWFMorph_s));
 
 	SWFCharacterInit((SWFCharacter)morph);

@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
     Ming, an SWF output library
     Copyright (C) 2007  Klaus Rechert
@@ -47,6 +52,9 @@ writeSWFSymbolClassToMethod(SWFBlock block,
 static int
 completeSWFSymbolClass(SWFBlock block)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(619);
+#endif
 	int i;
 	SWFSymbolClass sclass = (SWFSymbolClass)block;
 	
@@ -63,6 +71,9 @@ completeSWFSymbolClass(SWFBlock block)
 void
 destroySWFSymbolClass(SWFSymbolClass sclass)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(620);
+#endif
 	int i;
 
 	for(i = 0; i < sclass->numSymbols; i++)
@@ -82,6 +93,9 @@ void
 SWFSymbolClass_addSymbol(SWFSymbolClass sclass, 
                          SWFCharacter character, const char *name)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(621);
+#endif
 	size_t size;
 	if(sclass == NULL || name == NULL)
 		return;
@@ -103,6 +117,9 @@ SWFSymbolClass_addSymbol(SWFSymbolClass sclass,
 
 SWFSymbolClass newSWFSymbolClass()
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(622);
+#endif
         SWFSymbolClass sclass = (SWFSymbolClass)malloc(sizeof(struct SWFSymbolClass_s));
 
         SWFBlockInit(BLOCK(sclass));

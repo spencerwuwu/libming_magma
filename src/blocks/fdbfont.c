@@ -1,3 +1,8 @@
+#ifndef ZTRIM_H
+#define ZTRIM_H
+#include <libztrim.h>
+#endif
+
 /*
 Ming, an SWF output library
 Copyright (C) 2002	Opaque Industries - http://www.opaque.net/
@@ -36,6 +41,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
 static void
 readBounds(SWFInput input, struct SWFRect_s* bounds)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(563);
+#endif
 	int nBits;
 
 	SWFInput_byteAlign(input);
@@ -68,6 +76,9 @@ static inline void checkShapeHeader(SWFInput input,
                                     int *numFillBits,
                                     int *numLineBits)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(564);
+#endif
 	SWFInput_byteAlign(input);
 	if ( (*numFillBits = SWFInput_readBits(input, 4)) != 1 ) /* fill bits */
 		SWF_error("FdbFont read glyph: bad file format (was expecting fill bits = 1)\n");
@@ -79,6 +90,9 @@ static inline void checkShapeHeader(SWFInput input,
 static inline void checkShapeStyle(SWFInput input, char style,
                              int numFillBits, int numLineBits)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(565);
+#endif
 	if ( style & 1 )
 		if ( SWFInput_readBits(input, numFillBits) != 0 ) /* fill0 = 0 */
 			SWF_warn("SWFFont_getShape: bad file format (was expecting fill0 = 0)\n");
@@ -92,6 +106,9 @@ static inline void checkShapeStyle(SWFInput input, char style,
 
 static int translateShapeRecord(SWFInput input, SWFShape shape)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(566);
+#endif
 	int moveBits, x = 0, y = 0;
 	int straight, numBits;
 
@@ -141,6 +158,9 @@ static int translateShapeRecord(SWFInput input, SWFShape shape)
 
 static SWFShape readGlyphShape(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(567);
+#endif
 	int numFillBits, numLineBits, moveBits, x, y;
 	char style;
 	SWFShape shape;
@@ -172,6 +192,9 @@ static SWFShape readGlyphShape(SWFInput input)
 
 static inline int readFontLayout(SWFInput input, SWFFont font)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(568);
+#endif
 	int i;
 	struct SWFRect_s __rect;
 
@@ -217,6 +240,9 @@ static inline int readFontLayout(SWFInput input, SWFFont font)
 
 static inline int checkFdbHeader(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(569);
+#endif
 	char f, d, b, z;
 	f = SWFInput_getChar(input);
 	d = SWFInput_getChar(input);
@@ -234,6 +260,9 @@ static inline int checkFdbHeader(SWFInput input)
 
 SWFFont loadSWFFontFromInput(SWFInput input)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(570);
+#endif
 	SWFFont font; 
 	int namelen, flags, i, nGlyphs;
 
@@ -296,6 +325,9 @@ SWFFont loadSWFFontFromInput(SWFInput input)
 /* pull font definition from fdb (font def block) file */
 SWFFont loadSWFFont_fromFdbFile(FILE *file)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(571);
+#endif
 	SWFInput input;
 	SWFFont font;
 	if ( file == NULL )
@@ -322,6 +354,9 @@ struct out
 
 static void oprintf(struct out *op, const char *fmt, ...)
 {	va_list ap;
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(572);
+#endif
 	char buf[256];
 	int d, l;
 	
@@ -339,6 +374,9 @@ static void oprintf(struct out *op, const char *fmt, ...)
 char *
 SWFFont_getShape(SWFFont font, unsigned short c)
 {
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(573);
+#endif
 	byte *p = SWFFont_findGlyph(font, c);
 	byte **f = &p;
 	struct out o;
