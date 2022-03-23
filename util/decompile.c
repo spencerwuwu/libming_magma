@@ -464,7 +464,7 @@ static int
 getInt(struct SWF_ACTIONPUSHPARAM *act)
 {
 #ifndef ZTRIM_DONT_INSTR
-ztrim_fInstrument(41);
+ztrim_fInstrument(0);
 #endif
 #ifdef MAGMA_ENABLE_CANARIES
 	    MAGMA_LOG("MIN005", act == NULL);
