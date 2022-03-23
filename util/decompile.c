@@ -405,6 +405,7 @@ static char *
 getName(struct SWF_ACTIONPUSHPARAM *act)
 {
 #ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(0);
 ztrim_fInstrument(40);
 #endif
 	char *t;
