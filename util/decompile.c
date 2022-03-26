@@ -2131,9 +2131,6 @@ getAllSwitchActions(union SWF_ACTION *dest, union SWF_ACTION *actions, union SWF
 static int
 decompile_SWITCH(int n, SWF_ACTION *actions, int maxn, int off1end)
 {
-#ifndef ZTRIM_DONT_INSTR
-ztrim_fInstrument(0);
-#endif
 	int i,j;
 	int start;		// base action index for case value and code
 	int ccsize=0;		// size of code for case value
@@ -3205,6 +3202,9 @@ decompileSETTARGET(int n, SWF_ACTION *actions, int maxn, int is_type2)
 	name = is_type2 ? getString(pop()) : sact->TargetName;
 	if (*name)
 	{
+#ifndef ZTRIM_DONT_INSTR
+ztrim_fInstrument(0);
+#endif
 		INDENT
 		println("tellTarget('%s') {" ,name);
 		while(action_cnt+n<maxn)
