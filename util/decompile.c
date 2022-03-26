@@ -46,9 +46,9 @@
 
 
 static char **pool;
-#ifdef MAGMA_ENABLE_CANARIES
-static unsigned short poolcounter;
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//static unsigned short poolcounter;
+//#endif
 struct SWF_ACTIONPUSHPARAM *regs[256];
 
 static char *getName(struct SWF_ACTIONPUSHPARAM *act);
@@ -349,18 +349,18 @@ getString(struct SWF_ACTIONPUSHPARAM *act)
 		sprintf(t,"%ld", act->p.Integer );
 		return t;
 	case PUSH_CONSTANT: /* CONSTANT8 */
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN002", act->p.Constant8 > poolcounter);
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//	    MAGMA_LOG("MIN002", act->p.Constant8 > poolcounter);
+//#endif
 		t=malloc(strlenext(pool[act->p.Constant8])+3); /* 2 "'"s and a NULL */
 		strcpy(t,"'");
 		strcatext(t,pool[act->p.Constant8]);
 		strcat(t,"'");
 		return t;
 	case PUSH_CONSTANT16: /* CONSTANT16 */
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN002", act->p.Constant16 > poolcounter);
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//	    MAGMA_LOG("MIN002", act->p.Constant16 > poolcounter);
+//#endif
 		t=malloc(strlenext(pool[act->p.Constant16])+3); /* 2 '\"'s and a NULL */
 		strcpy(t,"'");
 		strcatext(t,pool[act->p.Constant16]);
@@ -404,9 +404,9 @@ getName(struct SWF_ACTIONPUSHPARAM *act)
   		return t;
 #endif
 	case PUSH_CONSTANT: /* CONSTANT8 */
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN001", act->p.Constant8 > poolcounter);
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//	    MAGMA_LOG("MIN001", act->p.Constant8 > poolcounter);
+//#endif
 		t=malloc(strlenext(pool[act->p.Constant8])+1);
 		strcpyext(t,pool[act->p.Constant8]);
 		if(strlen(t)) /* Not a zero length string */
@@ -417,9 +417,9 @@ getName(struct SWF_ACTIONPUSHPARAM *act)
 			return strcpy(t,"this");
 		}
 	case PUSH_CONSTANT16: /* CONSTANT16 */
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN001", act->p.Constant16 > poolcounter);
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//	    MAGMA_LOG("MIN001", act->p.Constant16 > poolcounter);
+//#endif
 		t=malloc(strlenext(pool[act->p.Constant16])+1);
 		strcpyext(t,pool[act->p.Constant16]);
 		if(strlen(t)) /* Not a zero length string */
@@ -746,9 +746,9 @@ decompileCONSTANTPOOL (SWF_ACTION *act)
 {
 	OUT_BEGIN(SWF_ACTIONCONSTANTPOOL);
 	pool=sact->ConstantPool;
-#ifdef MAGMA_ENABLE_CANARIES
-    poolcounter = sact->Count;
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//    poolcounter = sact->Count;
+//#endif
 }
 
 static void
@@ -886,9 +886,9 @@ static inline int OpCode(SWF_ACTION *actions, int n, int maxn)
 #endif
 		return -999;
 	}
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN004", n < 1);
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//	    MAGMA_LOG("MIN004", n < 1);
+//#endif
 	return actions[n].SWF_ACTIONRECORD.ActionCode;
 }
 
@@ -2037,7 +2037,7 @@ decompile_SWITCH(int n, SWF_ACTION *actions, int maxn, int off1end)
 	for (i=0; i<n_firstactions; i++) // seek last op in 1st if
 	{
 #ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN003", i == maxn - 1);
+	    MAGMA_LOG("MIN003_1", i == maxn - 1);
 #endif
 		if (actions[i+1].SWF_ACTIONRECORD.Offset==off1end)
 		{
@@ -3088,11 +3088,11 @@ decompileSETTARGET(int n, SWF_ACTION *actions, int maxn, int is_type2)
 	{
 		INDENT
 		println("tellTarget('%s') {" ,name);
-#ifdef MAGMA_ENABLE_CANARIES
-	    MAGMA_LOG("MIN003", action_cnt+n == maxn - 1);
-#endif
 		while(action_cnt+n<maxn)
 		{
+#ifdef MAGMA_ENABLE_CANARIES
+	    MAGMA_LOG("MIN003_2", action_cnt+n == maxn - 1);
+#endif
 			if (OpCode(actions, n+1+action_cnt, maxn)==SWFACTION_SETTARGET
 			    || OpCode(actions, n+1+action_cnt, maxn)==SWFACTION_SETTARGET2
 			    || OpCode(actions, n+1+action_cnt, maxn)==SWFACTION_DEFINEFUNCTION
