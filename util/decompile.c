@@ -3444,9 +3444,9 @@ decompile5Action(int n, SWF_ACTION *actions,int indent)
 		return NULL;
 
 	pool = NULL;
-#ifdef MAGMA_ENABLE_CANARIES
-    poolcounter = 0;
-#endif
+//#ifdef MAGMA_ENABLE_CANARIES
+//    poolcounter = 0;
+//#endif
 
 	dcinit();
 
